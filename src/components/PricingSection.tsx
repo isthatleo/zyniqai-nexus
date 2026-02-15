@@ -4,19 +4,19 @@ import { Check } from "lucide-react";
 const plans = [
   {
     name: "Starter",
-    price: "$49",
+    price: "$2,499",
     period: "/mo",
-    description: "For small teams getting started with AI operations.",
-    features: ["Up to 5 users", "Basic analytics dashboard", "10K data points/day", "Email support", "API access"],
+    description: "For growing teams adopting AI-driven workflows.",
+    features: ["Up to 10 users", "Core analytics dashboard", "2 AI modules", "Standard API access", "Email & chat support"],
     cta: "Start Free Trial",
     highlighted: false,
   },
   {
     name: "Professional",
-    price: "$199",
+    price: "$7,999",
     period: "/mo",
-    description: "For growing businesses needing advanced AI insights.",
-    features: ["Up to 25 users", "Advanced predictive analytics", "1M data points/day", "Priority support", "Custom integrations", "Fleet intelligence"],
+    description: "For organizations scaling intelligent operations.",
+    features: ["Up to 50 users", "Full predictive analytics", "All AI modules", "Priority API + WebSocket", "Dedicated success manager", "Custom integrations"],
     cta: "Get Started",
     highlighted: true,
   },
@@ -24,8 +24,8 @@ const plans = [
     name: "Enterprise",
     price: "Custom",
     period: "",
-    description: "For large organizations with complex operations.",
-    features: ["Unlimited users", "Full AI module suite", "Unlimited data", "24/7 dedicated support", "On-premise deployment", "Custom ML models"],
+    description: "For large enterprises with mission-critical AI needs.",
+    features: ["Unlimited users", "Custom ML model development", "On-premise / private cloud", "24/7 dedicated engineering", "SLA-backed uptime", "Full source access"],
     cta: "Contact Sales",
     highlighted: false,
   },
@@ -46,7 +46,7 @@ const PricingSection = () => {
             Plans that <span className="gradient-text">Scale</span>
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto">
-            Start small, grow fast. Every plan includes core AI capabilities.
+            Enterprise-ready pricing with flexibility. Every plan includes core AI capabilities and dedicated support.
           </p>
         </motion.div>
 

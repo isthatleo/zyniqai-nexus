@@ -1,25 +1,20 @@
+import logo from "@/assets/zyniqai-logo.png";
+
 const Footer = () => {
   return (
     <footer className="border-t border-border/50 py-12 px-4 md:px-8">
       <div className="max-w-6xl mx-auto">
         <div className="grid md:grid-cols-4 gap-8 mb-10">
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center">
-                <span className="font-display font-bold text-primary text-sm">Z</span>
-              </div>
-              <span className="font-display font-semibold">
-                Zyniq<span className="text-primary">AI</span>
-              </span>
-            </div>
+            <img src={logo} alt="ZyniqAI" className="h-10 w-auto mb-4 object-contain" />
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Turning Data Into Action. AI-powered intelligence for enterprise operations.
+              Turning Data Into Action. AI-first software engineering for the modern enterprise.
             </p>
           </div>
 
           {[
-            { title: "Product", links: ["Features", "Dashboard", "Pricing", "API Docs"] },
-            { title: "Company", links: ["About", "Careers", "Blog", "Contact"] },
+            { title: "Solutions", links: ["Predictive Analytics", "Operations AI", "Dashboards", "Automation"] },
+            { title: "Company", links: ["About", "Services", "Careers", "Contact"] },
             { title: "Legal", links: ["Privacy", "Terms", "Security", "GDPR"] },
           ].map((col) => (
             <div key={col.title}>

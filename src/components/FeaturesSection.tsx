@@ -1,30 +1,42 @@
 import { motion } from "framer-motion";
-import { Brain, BarChart3, Cpu, LayoutDashboard } from "lucide-react";
+import { Brain, BarChart3, Cpu, LayoutDashboard, Zap, Database } from "lucide-react";
 
 const features = [
   {
-    icon: Cpu,
-    title: "Fleet & Operations Intelligence",
-    description: "Real-time monitoring and optimization of fleet operations with AI-driven route planning and resource allocation.",
+    icon: Brain,
+    title: "Predictive Analytics",
+    description: "Leverage machine learning models to forecast trends, demand, and risks before they materialize — giving your business a decisive edge.",
     color: "neon-blue" as const,
   },
   {
-    icon: BarChart3,
-    title: "Predictive Analytics",
-    description: "Forecast demand, maintenance needs, and market trends with precision using advanced machine learning models.",
+    icon: Cpu,
+    title: "Operations Optimization",
+    description: "AI-driven systems that streamline workflows, automate processes, and maximize resource utilization across your entire operation.",
     color: "neon-green" as const,
   },
   {
-    icon: Brain,
+    icon: BarChart3,
     title: "AI Insights & Recommendations",
-    description: "Actionable intelligence generated from your data, delivering automated recommendations to drive business outcomes.",
+    description: "Actionable intelligence generated from your data in real-time, powering smarter decisions at every organizational level.",
     color: "neon-purple" as const,
   },
   {
     icon: LayoutDashboard,
-    title: "Interactive Dashboards",
-    description: "Beautiful, real-time dashboards with KPIs, heatmaps, and charts that bring your data to life at a glance.",
+    title: "Data Dashboards & Visualization",
+    description: "Beautiful, interactive dashboards with live KPIs, heatmaps, and charts that transform complex data into clear business narratives.",
     color: "neon-blue" as const,
+  },
+  {
+    icon: Zap,
+    title: "Intelligent Automation",
+    description: "End-to-end automation pipelines powered by AI — from data ingestion and processing to alerts, reporting, and autonomous actions.",
+    color: "neon-green" as const,
+  },
+  {
+    icon: Database,
+    title: "Enterprise Data Platform",
+    description: "Scalable, secure data infrastructure that unifies disparate sources into a single intelligent layer for your organization.",
+    color: "neon-purple" as const,
   },
 ];
 
@@ -46,17 +58,17 @@ const FeaturesSection = () => {
           className="text-center mb-16"
         >
           <span className="text-xs font-medium tracking-widest uppercase text-primary mb-4 block">
-            AI Modules
+            Solutions
           </span>
           <h2 className="text-3xl md:text-5xl font-display font-bold mb-4">
-            Intelligent by <span className="gradient-text">Design</span>
+            AI Modules Built for <span className="gradient-text">Enterprise</span>
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto">
-            Purpose-built AI modules that integrate seamlessly into your operations workflow.
+            Modular, production-ready AI systems that integrate into your existing infrastructure and scale with your business.
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {features.map((feature, i) => (
             <motion.div
               key={feature.title}

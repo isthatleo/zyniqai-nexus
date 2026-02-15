@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import logo from "@/assets/zyniqai-logo.png";
 
 const navLinks = [
-  { label: "Features", href: "#features" },
-  { label: "Dashboard", href: "#dashboard" },
   { label: "About", href: "#about" },
+  { label: "Solutions", href: "#features" },
+  { label: "Platform", href: "#dashboard" },
+  { label: "Services", href: "#services" },
   { label: "Pricing", href: "#pricing" },
   { label: "Contact", href: "#contact" },
 ];
@@ -32,12 +34,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between h-16 md:h-20">
         {/* Logo */}
         <a href="#" className="flex items-center gap-2 group">
-          <div className="w-9 h-9 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center group-hover:border-primary/60 transition-colors">
-            <span className="font-display font-bold text-primary text-lg">Z</span>
-          </div>
-          <span className="font-display font-semibold text-lg tracking-tight">
-            Zyniq<span className="text-primary">AI</span>
-          </span>
+          <img src={logo} alt="ZyniqAI" className="h-10 md:h-12 w-auto object-contain group-hover:drop-shadow-[0_0_12px_hsl(var(--neon-green)/0.6)] transition-all duration-300" />
         </a>
 
         {/* Desktop Links */}
@@ -62,7 +59,7 @@ const Navbar = () => {
             href="#contact"
             className="text-sm font-medium px-5 py-2.5 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-all hover:shadow-[0_0_20px_hsl(var(--neon-blue)/0.3)]"
           >
-            Get Started
+            Request Demo
           </a>
         </div>
 
@@ -96,7 +93,7 @@ const Navbar = () => {
             href="#contact"
             className="mt-3 block text-center text-sm font-medium px-5 py-2.5 rounded-lg bg-primary text-primary-foreground"
           >
-            Get Started
+            Request Demo
           </a>
         </motion.div>
       )}
