@@ -46,7 +46,6 @@ const Particles = () => {
         ctx.fillStyle = `rgba(44, 233, 255, ${p.opacity})`;
         ctx.fill();
 
-        // Draw connections
         for (let j = i + 1; j < particles.length; j++) {
           const dx = p.x - particles[j].x;
           const dy = p.y - particles[j].y;
@@ -91,7 +90,7 @@ const HeroSection = () => {
         >
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-border/60 bg-muted/30 backdrop-blur-sm mb-8">
             <span className="w-2 h-2 rounded-full bg-neon-green animate-pulse-glow" />
-            <span className="text-xs font-medium text-muted-foreground">AI-Powered Intelligence Platform</span>
+            <span className="text-xs font-medium text-muted-foreground">AI-First Software Engineering Firm</span>
           </div>
         </motion.div>
 
@@ -112,7 +111,7 @@ const HeroSection = () => {
           transition={{ duration: 0.8, delay: 0.6 }}
           className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed"
         >
-          ZyniqAI delivers predictive analytics, fleet intelligence, and real-time AI insights that transform enterprise operations into optimized, data-driven workflows.
+          ZyniqAI designs and deploys intelligent systems — from predictive analytics and AI-powered platforms to custom enterprise software — engineered to transform how businesses operate.
         </motion.p>
 
         <motion.div
@@ -128,10 +127,10 @@ const HeroSection = () => {
             Get Started
           </a>
           <a
-            href="#dashboard"
+            href="#contact"
             className="px-8 py-3.5 rounded-lg border border-border/60 text-foreground font-medium text-sm hover:border-primary/40 hover:bg-muted/30 transition-all duration-300"
           >
-            Dashboard Demo
+            Request Demo
           </a>
         </motion.div>
 
@@ -143,9 +142,9 @@ const HeroSection = () => {
           className="mt-20 grid grid-cols-3 gap-8 max-w-lg mx-auto"
         >
           {[
-            { value: "99.9%", label: "Uptime" },
-            { value: "50ms", label: "Avg Response" },
-            { value: "10M+", label: "Data Points/Day" },
+            { value: "150+", label: "Enterprise Clients" },
+            { value: "99.9%", label: "Platform Uptime" },
+            { value: "10M+", label: "AI Decisions/Day" },
           ].map((stat) => (
             <div key={stat.label}>
               <p className="text-2xl md:text-3xl font-display font-bold text-primary">{stat.value}</p>

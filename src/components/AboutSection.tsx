@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Target, Lightbulb, Shield } from "lucide-react";
+import { Target, Lightbulb, Shield, Users, Code, Globe } from "lucide-react";
 
 const AboutSection = () => {
   return (
@@ -16,18 +16,15 @@ const AboutSection = () => {
               About ZyniqAI
             </span>
             <h2 className="text-3xl md:text-5xl font-display font-bold mb-6 leading-tight">
-              Built for the
+              An AI-First
               <br />
-              <span className="gradient-text">AI-First Era</span>
+              <span className="gradient-text">Engineering Firm</span>
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-6">
-              ZyniqAI was founded on a simple belief: enterprise operations shouldn't rely on guesswork. 
-              Our platform combines cutting-edge machine learning with real-time data processing to deliver 
-              intelligence that actually drives decisions.
+              ZyniqAI is a software engineering and AI company building the next generation of intelligent enterprise systems. We combine deep expertise in machine learning, data engineering, and modern software architecture to deliver platforms that don't just analyze data — they act on it.
             </p>
             <p className="text-muted-foreground leading-relaxed mb-8">
-              From fleet optimization to predictive maintenance, we build AI that understands your business 
-              context and delivers actionable insights — not just dashboards.
+              From predictive analytics platforms to fully automated decision engines, our team designs and deploys AI systems that solve real business problems at scale. We partner with enterprises across industries to architect, build, and maintain mission-critical AI infrastructure.
             </p>
 
             <div className="grid grid-cols-3 gap-4">
@@ -54,14 +51,17 @@ const AboutSection = () => {
             className="relative"
           >
             <div className="glass-card p-8 space-y-6">
+              <h3 className="text-lg font-display font-semibold mb-2">Why ZyniqAI?</h3>
               {[
-                { number: "01", title: "Collect", desc: "Ingest data from every touchpoint in your operations pipeline." },
-                { number: "02", title: "Analyze", desc: "Our AI models process and identify patterns in real-time." },
-                { number: "03", title: "Act", desc: "Receive actionable recommendations with measurable outcomes." },
-              ].map((step, i) => (
-                <div key={step.number} className="flex gap-5">
+                { icon: Code, title: "Engineering Excellence", desc: "World-class engineers building production AI systems — not proofs of concept." },
+                { icon: Users, title: "Enterprise Partnerships", desc: "We embed with your teams to deliver solutions that fit your workflows and scale." },
+                { icon: Globe, title: "End-to-End Delivery", desc: "From data strategy and architecture to deployment and monitoring — we handle it all." },
+              ].map((step) => (
+                <div key={step.title} className="flex gap-5">
                   <div className="flex-shrink-0">
-                    <span className="text-2xl font-display font-bold text-primary/30">{step.number}</span>
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center">
+                      <step.icon size={18} className="text-primary" />
+                    </div>
                   </div>
                   <div>
                     <h4 className="font-display font-semibold mb-1">{step.title}</h4>

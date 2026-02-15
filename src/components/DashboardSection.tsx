@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
-import { LineChart, Line, AreaChart, Area, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
-import { TrendingUp, Fuel, Clock, DollarSign } from "lucide-react";
+import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
+import { TrendingUp, Activity, Clock, DollarSign } from "lucide-react";
 
 const lineData = [
   { name: "Jan", value: 65 }, { name: "Feb", value: 72 }, { name: "Mar", value: 68 },
@@ -9,18 +9,18 @@ const lineData = [
 ];
 
 const barData = [
-  { name: "Mon", profit: 4200, cost: 2400 },
-  { name: "Tue", profit: 3800, cost: 2100 },
-  { name: "Wed", profit: 5100, cost: 2800 },
-  { name: "Thu", profit: 4700, cost: 2200 },
-  { name: "Fri", profit: 5300, cost: 2600 },
+  { name: "Mon", revenue: 4200, cost: 2400 },
+  { name: "Tue", revenue: 3800, cost: 2100 },
+  { name: "Wed", revenue: 5100, cost: 2800 },
+  { name: "Thu", revenue: 4700, cost: 2200 },
+  { name: "Fri", revenue: 5300, cost: 2600 },
 ];
 
 const kpis = [
-  { label: "Fuel Efficiency", value: "94.2%", change: "+3.1%", icon: Fuel, positive: true },
-  { label: "ETA Accuracy", value: "98.7%", change: "+1.2%", icon: Clock, positive: true },
-  { label: "Revenue", value: "$2.4M", change: "+12.5%", icon: DollarSign, positive: true },
-  { label: "Growth Rate", value: "23.8%", change: "+5.4%", icon: TrendingUp, positive: true },
+  { label: "AI Accuracy", value: "97.3%", change: "+2.1%", icon: Activity, positive: true },
+  { label: "Avg Response", value: "42ms", change: "-18%", icon: Clock, positive: true },
+  { label: "Revenue Impact", value: "$8.2M", change: "+24.5%", icon: DollarSign, positive: true },
+  { label: "Model Growth", value: "34.2%", change: "+8.4%", icon: TrendingUp, positive: true },
 ];
 
 const CustomTooltip = ({ active, payload, label }: any) => {
@@ -47,13 +47,13 @@ const DashboardSection = () => {
           className="text-center mb-16"
         >
           <span className="text-xs font-medium tracking-widest uppercase text-primary mb-4 block">
-            Live Dashboard
+            Platform Preview
           </span>
           <h2 className="text-3xl md:text-5xl font-display font-bold mb-4">
             Your Data, <span className="gradient-text-green">Visualized</span>
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto">
-            Interactive charts and KPIs that update in real-time, giving you complete operational visibility.
+            Enterprise-grade dashboards with real-time AI analytics, predictive KPIs, and actionable insights — all in one platform.
           </p>
         </motion.div>
 
@@ -86,8 +86,8 @@ const DashboardSection = () => {
             viewport={{ once: true }}
             className="glass-card p-6"
           >
-            <h3 className="text-sm font-medium mb-1">Efficiency Trend</h3>
-            <p className="text-xs text-muted-foreground mb-6">Fleet efficiency over 8 months</p>
+            <h3 className="text-sm font-medium mb-1">AI Model Performance</h3>
+            <p className="text-xs text-muted-foreground mb-6">Accuracy trend over 8 months</p>
             <ResponsiveContainer width="100%" height={220}>
               <AreaChart data={lineData}>
                 <defs>
@@ -112,7 +112,7 @@ const DashboardSection = () => {
             transition={{ delay: 0.1 }}
             className="glass-card p-6"
           >
-            <h3 className="text-sm font-medium mb-1">Profit vs Cost</h3>
+            <h3 className="text-sm font-medium mb-1">Revenue vs Cost</h3>
             <p className="text-xs text-muted-foreground mb-6">Weekly breakdown analysis</p>
             <ResponsiveContainer width="100%" height={220}>
               <BarChart data={barData}>
@@ -120,7 +120,7 @@ const DashboardSection = () => {
                 <XAxis dataKey="name" tick={{ fill: "#B0B0B0", fontSize: 11 }} axisLine={false} tickLine={false} />
                 <YAxis tick={{ fill: "#B0B0B0", fontSize: 11 }} axisLine={false} tickLine={false} />
                 <Tooltip content={<CustomTooltip />} />
-                <Bar dataKey="profit" fill="#7FFF00" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="revenue" fill="#7FFF00" radius={[4, 4, 0, 0]} />
                 <Bar dataKey="cost" fill="#7D5CFF" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
