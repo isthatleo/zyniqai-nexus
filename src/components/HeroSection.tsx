@@ -83,12 +83,12 @@ const HeroSection = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden particle-bg">
       <Particles />
-      
+
       {/* Gradient orbs */}
       <div className="absolute top-1/4 left-1/4 w-64 sm:w-96 h-64 sm:h-96 rounded-full bg-primary/5 blur-[128px]" />
       <div className="absolute bottom-1/4 right-1/4 w-64 sm:w-96 h-64 sm:h-96 rounded-full bg-secondary/5 blur-[128px]" />
 
-      <div className="relative z-10 text-center max-w-4xl mx-auto px-4 sm:px-6">
+      <div className="relative z-10 text-center max-w-5xl mx-auto px-4 sm:px-6">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -96,7 +96,9 @@ const HeroSection = () => {
         >
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-border/60 bg-muted/30 backdrop-blur-sm mb-6 sm:mb-8">
             <span className="w-2 h-2 rounded-full bg-accent animate-pulse-glow" />
-            <span className="text-xs font-medium text-muted-foreground">AI-Powered Enterprise Intelligence</span>
+            <span className="text-xs font-medium text-muted-foreground">
+              AI Systems & Infrastructure Partner
+            </span>
           </div>
         </motion.div>
 
@@ -140,20 +142,21 @@ const HeroSection = () => {
           </Link>
         </motion.div>
 
-        {/* Stats */}
+        {/* Stats as bento cards */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 1.2 }}
-          className="mt-16 sm:mt-20 grid grid-cols-3 gap-4 sm:gap-8 max-w-lg mx-auto"
+          className="mt-16 sm:mt-20 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-2xl mx-auto"
         >
           {[
             { value: "150+", label: "Enterprise Clients" },
             { value: "99.9%", label: "Platform Uptime" },
             { value: "10M+", label: "AI Decisions/Day" },
+            { value: "5", label: "Service Pillars" },
           ].map((stat) => (
-            <div key={stat.label}>
-              <p className="text-xl sm:text-2xl md:text-3xl font-display font-bold text-primary">{stat.value}</p>
+            <div key={stat.label} className="glass-card p-4 text-center">
+              <p className="text-xl sm:text-2xl font-display font-bold text-primary">{stat.value}</p>
               <p className="text-[10px] sm:text-xs text-muted-foreground mt-1">{stat.label}</p>
             </div>
           ))}

@@ -1,38 +1,97 @@
 import { motion } from "framer-motion";
-import { Layers, Plug, Headphones, Rocket, Settings, LineChart } from "lucide-react";
+import {
+  Brain,
+  Code2,
+  Server,
+  GraduationCap,
+  RefreshCw,
+  Cpu,
+  Plug,
+  LineChart,
+  Shield,
+  Wrench,
+  CloudCog,
+  BarChart3,
+} from "lucide-react";
 
-const services = [
+const pillars = [
   {
-    icon: Layers,
-    title: "Custom AI Development",
-    description: "Bespoke machine learning models and AI systems designed, trained, and deployed for your specific business challenges.",
+    title: "AI Systems & Intelligence",
+    subtitle: "Custom AI for real-world operations",
+    icon: Brain,
+    color: "neon-blue" as const,
+    services: [
+      "Custom AI model development",
+      "Predictive analytics systems",
+      "Anomaly detection & forecasting",
+      "NLP integrations & AI assistants",
+      "AI data pipelines (ETL + serving)",
+      "Intelligent decision engines",
+    ],
   },
   {
-    icon: Plug,
-    title: "API & System Integration",
-    description: "Seamless integration of AI capabilities into your existing tech stack via REST APIs, WebSockets, and enterprise connectors.",
+    title: "Software Engineering",
+    subtitle: "Enterprise platforms built from zero",
+    icon: Code2,
+    color: "neon-green" as const,
+    services: [
+      "Enterprise web platforms (React/Next.js)",
+      "SaaS products & admin systems",
+      "API development & backends",
+      "Database architecture",
+      "DevOps & CI/CD automation",
+      "Legacy system refactoring",
+    ],
   },
   {
-    icon: LineChart,
-    title: "Data Strategy & Architecture",
-    description: "End-to-end data pipeline design — from collection and storage to processing and real-time analytics infrastructure.",
+    title: "Systems Architecture",
+    subtitle: "Infrastructure that scales",
+    icon: Server,
+    color: "neon-purple" as const,
+    services: [
+      "System audits & infrastructure design",
+      "Cloud migration & scaling",
+      "Data warehouse setup",
+      "Monitoring & observability",
+      "Security hardening",
+      "Performance tuning",
+    ],
   },
   {
-    icon: Settings,
-    title: "Enterprise SaaS Modules",
-    description: "Pre-built, configurable AI modules for common enterprise needs — plug into your operations and start generating insights immediately.",
+    title: "AI Onboarding & Integration",
+    subtitle: "Your AI transformation partner",
+    icon: GraduationCap,
+    color: "neon-blue" as const,
+    services: [
+      "Current system audits",
+      "Automation opportunity mapping",
+      "AI roadmap & phased rollout",
+      "Internal team training",
+      "AI governance structure",
+      "Continuous optimization",
+    ],
   },
   {
-    icon: Headphones,
-    title: "Managed AI Operations",
-    description: "24/7 monitoring, model retraining, performance optimization, and dedicated support for your AI infrastructure.",
-  },
-  {
-    icon: Rocket,
-    title: "AI Consulting & Strategy",
-    description: "Expert advisory services to help you identify AI opportunities, build roadmaps, and execute on your intelligent automation vision.",
+    title: "Ongoing Optimization",
+    subtitle: "Recurring value, not just support",
+    icon: RefreshCw,
+    color: "neon-green" as const,
+    services: [
+      "System monitoring & tuning",
+      "AI model retraining",
+      "Infrastructure management",
+      "Security patches & updates",
+      "Strategic advisory",
+      "Monthly data insights reports",
+    ],
   },
 ];
+
+const colorMap = {
+  "neon-blue": "text-neon-blue bg-neon-blue/10 border-neon-blue/20",
+  "neon-green": "text-neon-green bg-neon-green/10 border-neon-green/20",
+  "neon-purple": "text-neon-purple bg-neon-purple/10 border-neon-purple/20",
+};
 
 const ServicesSection = () => {
   return (
@@ -46,31 +105,48 @@ const ServicesSection = () => {
           className="text-center mb-16"
         >
           <span className="text-xs font-medium tracking-widest uppercase text-primary mb-4 block">
-            Services
+            What We Build
           </span>
           <h2 className="text-3xl md:text-5xl font-display font-bold mb-4">
-            How We <span className="gradient-text-green">Partner</span> With You
+            Full Stack. <span className="gradient-text">Enterprise Ready.</span>
           </h2>
-          <p className="text-muted-foreground max-w-xl mx-auto">
-            From strategy to deployment, ZyniqAI provides end-to-end AI and software engineering services for enterprise teams.
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            Five core pillars powering everything from AI model development to ongoing infrastructure optimization.
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.map((service, i) => (
+        {/* Bento grid for service pillars */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {pillars.map((pillar, i) => (
             <motion.div
-              key={service.title}
+              key={pillar.title}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.08 }}
-              className="glass-card-hover p-8 group"
+              className={`glass-card-hover p-6 group ${
+                i === 0 ? "lg:col-span-2 lg:row-span-1" : ""
+              }`}
             >
-              <div className="w-12 h-12 rounded-xl border border-primary/20 bg-primary/10 flex items-center justify-center mb-5 text-primary transition-all group-hover:scale-110">
-                <service.icon size={22} />
+              <div className="flex items-start gap-4 mb-5">
+                <div
+                  className={`w-11 h-11 rounded-xl border flex items-center justify-center flex-shrink-0 ${colorMap[pillar.color]} transition-transform group-hover:scale-110`}
+                >
+                  <pillar.icon size={20} />
+                </div>
+                <div>
+                  <h3 className="text-lg font-display font-semibold">{pillar.title}</h3>
+                  <p className="text-xs text-muted-foreground">{pillar.subtitle}</p>
+                </div>
               </div>
-              <h3 className="text-lg font-display font-semibold mb-3">{service.title}</h3>
-              <p className="text-muted-foreground leading-relaxed text-sm">{service.description}</p>
+              <ul className={`grid gap-2 ${i === 0 ? "sm:grid-cols-2" : "grid-cols-1"}`}>
+                {pillar.services.map((s) => (
+                  <li key={s} className="flex items-start gap-2 text-sm text-muted-foreground">
+                    <span className="w-1 h-1 rounded-full bg-primary mt-2 flex-shrink-0" />
+                    {s}
+                  </li>
+                ))}
+              </ul>
             </motion.div>
           ))}
         </div>

@@ -27,7 +27,7 @@ const ContactSection = () => {
             Ready to <span className="gradient-text-green">Build</span> With AI?
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto">
-            Let's discuss how ZyniqAI can design and deploy intelligent systems for your organization.
+            Let's discuss how ZyniqAI can architect and deploy intelligent systems for your organization.
           </p>
         </motion.div>
 
@@ -41,24 +41,24 @@ const ContactSection = () => {
           >
             {[
               { icon: Mail, label: "Email", value: "hello@zyniqai.com" },
-              { icon: Phone, label: "Phone", value: "+1 (800) 964-7742" },
-              { icon: MapPin, label: "HQ", value: "San Francisco, CA" },
+              { icon: Phone, label: "Phone", value: "+27 70 773 1490" },
+              { icon: MapPin, label: "HQ", value: "Cape Town, South Africa" },
             ].map((item) => (
-              <div key={item.label} className="flex items-start gap-4">
+              <div key={item.label} className="glass-card p-4 flex items-center gap-4">
                 <div className="w-10 h-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0">
                   <item.icon size={18} className="text-primary" />
                 </div>
                 <div>
-                  <p className="text-xs text-muted-foreground mb-1">{item.label}</p>
+                  <p className="text-xs text-muted-foreground mb-0.5">{item.label}</p>
                   <p className="text-sm font-medium">{item.value}</p>
                 </div>
               </div>
             ))}
 
-            <div className="glass-card p-6 mt-8">
+            <div className="glass-card p-6">
               <h4 className="font-display font-semibold text-sm mb-2">Enterprise Inquiry?</h4>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                For large-scale deployments, custom AI development, or partnership inquiries, reach out to our enterprise team for a tailored consultation.
+                For large-scale AI deployments, custom system builds, or strategic partnerships, reach out for a tailored consultation.
               </p>
             </div>
           </motion.div>

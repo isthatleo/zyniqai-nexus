@@ -38,15 +38,18 @@ const Navbar = () => {
         scrolled ? "bg-background/80 backdrop-blur-xl border-b border-border/50" : "bg-transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16 md:h-20">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16 md:h-20">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 group flex-shrink-0">
           <img
             src={logo}
             alt="ZyniqAI"
-            className="h-8 sm:h-10 md:h-12 w-auto object-contain drop-shadow-[0_0_6px_hsl(var(--neon-blue)/0.3)] group-hover:drop-shadow-[0_0_16px_hsl(var(--neon-blue)/0.6)] transition-all duration-300"
+            className="h-9 sm:h-10 md:h-11 w-auto object-contain drop-shadow-[0_0_8px_hsl(var(--neon-blue)/0.4)] group-hover:drop-shadow-[0_0_16px_hsl(var(--neon-blue)/0.6)] transition-all duration-300"
             style={{ mixBlendMode: "screen" }}
           />
+          <span className="text-lg font-display font-bold tracking-tight hidden sm:inline">
+            Zyniq<span className="text-primary">AI</span>
+          </span>
         </Link>
 
         {/* Desktop Links */}
@@ -69,9 +72,6 @@ const Navbar = () => {
         {/* CTA + Theme */}
         <div className="hidden lg:flex items-center gap-3">
           <ThemeToggle />
-          <Link to="/contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-            Log In
-          </Link>
           <Link
             to="/contact"
             className="text-sm font-medium px-5 py-2.5 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-all hover:shadow-[0_0_20px_hsl(var(--neon-blue)/0.3)]"
