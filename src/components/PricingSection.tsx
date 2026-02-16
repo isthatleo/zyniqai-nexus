@@ -11,60 +11,84 @@ const regionLabels: Record<Region, string> = {
   us: "🇺🇸 United States",
 };
 
-const pricingData: Record<Region, { starter: string; pro: string; currency: string }> = {
-  za: { starter: "R 45,000", pro: "R 150,000", currency: "ZAR" },
-  uk: { starter: "£ 2,000", pro: "£ 6,500", currency: "GBP" },
-  us: { starter: "$ 2,500", pro: "$ 8,000", currency: "USD" },
+const pricingData: Record<
+  Region,
+  { impl: string; implRange: string; t1: string; t2: string; t3: string; currency: string }
+> = {
+  za: {
+    impl: "R45k – R180k",
+    implRange: "once-off",
+    t1: "R 8,000",
+    t2: "R 15,000",
+    t3: "R 35,000+",
+    currency: "ZAR",
+  },
+  uk: {
+    impl: "£4k – £15k",
+    implRange: "once-off",
+    t1: "£ 900",
+    t2: "£ 2,000",
+    t3: "£ 5,000+",
+    currency: "GBP",
+  },
+  us: {
+    impl: "$5k – $20k+",
+    implRange: "once-off",
+    t1: "$ 1,200",
+    t2: "$ 3,000",
+    t3: "$ 8,000+",
+    currency: "USD",
+  },
 };
 
 const PricingSection = () => {
-  const [region, setRegion] = useState<Region>("us");
-  const pricing = pricingData[region];
+  const [region, setRegion] = useState<Region>("za");
+  const p = pricingData[region];
 
-  const plans = [
+  const retainerTiers = [
     {
-      name: "Starter",
-      price: pricing.starter,
+      name: "Maintenance",
+      price: p.t1,
       period: "/mo",
-      description: "For growing teams adopting AI-driven workflows.",
+      description: "Keep systems healthy with ongoing monitoring and quick fixes.",
       features: [
-        "Up to 10 users",
-        "Core analytics dashboard",
-        "2 AI modules",
-        "Standard API access",
-        "Email & chat support",
+        "Bug fixes & minor improvements",
+        "Performance monitoring",
+        "Monthly check-in call",
+        "Response within 48h",
+        "System health reports",
       ],
-      cta: "Start Free Trial",
+      cta: "Get Started",
       highlighted: false,
     },
     {
-      name: "Professional",
-      price: pricing.pro,
+      name: "Growth",
+      price: p.t2,
       period: "/mo",
-      description: "For organizations scaling intelligent operations.",
+      description: "Scale your systems with new features, AI retraining, and insights.",
       features: [
-        "Up to 50 users",
-        "Full predictive analytics",
-        "All AI modules",
-        "Priority API + WebSocket",
-        "Dedicated success manager",
-        "Custom integrations",
+        "Everything in Maintenance",
+        "Feature additions",
+        "AI model retraining",
+        "Infrastructure scaling",
+        "Monthly analytics report",
+        "24h response SLA",
       ],
-      cta: "Get Started",
+      cta: "Start Growing",
       highlighted: true,
     },
     {
-      name: "Enterprise",
-      price: "Custom",
-      period: "",
-      description: "For large enterprises with mission-critical AI needs.",
+      name: "Strategic AI Partner",
+      price: p.t3,
+      period: "/mo",
+      description: "Dedicated engineering hours with quarterly innovation planning.",
       features: [
-        "Unlimited users",
-        "Custom ML model development",
-        "On-premise / private cloud",
-        "24/7 dedicated engineering",
-        "SLA-backed uptime",
-        "Full source access",
+        "Everything in Growth",
+        "Dedicated engineer hours",
+        "AI roadmap updates",
+        "Quarterly innovation planning",
+        "Direct Slack access",
+        "12h response | System priority",
       ],
       cta: "Contact Sales",
       highlighted: false,
@@ -73,19 +97,21 @@ const PricingSection = () => {
 
   return (
     <section id="pricing" className="section-padding relative">
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="text-center mb-10"
         >
-          <span className="text-xs font-medium tracking-widest uppercase text-primary mb-4 block">Pricing</span>
+          <span className="text-xs font-medium tracking-widest uppercase text-primary mb-4 block">
+            Pricing
+          </span>
           <h2 className="text-3xl md:text-5xl font-display font-bold mb-4">
-            Plans that <span className="gradient-text">Scale</span>
+            Infrastructure-Grade <span className="gradient-text">Pricing</span>
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto mb-8">
-            Standard software development rates. Every plan includes core AI capabilities and dedicated support.
+            We price like infrastructure, not freelancers. AI implementation projects plus ongoing retainer plans.
           </p>
 
           {/* Region selector */}
@@ -106,8 +132,25 @@ const PricingSection = () => {
           </div>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {plans.map((plan, i) => (
+        {/* Implementation banner */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="glass-card p-6 mb-8 text-center"
+        >
+          <p className="text-xs text-muted-foreground uppercase tracking-widest mb-2">
+            AI Implementation Projects
+          </p>
+          <p className="text-2xl sm:text-3xl font-display font-bold text-primary">
+            {p.impl}
+          </p>
+          <p className="text-sm text-muted-foreground mt-1">{p.implRange} · scoped per project</p>
+        </motion.div>
+
+        {/* Retainer tiers */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {retainerTiers.map((plan, i) => (
             <motion.div
               key={plan.name}
               initial={{ opacity: 0, y: 20 }}
@@ -115,7 +158,9 @@ const PricingSection = () => {
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
               className={`glass-card-hover p-6 sm:p-8 flex flex-col ${
-                plan.highlighted ? "border-primary/40 shadow-[0_0_40px_hsl(var(--neon-blue)/0.1)]" : ""
+                plan.highlighted
+                  ? "border-primary/40 shadow-[0_0_40px_hsl(var(--neon-blue)/0.1)]"
+                  : ""
               }`}
             >
               {plan.highlighted && (
