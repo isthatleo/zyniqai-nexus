@@ -1,8 +1,11 @@
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import { useTheme } from "./ThemeProvider";
 
 const Particles = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const { resolvedTheme } = useTheme();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -33,6 +36,9 @@ const Particles = () => {
       });
     }
 
+    const particleColor = resolvedTheme === "light" ? "0, 160, 200" : "44, 233, 255";
+    const lineAlpha = resolvedTheme === "light" ? 0.06 : 0.08;
+
     const draw = () => {
       ctx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
       particles.forEach((p, i) => {
@@ -43,7 +49,7 @@ const Particles = () => {
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(44, 233, 255, ${p.opacity})`;
+        ctx.fillStyle = `rgba(${particleColor}, ${p.opacity})`;
         ctx.fill();
 
         for (let j = i + 1; j < particles.length; j++) {
@@ -54,7 +60,7 @@ const Particles = () => {
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(44, 233, 255, ${0.08 * (1 - dist / 120)})`;
+            ctx.strokeStyle = `rgba(${particleColor}, ${lineAlpha * (1 - dist / 120)})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
@@ -68,7 +74,7 @@ const Particles = () => {
       cancelAnimationFrame(animationId);
       window.removeEventListener("resize", resize);
     };
-  }, []);
+  }, [resolvedTheme]);
 
   return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" />;
 };
@@ -79,18 +85,18 @@ const HeroSection = () => {
       <Particles />
       
       {/* Gradient orbs */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-neon-blue/5 blur-[128px]" />
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full bg-neon-purple/5 blur-[128px]" />
+      <div className="absolute top-1/4 left-1/4 w-64 sm:w-96 h-64 sm:h-96 rounded-full bg-primary/5 blur-[128px]" />
+      <div className="absolute bottom-1/4 right-1/4 w-64 sm:w-96 h-64 sm:h-96 rounded-full bg-secondary/5 blur-[128px]" />
 
-      <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
+      <div className="relative z-10 text-center max-w-4xl mx-auto px-4 sm:px-6">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-border/60 bg-muted/30 backdrop-blur-sm mb-8">
-            <span className="w-2 h-2 rounded-full bg-neon-green animate-pulse-glow" />
-            <span className="text-xs font-medium text-muted-foreground">AI-First Software Engineering Firm</span>
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-border/60 bg-muted/30 backdrop-blur-sm mb-6 sm:mb-8">
+            <span className="w-2 h-2 rounded-full bg-accent animate-pulse-glow" />
+            <span className="text-xs font-medium text-muted-foreground">AI-Powered Enterprise Intelligence</span>
           </div>
         </motion.div>
 
@@ -98,40 +104,40 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-5xl md:text-7xl lg:text-8xl font-display font-bold leading-[0.95] tracking-tight mb-6"
+          className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-display font-bold leading-[0.95] tracking-tight mb-4 sm:mb-6"
         >
-          Turning Data
+          Turn Data Into Action
           <br />
-          <span className="gradient-text">Into Action</span>
+          <span className="gradient-text">— Instantly.</span>
         </motion.h1>
 
         <motion.p
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed"
+          className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed px-2"
         >
-          ZyniqAI designs and deploys intelligent systems — from predictive analytics and AI-powered platforms to custom enterprise software — engineered to transform how businesses operate.
+          ZyniqAI leverages cutting-edge AI to transform complex data into real-time insights, predictive intelligence, and automated decisions for enterprises that demand the future, today.
         </motion.p>
 
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4"
+          className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4"
         >
-          <a
-            href="#contact"
-            className="px-8 py-3.5 rounded-lg bg-primary text-primary-foreground font-medium text-sm hover:shadow-[0_0_30px_hsl(var(--neon-blue)/0.4)] transition-all duration-300 hover:bg-primary/90"
+          <Link
+            to="/contact"
+            className="w-full sm:w-auto px-8 py-3.5 rounded-lg bg-primary text-primary-foreground font-medium text-sm hover:shadow-[0_0_30px_hsl(var(--neon-blue)/0.4)] transition-all duration-300 hover:bg-primary/90 text-center"
           >
             Get Started
-          </a>
-          <a
-            href="#contact"
-            className="px-8 py-3.5 rounded-lg border border-border/60 text-foreground font-medium text-sm hover:border-primary/40 hover:bg-muted/30 transition-all duration-300"
+          </Link>
+          <Link
+            to="/dashboard"
+            className="w-full sm:w-auto px-8 py-3.5 rounded-lg border border-border/60 text-foreground font-medium text-sm hover:border-primary/40 hover:bg-muted/30 transition-all duration-300 text-center"
           >
-            Request Demo
-          </a>
+            Explore Dashboard
+          </Link>
         </motion.div>
 
         {/* Stats */}
@@ -139,7 +145,7 @@ const HeroSection = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 1.2 }}
-          className="mt-20 grid grid-cols-3 gap-8 max-w-lg mx-auto"
+          className="mt-16 sm:mt-20 grid grid-cols-3 gap-4 sm:gap-8 max-w-lg mx-auto"
         >
           {[
             { value: "150+", label: "Enterprise Clients" },
@@ -147,8 +153,8 @@ const HeroSection = () => {
             { value: "10M+", label: "AI Decisions/Day" },
           ].map((stat) => (
             <div key={stat.label}>
-              <p className="text-2xl md:text-3xl font-display font-bold text-primary">{stat.value}</p>
-              <p className="text-xs text-muted-foreground mt-1">{stat.label}</p>
+              <p className="text-xl sm:text-2xl md:text-3xl font-display font-bold text-primary">{stat.value}</p>
+              <p className="text-[10px] sm:text-xs text-muted-foreground mt-1">{stat.label}</p>
             </div>
           ))}
         </motion.div>

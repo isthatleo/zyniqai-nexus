@@ -1,26 +1,33 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 import logo from "@/assets/zyniqai-logo.png";
+import ThemeToggle from "./ThemeToggle";
 
 const navLinks = [
-  { label: "About", href: "#about" },
-  { label: "Solutions", href: "#features" },
-  { label: "Platform", href: "#dashboard" },
-  { label: "Services", href: "#services" },
-  { label: "Pricing", href: "#pricing" },
-  { label: "Contact", href: "#contact" },
+  { label: "About", href: "/about" },
+  { label: "Solutions", href: "/products" },
+  { label: "Platform", href: "/dashboard" },
+  { label: "Services", href: "/services" },
+  { label: "Pricing", href: "/pricing" },
+  { label: "Contact", href: "/contact" },
 ];
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handler);
     return () => window.removeEventListener("scroll", handler);
   }, []);
+
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [location]);
 
   return (
     <motion.nav
@@ -31,45 +38,58 @@ const Navbar = () => {
         scrolled ? "bg-background/80 backdrop-blur-xl border-b border-border/50" : "bg-transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between h-16 md:h-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16 md:h-20">
         {/* Logo */}
-        <a href="#" className="flex items-center gap-2 group">
-          <img src={logo} alt="ZyniqAI" className="h-10 md:h-12 w-auto object-contain group-hover:drop-shadow-[0_0_12px_hsl(var(--neon-green)/0.6)] transition-all duration-300" />
-        </a>
+        <Link to="/" className="flex items-center gap-2 group flex-shrink-0">
+          <img
+            src={logo}
+            alt="ZyniqAI"
+            className="h-8 sm:h-10 md:h-12 w-auto object-contain drop-shadow-[0_0_6px_hsl(var(--neon-blue)/0.3)] group-hover:drop-shadow-[0_0_16px_hsl(var(--neon-blue)/0.6)] transition-all duration-300"
+            style={{ mixBlendMode: "screen" }}
+          />
+        </Link>
 
         {/* Desktop Links */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden lg:flex items-center gap-6 xl:gap-8">
           {navLinks.map((link) => (
-            <a
+            <Link
               key={link.label}
-              href={link.href}
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-px after:bg-primary after:transition-all hover:after:w-full"
+              to={link.href}
+              className={`text-sm transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-px after:bg-primary after:transition-all hover:after:w-full ${
+                location.pathname === link.href
+                  ? "text-foreground after:w-full"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
             >
               {link.label}
-            </a>
+            </Link>
           ))}
         </div>
 
-        {/* CTA */}
-        <div className="hidden md:flex items-center gap-3">
-          <a href="#contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+        {/* CTA + Theme */}
+        <div className="hidden lg:flex items-center gap-3">
+          <ThemeToggle />
+          <Link to="/contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
             Log In
-          </a>
-          <a
-            href="#contact"
+          </Link>
+          <Link
+            to="/contact"
             className="text-sm font-medium px-5 py-2.5 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-all hover:shadow-[0_0_20px_hsl(var(--neon-blue)/0.3)]"
           >
             Request Demo
-          </a>
+          </Link>
         </div>
 
-        {/* Mobile Toggle */}
-        <button
-          onClick={() => setMobileOpen(!mobileOpen)}
-          className="md:hidden text-foreground"
-        >
-          {mobileOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        {/* Mobile: theme + toggle */}
+        <div className="flex lg:hidden items-center gap-2">
+          <ThemeToggle />
+          <button
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className="text-foreground p-1"
+          >
+            {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu */}
@@ -77,24 +97,27 @@ const Navbar = () => {
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="md:hidden bg-background/95 backdrop-blur-xl border-b border-border/50 px-4 pb-6"
+          className="lg:hidden bg-background/95 backdrop-blur-xl border-b border-border/50 px-4 pb-6"
         >
           {navLinks.map((link) => (
-            <a
+            <Link
               key={link.label}
-              href={link.href}
-              onClick={() => setMobileOpen(false)}
-              className="block py-3 text-muted-foreground hover:text-foreground transition-colors"
+              to={link.href}
+              className={`block py-3 transition-colors ${
+                location.pathname === link.href
+                  ? "text-foreground"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
             >
               {link.label}
-            </a>
+            </Link>
           ))}
-          <a
-            href="#contact"
+          <Link
+            to="/contact"
             className="mt-3 block text-center text-sm font-medium px-5 py-2.5 rounded-lg bg-primary text-primary-foreground"
           >
             Request Demo
-          </a>
+          </Link>
         </motion.div>
       )}
     </motion.nav>
