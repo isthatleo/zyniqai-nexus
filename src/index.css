@@ -52,6 +52,42 @@
     --glass-bg: 216 28% 12%;
     --glass-border: 186 100% 59%;
   }
+
+  .light {
+    --background: 0 0% 98%;
+    --foreground: 216 28% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 216 28% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 216 28% 10%;
+
+    --primary: 186 100% 40%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 258 80% 55%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 216 20% 93%;
+    --muted-foreground: 216 15% 40%;
+
+    --accent: 90 80% 38%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 216 15% 85%;
+    --input: 216 15% 85%;
+    --ring: 186 100% 40%;
+
+    --neon-blue: 186 100% 40%;
+    --neon-green: 90 80% 38%;
+    --deep-purple: 258 80% 55%;
+    --glass-bg: 0 0% 100%;
+    --glass-border: 186 80% 50%;
+  }
 }
 
 @layer base {
@@ -71,6 +107,12 @@
     @apply bg-card/40 backdrop-blur-xl border border-border/50 rounded-xl;
     box-shadow: 0 0 20px hsl(var(--neon-blue) / 0.05), inset 0 1px 0 hsl(0 0% 100% / 0.05);
   }
+
+  .light .glass-card {
+    @apply bg-card/80;
+    box-shadow: 0 1px 3px hsl(216 28% 10% / 0.08), 0 0 0 1px hsl(var(--border));
+  }
+
   .glass-card-hover {
     @apply glass-card transition-all duration-500;
   }
@@ -78,11 +120,22 @@
     border-color: hsl(var(--neon-blue) / 0.4);
     box-shadow: 0 0 30px hsl(var(--neon-blue) / 0.15), 0 0 60px hsl(var(--neon-blue) / 0.05), inset 0 1px 0 hsl(0 0% 100% / 0.1);
   }
+
+  .light .glass-card-hover:hover {
+    box-shadow: 0 4px 20px hsl(var(--neon-blue) / 0.12), 0 0 0 1px hsl(var(--neon-blue) / 0.2);
+  }
+
   .neon-glow {
     text-shadow: 0 0 10px hsl(var(--neon-blue) / 0.5), 0 0 40px hsl(var(--neon-blue) / 0.2);
   }
+  .light .neon-glow {
+    text-shadow: none;
+  }
   .neon-green-glow {
     text-shadow: 0 0 10px hsl(var(--neon-green) / 0.5), 0 0 40px hsl(var(--neon-green) / 0.2);
+  }
+  .light .neon-green-glow {
+    text-shadow: none;
   }
   .gradient-text {
     @apply bg-clip-text text-transparent;
@@ -123,5 +176,10 @@
     background-image: radial-gradient(circle at 20% 50%, hsl(var(--neon-blue) / 0.08) 0%, transparent 50%),
                        radial-gradient(circle at 80% 20%, hsl(var(--deep-purple) / 0.06) 0%, transparent 50%),
                        radial-gradient(circle at 50% 80%, hsl(var(--neon-green) / 0.04) 0%, transparent 50%);
+  }
+  .light .particle-bg {
+    background-image: radial-gradient(circle at 20% 50%, hsl(var(--neon-blue) / 0.04) 0%, transparent 50%),
+                       radial-gradient(circle at 80% 20%, hsl(var(--deep-purple) / 0.03) 0%, transparent 50%),
+                       radial-gradient(circle at 50% 80%, hsl(var(--neon-green) / 0.02) 0%, transparent 50%);
   }
 }
