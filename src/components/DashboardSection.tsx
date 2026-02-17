@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
 import { TrendingUp, Activity, Clock, DollarSign } from "lucide-react";
+import { useTheme } from "./ThemeProvider";
 
 const lineData = [
   { name: "Jan", value: 65 }, { name: "Feb", value: 72 }, { name: "Mar", value: 68 },
@@ -17,10 +18,10 @@ const barData = [
 ];
 
 const kpis = [
-  { label: "AI Accuracy", value: "97.3%", change: "+2.1%", icon: Activity, positive: true },
-  { label: "Avg Response", value: "42ms", change: "-18%", icon: Clock, positive: true },
-  { label: "Revenue Impact", value: "$8.2M", change: "+24.5%", icon: DollarSign, positive: true },
-  { label: "Model Growth", value: "34.2%", change: "+8.4%", icon: TrendingUp, positive: true },
+  { label: "AI Accuracy", value: "97.3%", change: "+2.1%", icon: Activity },
+  { label: "Avg Response", value: "42ms", change: "-18%", icon: Clock },
+  { label: "Revenue Impact", value: "$8.2M", change: "+24.5%", icon: DollarSign },
+  { label: "Model Growth", value: "34.2%", change: "+8.4%", icon: TrendingUp },
 ];
 
 const CustomTooltip = ({ active, payload, label }: any) => {
@@ -36,6 +37,12 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 };
 
 const DashboardSection = () => {
+  const { resolvedTheme } = useTheme();
+  const gridColor = resolvedTheme === "light" ? "hsl(40 15% 90%)" : "hsl(30 10% 18%)";
+  const tickColor = resolvedTheme === "light" ? "#888" : "#B0B0B0";
+  const goldMain = "#D4AF37";
+  const goldDark = "#8B6914";
+
   return (
     <section id="dashboard" className="section-padding relative">
       <div className="absolute inset-0 particle-bg opacity-50" />
@@ -50,14 +57,13 @@ const DashboardSection = () => {
             Platform Preview
           </span>
           <h2 className="text-3xl md:text-5xl font-display font-bold mb-4">
-            Your Data, <span className="gradient-text-green">Visualized</span>
+            Your Data, <span className="gradient-text">Visualized</span>
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto">
-            Enterprise-grade dashboards with real-time AI analytics, predictive KPIs, and actionable insights — all in one platform.
+            Enterprise-grade dashboards with real-time AI analytics, predictive KPIs, and actionable insights.
           </p>
         </motion.div>
 
-        {/* KPI Cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           {kpis.map((kpi, i) => (
             <motion.div
@@ -70,7 +76,7 @@ const DashboardSection = () => {
             >
               <div className="flex items-center justify-between mb-3">
                 <kpi.icon size={18} className="text-muted-foreground" />
-                <span className="text-xs font-medium text-neon-green">{kpi.change}</span>
+                <span className="text-xs font-medium text-primary">{kpi.change}</span>
               </div>
               <p className="text-2xl font-display font-bold">{kpi.value}</p>
               <p className="text-xs text-muted-foreground mt-1">{kpi.label}</p>
@@ -78,7 +84,6 @@ const DashboardSection = () => {
           ))}
         </div>
 
-        {/* Charts */}
         <div className="grid md:grid-cols-2 gap-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -91,16 +96,16 @@ const DashboardSection = () => {
             <ResponsiveContainer width="100%" height={220}>
               <AreaChart data={lineData}>
                 <defs>
-                  <linearGradient id="gradBlue" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#2CE9FF" stopOpacity={0.3} />
-                    <stop offset="95%" stopColor="#2CE9FF" stopOpacity={0} />
+                  <linearGradient id="gradGold" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor={goldMain} stopOpacity={0.3} />
+                    <stop offset="95%" stopColor={goldMain} stopOpacity={0} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="hsl(216 20% 18%)" />
-                <XAxis dataKey="name" tick={{ fill: "#B0B0B0", fontSize: 11 }} axisLine={false} tickLine={false} />
-                <YAxis tick={{ fill: "#B0B0B0", fontSize: 11 }} axisLine={false} tickLine={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
+                <XAxis dataKey="name" tick={{ fill: tickColor, fontSize: 11 }} axisLine={false} tickLine={false} />
+                <YAxis tick={{ fill: tickColor, fontSize: 11 }} axisLine={false} tickLine={false} />
                 <Tooltip content={<CustomTooltip />} />
-                <Area type="monotone" dataKey="value" stroke="#2CE9FF" strokeWidth={2} fill="url(#gradBlue)" />
+                <Area type="monotone" dataKey="value" stroke={goldMain} strokeWidth={2} fill="url(#gradGold)" />
               </AreaChart>
             </ResponsiveContainer>
           </motion.div>
@@ -116,12 +121,12 @@ const DashboardSection = () => {
             <p className="text-xs text-muted-foreground mb-6">Weekly breakdown analysis</p>
             <ResponsiveContainer width="100%" height={220}>
               <BarChart data={barData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="hsl(216 20% 18%)" />
-                <XAxis dataKey="name" tick={{ fill: "#B0B0B0", fontSize: 11 }} axisLine={false} tickLine={false} />
-                <YAxis tick={{ fill: "#B0B0B0", fontSize: 11 }} axisLine={false} tickLine={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
+                <XAxis dataKey="name" tick={{ fill: tickColor, fontSize: 11 }} axisLine={false} tickLine={false} />
+                <YAxis tick={{ fill: tickColor, fontSize: 11 }} axisLine={false} tickLine={false} />
                 <Tooltip content={<CustomTooltip />} />
-                <Bar dataKey="revenue" fill="#7FFF00" radius={[4, 4, 0, 0]} />
-                <Bar dataKey="cost" fill="#7D5CFF" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="revenue" fill={goldMain} radius={[4, 4, 0, 0]} />
+                <Bar dataKey="cost" fill={goldDark} radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </motion.div>

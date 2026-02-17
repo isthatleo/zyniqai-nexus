@@ -117,7 +117,7 @@ const LogisticsOS = () => {
                     <p className="text-2xl font-display font-bold mt-2">{plan.price}<span className="text-sm text-muted-foreground">/mo</span></p>
                     <ul className="space-y-2 mt-4 flex-1">
                       {plan.features.map((f) => (
-                        <li key={f} className="flex items-center gap-2 text-sm text-muted-foreground"><Check size={14} className="text-accent flex-shrink-0" /> {f}</li>
+                        <li key={f} className="flex items-center gap-2 text-sm text-muted-foreground"><Check size={14} className="text-primary flex-shrink-0" /> {f}</li>
                       ))}
                     </ul>
                     <Link to="/contact" className="mt-6 block text-center text-sm font-medium py-3 rounded-lg border border-border/60 text-foreground hover:border-primary/40 transition-all">Get Started</Link>
@@ -127,7 +127,7 @@ const LogisticsOS = () => {
             </motion.div>
 
             <div className="mt-16 text-center">
-              <Link to="/contact" className="inline-flex items-center gap-2 px-8 py-3.5 rounded-lg bg-primary text-primary-foreground font-medium text-sm hover:shadow-[0_0_30px_hsl(var(--neon-blue)/0.4)] transition-all">
+              <Link to="/contact" className="inline-flex items-center gap-2 px-8 py-3.5 rounded-lg bg-primary text-primary-foreground font-medium text-sm hover:shadow-[0_0_30px_hsl(var(--gold)/0.4)] transition-all">
                 Book a Strategy Call <ArrowRight size={16} />
               </Link>
             </div>

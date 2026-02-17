@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Hotel, GraduationCap, Truck, ArrowRight } from "lucide-react";
+import { Hotel, GraduationCap, Truck, Landmark, Building2, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const modules = [
@@ -8,29 +8,32 @@ const modules = [
     title: "Hospitality OS",
     desc: "Transform your hotel into a fully digital ecosystem with booking engines, revenue analytics, and AI forecasting.",
     href: "/hospitality-os",
-    color: "neon-blue" as const,
   },
   {
     icon: GraduationCap,
     title: "Education OS",
     desc: "Manage your school efficiently with student management, automated attendance, fee tracking, and AI enrollment forecasting.",
     href: "/education-os",
-    color: "neon-green" as const,
   },
   {
     icon: Truck,
     title: "Logistics OS",
     desc: "Optimize your supply chain with fleet tracking, route optimization, inventory management, and predictive maintenance.",
     href: "/logistics-os",
-    color: "neon-purple" as const,
+  },
+  {
+    icon: Landmark,
+    title: "Fintech OS",
+    desc: "Build secure financial platforms with real-time fraud detection, compliance automation, and AI-driven risk assessment.",
+    href: "/fintech-os",
+  },
+  {
+    icon: Building2,
+    title: "Enterprise SaaS",
+    desc: "Scale your SaaS with multi-tenant architecture, usage analytics, churn prediction, and automated onboarding flows.",
+    href: "/enterprise-saas",
   },
 ];
-
-const colorMap = {
-  "neon-blue": "text-neon-blue bg-neon-blue/10 border-neon-blue/20",
-  "neon-green": "text-neon-green bg-neon-green/10 border-neon-green/20",
-  "neon-purple": "text-neon-purple bg-neon-purple/10 border-neon-purple/20",
-};
 
 const container = {
   hidden: {},
@@ -68,12 +71,12 @@ const IndustryOSSection = () => {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true }}
-          className="grid md:grid-cols-3 gap-5"
+          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"
         >
           {modules.map((m) => (
             <motion.div key={m.title} variants={item}>
               <Link to={m.href} className="glass-card-hover p-8 group flex flex-col h-full block">
-                <div className={`w-12 h-12 rounded-xl border flex items-center justify-center mb-5 ${colorMap[m.color]} transition-transform group-hover:scale-110`}>
+                <div className="w-12 h-12 rounded-xl border border-primary/20 bg-primary/10 flex items-center justify-center mb-5 text-primary transition-transform group-hover:scale-110">
                   <m.icon size={22} />
                 </div>
                 <h3 className="text-xl font-display font-bold mb-3">{m.title}</h3>
@@ -93,7 +96,7 @@ const IndustryOSSection = () => {
           className="glass-card p-6 mt-8 text-center"
         >
           <p className="text-sm text-muted-foreground">
-            <span className="text-primary font-medium">AI Integration Note:</span> All OS platforms launch as v1 without AI microservice. AI modules (predictive analytics, automated follow-ups, revenue forecasting) integrate independently as microservices in v2/v3 phases.
+            <span className="text-primary font-medium">AI Integration Note:</span> All OS platforms launch as v1 without AI microservice. AI modules integrate independently as microservices in v2/v3 phases.
           </p>
         </motion.div>
       </div>

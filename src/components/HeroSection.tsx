@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useTheme } from "./ThemeProvider";
+import lionLogo from "@/assets/lion-logo-front.png";
 
 const Particles = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -15,7 +16,7 @@ const Particles = () => {
 
     let animationId: number;
     const particles: { x: number; y: number; vx: number; vy: number; size: number; opacity: number }[] = [];
-    const count = 60;
+    const count = 50;
 
     const resize = () => {
       canvas.width = canvas.offsetWidth * window.devicePixelRatio;
@@ -29,15 +30,15 @@ const Particles = () => {
       particles.push({
         x: Math.random() * canvas.offsetWidth,
         y: Math.random() * canvas.offsetHeight,
-        vx: (Math.random() - 0.5) * 0.3,
-        vy: (Math.random() - 0.5) * 0.3,
+        vx: (Math.random() - 0.5) * 0.2,
+        vy: (Math.random() - 0.5) * 0.2,
         size: Math.random() * 2 + 0.5,
-        opacity: Math.random() * 0.5 + 0.1,
+        opacity: Math.random() * 0.4 + 0.1,
       });
     }
 
-    const particleColor = resolvedTheme === "light" ? "0, 160, 200" : "44, 233, 255";
-    const lineAlpha = resolvedTheme === "light" ? 0.06 : 0.08;
+    const particleColor = resolvedTheme === "light" ? "180, 140, 50" : "212, 175, 55";
+    const lineAlpha = resolvedTheme === "light" ? 0.04 : 0.06;
 
     const draw = () => {
       ctx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
@@ -89,14 +90,28 @@ const HeroSection = () => {
       <div className="absolute bottom-1/4 right-1/4 w-64 sm:w-96 h-64 sm:h-96 rounded-full bg-secondary/5 blur-[128px]" />
 
       <div className="relative z-10 text-center max-w-5xl mx-auto px-4 sm:px-6">
+        {/* Lion Logo */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1 }}
+          className="mb-6"
+        >
+          <img
+            src={lionLogo}
+            alt="ZyniqAI Lion"
+            className="h-28 sm:h-36 md:h-44 w-auto mx-auto drop-shadow-[0_0_40px_hsl(var(--gold)/0.3)]"
+          />
+        </motion.div>
+
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
         >
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-border/60 bg-muted/30 backdrop-blur-sm mb-6 sm:mb-8">
-            <span className="w-2 h-2 rounded-full bg-accent animate-pulse-glow" />
-            <span className="text-xs font-medium text-muted-foreground">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/5 backdrop-blur-sm mb-6 sm:mb-8">
+            <span className="w-2 h-2 rounded-full bg-primary animate-pulse-glow" />
+            <span className="text-xs font-medium text-primary">
               AI Systems & Infrastructure Partner
             </span>
           </div>
@@ -105,7 +120,7 @@ const HeroSection = () => {
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
           className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-display font-bold leading-[0.95] tracking-tight mb-4 sm:mb-6"
         >
           Turn Data Into Action
@@ -116,7 +131,7 @@ const HeroSection = () => {
         <motion.p
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
+          transition={{ duration: 0.8, delay: 0.7 }}
           className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed px-2"
         >
           ZyniqAI leverages cutting-edge AI to transform complex data into real-time insights, predictive intelligence, and automated decisions for enterprises that demand the future, today.
@@ -125,24 +140,24 @@ const HeroSection = () => {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
+          transition={{ duration: 0.8, delay: 0.9 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4"
         >
           <Link
             to="/contact"
-            className="w-full sm:w-auto px-8 py-3.5 rounded-lg bg-primary text-primary-foreground font-medium text-sm hover:shadow-[0_0_30px_hsl(var(--neon-blue)/0.4)] transition-all duration-300 hover:bg-primary/90 text-center"
+            className="w-full sm:w-auto px-8 py-3.5 rounded-lg bg-primary text-primary-foreground font-medium text-sm hover:shadow-[0_0_30px_hsl(var(--gold)/0.4)] transition-all duration-300 hover:bg-primary/90 text-center"
           >
             Get Started
           </Link>
           <Link
             to="/dashboard"
-            className="w-full sm:w-auto px-8 py-3.5 rounded-lg border border-border/60 text-foreground font-medium text-sm hover:border-primary/40 hover:bg-muted/30 transition-all duration-300 text-center"
+            className="w-full sm:w-auto px-8 py-3.5 rounded-lg border border-border/60 text-foreground font-medium text-sm hover:border-primary/40 hover:bg-primary/5 transition-all duration-300 text-center"
           >
             Explore Dashboard
           </Link>
         </motion.div>
 
-        {/* Stats as bento cards */}
+        {/* Stats */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

@@ -16,8 +16,8 @@ const ThemeToggle = () => {
       className="relative w-9 h-9 rounded-lg border border-border/50 bg-muted/30 backdrop-blur-sm flex items-center justify-center hover:border-primary/40 hover:bg-muted/50 transition-all duration-300"
       title={`Theme: ${theme}`}
     >
-      {theme === "light" && <Sun size={16} className="text-foreground" />}
-      {theme === "dark" && <Moon size={16} className="text-foreground" />}
+      {theme === "light" && <Sun size={16} className="text-primary" />}
+      {theme === "dark" && <Moon size={16} className="text-primary" />}
       {theme === "system" && <Monitor size={16} className="text-foreground" />}
     </button>
   );

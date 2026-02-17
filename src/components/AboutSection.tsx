@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Target, Lightbulb, Shield, Code, Users, Globe, Zap, Brain } from "lucide-react";
+import { Target, Code, Shield, Globe, Users, Zap, Brain } from "lucide-react";
 
 const AboutSection = () => {
   return (
@@ -23,9 +23,7 @@ const AboutSection = () => {
           </p>
         </motion.div>
 
-        {/* Bento grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {/* Main card - spans 2 cols */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -41,7 +39,6 @@ const AboutSection = () => {
             </p>
           </motion.div>
 
-          {/* Positioning card */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -63,7 +60,6 @@ const AboutSection = () => {
             </div>
           </motion.div>
 
-          {/* Values grid */}
           {[
             { icon: Target, title: "Mission-Driven", desc: "Every system we build solves a real business problem at scale." },
             { icon: Code, title: "Engineering First", desc: "Production AI systems, not proofs of concept." },
