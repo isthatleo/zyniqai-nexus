@@ -1,18 +1,24 @@
 import { Link } from "react-router-dom";
-import { Github, Linkedin, Twitter } from "lucide-react";
+import { Linkedin, Github } from "lucide-react";
 import logo from "@/assets/zyniqai-logo.png";
 
+const XIcon = () => (
+  <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+  </svg>
+);
+
 const socialLinks = [
-  { icon: Twitter, label: "X", href: "#" },
+  { icon: XIcon, label: "X", href: "#" },
   { icon: Linkedin, label: "LinkedIn", href: "#" },
   { icon: Github, label: "GitHub", href: "#" },
 ];
 
 const Footer = () => {
   return (
-    <footer className="border-t border-border/50 py-12 sm:py-16 px-4 sm:px-6 lg:px-8">
+    <footer className="w-full border-t border-border/50 py-12 sm:py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
           <div className="col-span-2 md:col-span-1">
             <Link to="/" className="inline-block mb-4">
               <img
@@ -33,10 +39,11 @@ const Footer = () => {
             {
               title: "Solutions",
               links: [
-                { label: "AI Systems", to: "/products" },
-                { label: "Software Engineering", to: "/products" },
+                { label: "AI Modules", to: "/products" },
+                { label: "Hospitality OS", to: "/hospitality-os" },
+                { label: "Education OS", to: "/education-os" },
+                { label: "Logistics OS", to: "/logistics-os" },
                 { label: "Platform Preview", to: "/dashboard" },
-                { label: "Infrastructure", to: "/products" },
               ],
             },
             {
@@ -44,17 +51,27 @@ const Footer = () => {
               links: [
                 { label: "About", to: "/about" },
                 { label: "Services", to: "/services" },
+                { label: "Case Studies", to: "/case-studies" },
                 { label: "Pricing", to: "/pricing" },
                 { label: "Contact", to: "/contact" },
               ],
             },
             {
+              title: "Industries",
+              links: [
+                { label: "Hospitality", to: "/hospitality-os" },
+                { label: "Education", to: "/education-os" },
+                { label: "Logistics", to: "/logistics-os" },
+                { label: "Fintech", to: "/products" },
+                { label: "Enterprise SaaS", to: "/products" },
+              ],
+            },
+            {
               title: "Legal",
               links: [
-                { label: "Privacy", to: "#" },
-                { label: "Terms", to: "#" },
-                { label: "Security", to: "#" },
-                { label: "GDPR", to: "#" },
+                { label: "Privacy Policy", to: "/privacy" },
+                { label: "Terms of Service", to: "/terms" },
+                { label: "Security", to: "/security" },
               ],
             },
           ].map((col) => (
@@ -86,7 +103,7 @@ const Footer = () => {
                 aria-label={s.label}
                 className="w-8 h-8 rounded-lg border border-border/50 bg-muted/30 flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-primary/40 transition-all duration-300"
               >
-                <s.icon size={14} />
+                <s.icon />
               </a>
             ))}
           </div>
