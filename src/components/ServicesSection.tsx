@@ -1,25 +1,11 @@
 import { motion } from "framer-motion";
-import {
-  Brain,
-  Code2,
-  Server,
-  GraduationCap,
-  RefreshCw,
-  Cpu,
-  Plug,
-  LineChart,
-  Shield,
-  Wrench,
-  CloudCog,
-  BarChart3,
-} from "lucide-react";
+import { Brain, Code2, Server, GraduationCap, RefreshCw } from "lucide-react";
 
 const pillars = [
   {
     title: "AI Systems & Intelligence",
     subtitle: "Custom AI for real-world operations",
     icon: Brain,
-    color: "neon-blue" as const,
     services: [
       "Custom AI model development",
       "Predictive analytics systems",
@@ -33,7 +19,6 @@ const pillars = [
     title: "Software Engineering",
     subtitle: "Enterprise platforms built from zero",
     icon: Code2,
-    color: "neon-green" as const,
     services: [
       "Enterprise web platforms (React/Next.js)",
       "SaaS products & admin systems",
@@ -47,7 +32,6 @@ const pillars = [
     title: "Systems Architecture",
     subtitle: "Infrastructure that scales",
     icon: Server,
-    color: "neon-purple" as const,
     services: [
       "System audits & infrastructure design",
       "Cloud migration & scaling",
@@ -61,7 +45,6 @@ const pillars = [
     title: "AI Onboarding & Integration",
     subtitle: "Your AI transformation partner",
     icon: GraduationCap,
-    color: "neon-blue" as const,
     services: [
       "Current system audits",
       "Automation opportunity mapping",
@@ -75,7 +58,6 @@ const pillars = [
     title: "Ongoing Optimization",
     subtitle: "Recurring value, not just support",
     icon: RefreshCw,
-    color: "neon-green" as const,
     services: [
       "System monitoring & tuning",
       "AI model retraining",
@@ -86,12 +68,6 @@ const pillars = [
     ],
   },
 ];
-
-const colorMap = {
-  "neon-blue": "text-neon-blue bg-neon-blue/10 border-neon-blue/20",
-  "neon-green": "text-neon-green bg-neon-green/10 border-neon-green/20",
-  "neon-purple": "text-neon-purple bg-neon-purple/10 border-neon-purple/20",
-};
 
 const ServicesSection = () => {
   return (
@@ -115,7 +91,6 @@ const ServicesSection = () => {
           </p>
         </motion.div>
 
-        {/* Bento grid for service pillars */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
           {pillars.map((pillar, i) => (
             <motion.div
@@ -124,14 +99,10 @@ const ServicesSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.08 }}
-              className={`glass-card-hover p-6 group ${
-                i === 0 ? "lg:col-span-2 lg:row-span-1" : ""
-              }`}
+              className={`glass-card-hover p-6 group ${i === 0 ? "lg:col-span-2" : ""}`}
             >
               <div className="flex items-start gap-4 mb-5">
-                <div
-                  className={`w-11 h-11 rounded-xl border flex items-center justify-center flex-shrink-0 ${colorMap[pillar.color]} transition-transform group-hover:scale-110`}
-                >
+                <div className="w-11 h-11 rounded-xl border border-primary/20 bg-primary/10 flex items-center justify-center flex-shrink-0 text-primary transition-transform group-hover:scale-110">
                   <pillar.icon size={20} />
                 </div>
                 <div>

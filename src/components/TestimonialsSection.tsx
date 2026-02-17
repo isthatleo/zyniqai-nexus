@@ -46,12 +46,11 @@ const TestimonialsSection = () => {
           </p>
         </motion.div>
 
-        {/* Client logos */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="flex flex-wrap items-center justify-center gap-8 mb-16"
+          className="flex flex-wrap items-center justify-center gap-4 sm:gap-8 mb-16"
         >
           {clientLogos.map((name) => (
             <div key={name} className="px-6 py-3 rounded-lg border border-border/30 bg-muted/20 text-muted-foreground font-display font-semibold text-sm tracking-wider opacity-60 hover:opacity-100 hover:border-primary/30 transition-all duration-300">
@@ -60,7 +59,6 @@ const TestimonialsSection = () => {
           ))}
         </motion.div>
 
-        {/* Testimonial cards */}
         <div className="grid md:grid-cols-3 gap-6">
           {testimonials.map((t, i) => (
             <motion.div

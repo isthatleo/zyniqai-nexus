@@ -15,6 +15,8 @@ import CaseStudies from "./pages/CaseStudies";
 import HospitalityOS from "./pages/HospitalityOS";
 import EducationOS from "./pages/EducationOS";
 import LogisticsOS from "./pages/LogisticsOS";
+import FintechOS from "./pages/FintechOS";
+import EnterpriseSaaS from "./pages/EnterpriseSaaS";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import Security from "./pages/Security";
@@ -43,6 +45,8 @@ const App = () => (
             <Route path="/hospitality-os" element={<HospitalityOS />} />
             <Route path="/education-os" element={<EducationOS />} />
             <Route path="/logistics-os" element={<LogisticsOS />} />
+            <Route path="/fintech-os" element={<FintechOS />} />
+            <Route path="/enterprise-saas" element={<EnterpriseSaaS />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/security" element={<Security />} />

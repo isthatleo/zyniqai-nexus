@@ -1,26 +1,26 @@
 import Layout from "@/components/Layout";
 import { motion } from "framer-motion";
-import { GraduationCap, BookOpen, ClipboardCheck, DollarSign, BarChart3, Brain, Check, ArrowRight } from "lucide-react";
+import { Landmark, ShieldCheck, TrendingUp, BarChart3, Brain, Lock, Check, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
 type Region = "za" | "uk" | "us";
 const pricing: Record<Region, { build: string; t1: string; t2: string; t3: string }> = {
-  za: { build: "R180k – R350k", t1: "R 15,000", t2: "R 25,000", t3: "R 40,000" },
-  uk: { build: "£15k – £30k", t1: "£ 1,200", t2: "£ 2,000", t3: "£ 3,400" },
-  us: { build: "$18k – $38k", t1: "$ 1,600", t2: "$ 2,800", t3: "$ 4,500" },
+  za: { build: "R300k – R500k", t1: "R 22,000", t2: "R 35,000", t3: "R 55,000" },
+  uk: { build: "£25k – £45k", t1: "£ 1,800", t2: "£ 3,000", t3: "£ 4,500" },
+  us: { build: "$30k – $55k", t1: "$ 2,500", t2: "$ 4,000", t3: "$ 6,000" },
 };
 
 const features = [
-  { icon: GraduationCap, title: "Student & Staff Management", desc: "Comprehensive profiles, records, and role-based access control." },
-  { icon: BookOpen, title: "Class Scheduling & Attendance", desc: "Timetable management with automated attendance tracking." },
-  { icon: DollarSign, title: "Fee & Payment Tracking", desc: "Invoicing, payment reminders, and financial reporting." },
-  { icon: BarChart3, title: "Performance Analytics", desc: "Student grades, teacher performance, and academic trend analysis." },
-  { icon: Brain, title: "AI Enrollment Forecasting", desc: "Predict enrollment trends and optimize resource allocation." },
-  { icon: ClipboardCheck, title: "Reports & Compliance", desc: "Automated report generation and regulatory compliance tools." },
+  { icon: Landmark, title: "Payment Infrastructure", desc: "Multi-currency payment processing, settlement engines, and reconciliation automation." },
+  { icon: ShieldCheck, title: "Compliance & KYC", desc: "Automated KYC/AML checks, regulatory reporting, and audit trail management." },
+  { icon: TrendingUp, title: "Risk Assessment", desc: "AI-driven credit scoring, risk profiling, and portfolio analysis in real-time." },
+  { icon: BarChart3, title: "Financial Analytics", desc: "Real-time transaction dashboards, revenue analytics, and performance metrics." },
+  { icon: Brain, title: "Fraud Detection", desc: "Machine learning models detecting anomalous transactions and suspicious patterns." },
+  { icon: Lock, title: "Security & Encryption", desc: "End-to-end encryption, tokenization, and enterprise-grade security infrastructure." },
 ];
 
-const EducationOS = () => {
+const FintechOS = () => {
   const [region, setRegion] = useState<Region>("za");
   const p = pricing[region];
 
@@ -32,10 +32,10 @@ const EducationOS = () => {
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
               <span className="text-xs font-medium tracking-widest uppercase text-primary mb-4 block">Industry OS</span>
               <h1 className="text-3xl md:text-5xl font-display font-bold mb-4">
-                ZyniqAI <span className="gradient-text">Education OS</span>
+                ZyniqAI <span className="gradient-text">Fintech OS</span>
               </h1>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                Manage your school efficiently, reduce administrative overhead, and harness AI to improve student outcomes and resource allocation.
+                Build secure, scalable financial platforms with real-time fraud detection, compliance automation, and AI-driven risk assessment.
               </p>
             </motion.div>
 
@@ -50,37 +50,6 @@ const EducationOS = () => {
                 </motion.div>
               ))}
             </div>
-
-            {/* Dashboard mockup */}
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-16">
-              <h2 className="text-2xl font-display font-bold text-center mb-8">Dashboard Preview</h2>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                {[
-                  { label: "Total Students", value: "2,340" },
-                  { label: "Attendance Rate", value: "94.2%" },
-                  { label: "Fee Collection", value: "98.5%" },
-                  { label: "AI Accuracy", value: "91.3%" },
-                ].map((kpi) => (
-                  <div key={kpi.label} className="glass-card p-4 text-center">
-                    <p className="text-xl font-display font-bold text-primary">{kpi.value}</p>
-                    <p className="text-[10px] text-muted-foreground mt-1">{kpi.label}</p>
-                  </div>
-                ))}
-              </div>
-              <div className="glass-card p-6">
-                <div className="grid grid-cols-5 gap-1 h-32">
-                  {Array.from({ length: 25 }, (_, i) => {
-                    const intensity = Math.random();
-                    return (
-                      <div key={i} className="rounded" style={{
-                        backgroundColor: `hsl(var(--gold) / ${0.1 + intensity * 0.6})`,
-                      }} title={`${Math.round(intensity * 100)}% attendance`} />
-                    );
-                  })}
-                </div>
-                <p className="text-xs text-muted-foreground text-center mt-3">Attendance Heatmap — Last 5 Weeks</p>
-              </div>
-            </motion.div>
 
             {/* Pricing */}
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
@@ -98,14 +67,14 @@ const EducationOS = () => {
               <div className="glass-card p-6 mb-6 text-center">
                 <p className="text-xs text-muted-foreground uppercase tracking-widest mb-2">Base Build</p>
                 <p className="text-2xl font-display font-bold text-primary">{p.build}</p>
-                <p className="text-sm text-muted-foreground mt-1">once-off · scoped per institution</p>
+                <p className="text-sm text-muted-foreground mt-1">once-off · scoped per platform</p>
               </div>
 
               <div className="grid sm:grid-cols-3 gap-5">
                 {[
-                  { name: "Starter", price: p.t1, features: ["Maintenance & bug fixes", "Minor updates", "Monthly check-in", "48h response"] },
-                  { name: "Growth", price: p.t2, features: ["Everything in Starter", "Feature additions", "Analytics upgrades", "24h response"], highlighted: true },
-                  { name: "Strategic", price: p.t3, features: ["Everything in Growth", "AI continuous improvement", "Custom reports", "Priority support", "12h response"] },
+                  { name: "Starter", price: p.t1, features: ["Maintenance & security patches", "Compliance monitoring", "Monthly reports", "48h response SLA"] },
+                  { name: "Growth", price: p.t2, features: ["Everything in Starter", "Feature expansions", "AI fraud model retraining", "24h response SLA"], highlighted: true },
+                  { name: "Strategic", price: p.t3, features: ["Everything in Growth", "Custom AI models", "Regulatory advisory", "Priority support", "12h response SLA"] },
                 ].map((plan) => (
                   <div key={plan.name} className={`glass-card-hover p-6 flex flex-col ${"highlighted" in plan && plan.highlighted ? "border-primary/40" : ""}`}>
                     {"highlighted" in plan && plan.highlighted && <span className="text-[10px] font-medium tracking-widest uppercase text-primary-foreground bg-primary px-3 py-1 rounded-full self-start mb-3">Popular</span>}
@@ -113,10 +82,14 @@ const EducationOS = () => {
                     <p className="text-2xl font-display font-bold mt-2">{plan.price}<span className="text-sm text-muted-foreground">/mo</span></p>
                     <ul className="space-y-2 mt-4 flex-1">
                       {plan.features.map((f) => (
-                        <li key={f} className="flex items-center gap-2 text-sm text-muted-foreground"><Check size={14} className="text-primary flex-shrink-0" /> {f}</li>
+                        <li key={f} className="flex items-center gap-2 text-sm text-muted-foreground">
+                          <Check size={14} className="text-primary flex-shrink-0" /> {f}
+                        </li>
                       ))}
                     </ul>
-                    <Link to="/contact" className="mt-6 block text-center text-sm font-medium py-3 rounded-lg border border-border/60 text-foreground hover:border-primary/40 transition-all">Get Started</Link>
+                    <Link to="/contact" className="mt-6 block text-center text-sm font-medium py-3 rounded-lg border border-border/60 text-foreground hover:border-primary/40 transition-all">
+                      Get Started
+                    </Link>
                   </div>
                 ))}
               </div>
@@ -134,4 +107,4 @@ const EducationOS = () => {
   );
 };
 
-export default EducationOS;
+export default FintechOS;

@@ -20,11 +20,9 @@ const ContactSection = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="text-xs font-medium tracking-widest uppercase text-primary mb-4 block">
-            Get In Touch
-          </span>
+          <span className="text-xs font-medium tracking-widest uppercase text-primary mb-4 block">Get In Touch</span>
           <h2 className="text-3xl md:text-5xl font-display font-bold mb-4">
-            Ready to <span className="gradient-text-green">Build</span> With AI?
+            Ready to <span className="gradient-text">Build</span> With AI?
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto">
             Let's discuss how ZyniqAI can architect and deploy intelligent systems for your organization.
@@ -32,7 +30,6 @@ const ContactSection = () => {
         </motion.div>
 
         <div className="grid md:grid-cols-5 gap-8">
-          {/* Contact info */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -63,7 +60,6 @@ const ContactSection = () => {
             </div>
           </motion.div>
 
-          {/* Form */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -74,48 +70,23 @@ const ContactSection = () => {
               <div className="grid md:grid-cols-2 gap-5">
                 <div>
                   <label className="text-xs font-medium text-muted-foreground mb-2 block">Name</label>
-                  <input
-                    type="text"
-                    placeholder="Your name"
-                    className="w-full px-4 py-3 rounded-lg bg-muted/50 border border-border/50 text-foreground text-sm placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary/50 focus:shadow-[0_0_15px_hsl(var(--neon-blue)/0.1)] transition-all"
-                    required
-                  />
+                  <input type="text" placeholder="Your name" className="w-full px-4 py-3 rounded-lg bg-muted/50 border border-border/50 text-foreground text-sm placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary/50 focus:shadow-[0_0_15px_hsl(var(--gold)/0.1)] transition-all" required />
                 </div>
                 <div>
                   <label className="text-xs font-medium text-muted-foreground mb-2 block">Email</label>
-                  <input
-                    type="email"
-                    placeholder="you@company.com"
-                    className="w-full px-4 py-3 rounded-lg bg-muted/50 border border-border/50 text-foreground text-sm placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary/50 focus:shadow-[0_0_15px_hsl(var(--neon-blue)/0.1)] transition-all"
-                    required
-                  />
+                  <input type="email" placeholder="you@company.com" className="w-full px-4 py-3 rounded-lg bg-muted/50 border border-border/50 text-foreground text-sm placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary/50 focus:shadow-[0_0_15px_hsl(var(--gold)/0.1)] transition-all" required />
                 </div>
               </div>
               <div>
                 <label className="text-xs font-medium text-muted-foreground mb-2 block">Company</label>
-                <input
-                  type="text"
-                  placeholder="Company name"
-                  className="w-full px-4 py-3 rounded-lg bg-muted/50 border border-border/50 text-foreground text-sm placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary/50 focus:shadow-[0_0_15px_hsl(var(--neon-blue)/0.1)] transition-all"
-                />
+                <input type="text" placeholder="Company name" className="w-full px-4 py-3 rounded-lg bg-muted/50 border border-border/50 text-foreground text-sm placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary/50 focus:shadow-[0_0_15px_hsl(var(--gold)/0.1)] transition-all" />
               </div>
               <div>
                 <label className="text-xs font-medium text-muted-foreground mb-2 block">How can we help?</label>
-                <textarea
-                  rows={4}
-                  placeholder="Tell us about your project, challenges, and goals..."
-                  className="w-full px-4 py-3 rounded-lg bg-muted/50 border border-border/50 text-foreground text-sm placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary/50 focus:shadow-[0_0_15px_hsl(var(--neon-blue)/0.1)] transition-all resize-none"
-                />
+                <textarea rows={4} placeholder="Tell us about your project, challenges, and goals..." className="w-full px-4 py-3 rounded-lg bg-muted/50 border border-border/50 text-foreground text-sm placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary/50 focus:shadow-[0_0_15px_hsl(var(--gold)/0.1)] transition-all resize-none" />
               </div>
-              <button
-                type="submit"
-                className="w-full flex items-center justify-center gap-2 px-8 py-3.5 rounded-lg bg-primary text-primary-foreground font-medium text-sm hover:shadow-[0_0_30px_hsl(var(--neon-blue)/0.4)] transition-all duration-300 hover:bg-primary/90"
-              >
-                {submitted ? "Message Sent!" : (
-                  <>
-                    Send Message <Send size={16} />
-                  </>
-                )}
+              <button type="submit" className="w-full flex items-center justify-center gap-2 px-8 py-3.5 rounded-lg bg-primary text-primary-foreground font-medium text-sm hover:shadow-[0_0_30px_hsl(var(--gold)/0.4)] transition-all duration-300 hover:bg-primary/90">
+                {submitted ? "Message Sent!" : (<>Send Message <Send size={16} /></>)}
               </button>
             </form>
           </motion.div>

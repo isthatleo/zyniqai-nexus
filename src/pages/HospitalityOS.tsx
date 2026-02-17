@@ -4,6 +4,7 @@ import { Hotel, Calendar, Users, BarChart3, Brain, Clock, Check, ArrowRight } fr
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, BarChart, Bar } from "recharts";
+import { useTheme } from "@/components/ThemeProvider";
 
 const occupancyData = [
   { month: "Jan", rate: 62 }, { month: "Feb", rate: 68 }, { month: "Mar", rate: 75 },
@@ -47,13 +48,15 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 const HospitalityOS = () => {
   const [region, setRegion] = useState<Region>("za");
   const p = pricing[region];
+  const { resolvedTheme } = useTheme();
+  const gridColor = resolvedTheme === "light" ? "hsl(40 15% 90%)" : "hsl(30 10% 18%)";
+  const tickColor = resolvedTheme === "light" ? "#888" : "#B0B0B0";
 
   return (
     <Layout>
       <div className="pt-20">
         <section className="section-padding relative">
           <div className="max-w-6xl mx-auto">
-            {/* Hero */}
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
               <span className="text-xs font-medium tracking-widest uppercase text-primary mb-4 block">Industry OS</span>
               <h1 className="text-3xl md:text-5xl font-display font-bold mb-4">
@@ -64,7 +67,6 @@ const HospitalityOS = () => {
               </p>
             </motion.div>
 
-            {/* Features grid */}
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-16">
               {features.map((f, i) => (
                 <motion.div key={f.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }} className="glass-card-hover p-6 group">
@@ -88,15 +90,15 @@ const HospitalityOS = () => {
                     <AreaChart data={occupancyData}>
                       <defs>
                         <linearGradient id="gradOcc" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#2CE9FF" stopOpacity={0.3} />
-                          <stop offset="95%" stopColor="#2CE9FF" stopOpacity={0} />
+                          <stop offset="5%" stopColor="#D4AF37" stopOpacity={0.3} />
+                          <stop offset="95%" stopColor="#D4AF37" stopOpacity={0} />
                         </linearGradient>
                       </defs>
-                      <CartesianGrid strokeDasharray="3 3" stroke="hsl(216 20% 18%)" />
-                      <XAxis dataKey="month" tick={{ fill: "#B0B0B0", fontSize: 11 }} axisLine={false} tickLine={false} />
-                      <YAxis tick={{ fill: "#B0B0B0", fontSize: 11 }} axisLine={false} tickLine={false} />
+                      <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
+                      <XAxis dataKey="month" tick={{ fill: tickColor, fontSize: 11 }} axisLine={false} tickLine={false} />
+                      <YAxis tick={{ fill: tickColor, fontSize: 11 }} axisLine={false} tickLine={false} />
                       <Tooltip content={<CustomTooltip />} />
-                      <Area type="monotone" dataKey="rate" stroke="#2CE9FF" strokeWidth={2} fill="url(#gradOcc)" />
+                      <Area type="monotone" dataKey="rate" stroke="#D4AF37" strokeWidth={2} fill="url(#gradOcc)" />
                     </AreaChart>
                   </ResponsiveContainer>
                 </div>
@@ -105,12 +107,12 @@ const HospitalityOS = () => {
                   <p className="text-xs text-muted-foreground mb-4">Direct vs OTA bookings (k)</p>
                   <ResponsiveContainer width="100%" height={200}>
                     <BarChart data={revenueData}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="hsl(216 20% 18%)" />
-                      <XAxis dataKey="month" tick={{ fill: "#B0B0B0", fontSize: 11 }} axisLine={false} tickLine={false} />
-                      <YAxis tick={{ fill: "#B0B0B0", fontSize: 11 }} axisLine={false} tickLine={false} />
+                      <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
+                      <XAxis dataKey="month" tick={{ fill: tickColor, fontSize: 11 }} axisLine={false} tickLine={false} />
+                      <YAxis tick={{ fill: tickColor, fontSize: 11 }} axisLine={false} tickLine={false} />
                       <Tooltip content={<CustomTooltip />} />
-                      <Bar dataKey="direct" fill="#7FFF00" radius={[4, 4, 0, 0]} />
-                      <Bar dataKey="ota" fill="#7D5CFF" radius={[4, 4, 0, 0]} />
+                      <Bar dataKey="direct" fill="#D4AF37" radius={[4, 4, 0, 0]} />
+                      <Bar dataKey="ota" fill="#8B6914" radius={[4, 4, 0, 0]} />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
@@ -149,7 +151,7 @@ const HospitalityOS = () => {
                     <ul className="space-y-2 mt-4 flex-1">
                       {plan.features.map((f) => (
                         <li key={f} className="flex items-center gap-2 text-sm text-muted-foreground">
-                          <Check size={14} className="text-accent flex-shrink-0" /> {f}
+                          <Check size={14} className="text-primary flex-shrink-0" /> {f}
                         </li>
                       ))}
                     </ul>
@@ -162,7 +164,7 @@ const HospitalityOS = () => {
             </motion.div>
 
             <div className="mt-16 text-center">
-              <Link to="/contact" className="inline-flex items-center gap-2 px-8 py-3.5 rounded-lg bg-primary text-primary-foreground font-medium text-sm hover:shadow-[0_0_30px_hsl(var(--neon-blue)/0.4)] transition-all">
+              <Link to="/contact" className="inline-flex items-center gap-2 px-8 py-3.5 rounded-lg bg-primary text-primary-foreground font-medium text-sm hover:shadow-[0_0_30px_hsl(var(--gold)/0.4)] transition-all">
                 Book a Strategy Call <ArrowRight size={16} />
               </Link>
             </div>
