@@ -39,10 +39,8 @@ const footerColumns = [
   {
     title: "Platform",
     links: [
-      { label: "Dashboard Preview", to: "/dashboard" },
-      { label: "Hospitality", to: "/hospitality-os" },
-      { label: "Education", to: "/education-os" },
-      { label: "Logistics", to: "/logistics-os" },
+      { label: "Client Portal", to: "/auth" },
+      { label: "Dashboard", to: "/dashboard" },
     ],
   },
   {
@@ -60,15 +58,11 @@ const Footer = () => {
     <footer className="w-full border-t border-border/50 py-12 sm:py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         {/* Mobile: single column centered. Desktop: grid */}
-        <div className="flex flex-col items-center text-center sm:text-left sm:items-start sm:grid sm:grid-cols-2 md:grid-cols-5 gap-8 mb-12">
-          {/* Brand column */}
+        <div className="flex flex-col items-center text-center gap-10 sm:text-left sm:items-start sm:grid sm:grid-cols-2 md:grid-cols-5 sm:gap-8 mb-12">
+          {/* Brand */}
           <div className="flex flex-col items-center sm:items-start sm:col-span-2 md:col-span-1">
             <Link to="/" className="inline-block mb-4">
-              <img
-                src={logo}
-                alt="ZyniqAI"
-                className="h-12 w-auto object-contain drop-shadow-[0_0_8px_hsl(var(--gold)/0.3)]"
-              />
+              <img src={logo} alt="ZyniqAI" className="h-12 w-auto object-contain drop-shadow-[0_0_8px_hsl(var(--gold)/0.3)]" />
             </Link>
             <p className="text-sm text-muted-foreground leading-relaxed mb-4 max-w-[260px]">
               Turning Data Into Action. AI-first systems engineering for the modern enterprise.
@@ -77,17 +71,14 @@ const Footer = () => {
             <p className="text-xs text-muted-foreground">+27 70 773 1490</p>
           </div>
 
-          {/* Link columns */}
+          {/* Columns */}
           {footerColumns.map((col) => (
             <div key={col.title} className="flex flex-col items-center sm:items-start">
               <h4 className="text-sm font-display font-semibold mb-4 text-foreground">{col.title}</h4>
               <ul className="space-y-2.5">
                 {col.links.map((link) => (
-                  <li key={link.label}>
-                    <Link
-                      to={link.to}
-                      className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                    >
+                  <li key={link.label} className="text-center sm:text-left">
+                    <Link to={link.to} className="text-sm text-muted-foreground hover:text-primary transition-colors">
                       {link.label}
                     </Link>
                   </li>
@@ -97,17 +88,12 @@ const Footer = () => {
           ))}
         </div>
 
-        {/* Bottom bar */}
+        {/* Bottom */}
         <div className="border-t border-border/50 pt-6 flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
           <p className="text-xs text-muted-foreground">© 2026 ZyniqAI. All rights reserved.</p>
           <div className="flex items-center gap-3">
             {socialLinks.map((s) => (
-              <a
-                key={s.label}
-                href={s.href}
-                aria-label={s.label}
-                className="w-9 h-9 rounded-lg border border-border/50 bg-muted/30 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/40 transition-all duration-300"
-              >
+              <a key={s.label} href={s.href} aria-label={s.label} className="w-9 h-9 rounded-xl border border-border/50 bg-muted/30 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/40 transition-all duration-300">
                 <s.icon />
               </a>
             ))}
