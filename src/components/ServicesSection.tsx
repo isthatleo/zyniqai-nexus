@@ -6,6 +6,7 @@ const pillars = [
     title: "AI Systems & Intelligence",
     subtitle: "Custom AI for real-world operations",
     icon: Brain,
+    color: "hsl(0, 72%, 63%)",
     services: [
       "Custom AI model development",
       "Predictive analytics systems",
@@ -19,6 +20,7 @@ const pillars = [
     title: "Software Engineering",
     subtitle: "Enterprise platforms built from zero",
     icon: Code2,
+    color: "hsl(145, 63%, 49%)",
     services: [
       "Enterprise web platforms (React/Next.js)",
       "SaaS products & admin systems",
@@ -32,6 +34,7 @@ const pillars = [
     title: "Systems Architecture",
     subtitle: "Infrastructure that scales",
     icon: Server,
+    color: "hsl(217, 91%, 60%)",
     services: [
       "System audits & infrastructure design",
       "Cloud migration & scaling",
@@ -42,9 +45,10 @@ const pillars = [
     ],
   },
   {
-    title: "AI Onboarding & Integration",
+    title: "AI Onboarding",
     subtitle: "Your AI transformation partner",
     icon: GraduationCap,
+    color: "hsl(45, 93%, 58%)",
     services: [
       "Current system audits",
       "Automation opportunity mapping",
@@ -58,6 +62,7 @@ const pillars = [
     title: "Ongoing Optimization",
     subtitle: "Recurring value, not just support",
     icon: RefreshCw,
+    color: "hsl(187, 72%, 55%)",
     services: [
       "System monitoring & tuning",
       "AI model retraining",
@@ -77,43 +82,42 @@ const ServicesSection = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <span className="text-xs font-medium tracking-widest uppercase text-primary mb-4 block">
-            What We Build
-          </span>
-          <h2 className="text-3xl md:text-5xl font-display font-bold mb-4">
+          <h2 className="text-3xl md:text-5xl font-bold mb-4">
             Full Stack. <span className="gradient-text">Enterprise Ready.</span>
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Five core pillars powering everything from AI model development to ongoing infrastructure optimization.
+            Five core pillars powering everything from AI development to ongoing infrastructure optimization.
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           {pillars.map((pillar, i) => (
             <motion.div
               key={pillar.title}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.08 }}
+              transition={{ delay: i * 0.08 }}
               className={`glass-card-hover p-6 group ${i === 0 ? "lg:col-span-2" : ""}`}
             >
-              <div className="flex items-start gap-4 mb-5">
-                <div className="w-11 h-11 rounded-xl border border-primary/20 bg-primary/10 flex items-center justify-center flex-shrink-0 text-primary transition-transform group-hover:scale-110">
-                  <pillar.icon size={20} />
+              <div className="flex items-start gap-3 mb-4">
+                <div
+                  className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 transition-transform group-hover:scale-110"
+                  style={{ backgroundColor: `${pillar.color}15`, border: `1px solid ${pillar.color}30` }}
+                >
+                  <pillar.icon size={18} style={{ color: pillar.color }} />
                 </div>
                 <div>
-                  <h3 className="text-lg font-display font-semibold">{pillar.title}</h3>
+                  <h3 className="text-base font-bold">{pillar.title}</h3>
                   <p className="text-xs text-muted-foreground">{pillar.subtitle}</p>
                 </div>
               </div>
-              <ul className={`grid gap-2 ${i === 0 ? "sm:grid-cols-2" : "grid-cols-1"}`}>
+              <ul className={`grid gap-1.5 ${i === 0 ? "sm:grid-cols-2" : ""}`}>
                 {pillar.services.map((s) => (
-                  <li key={s} className="flex items-start gap-2 text-sm text-muted-foreground">
-                    <span className="w-1 h-1 rounded-full bg-primary mt-2 flex-shrink-0" />
+                  <li key={s} className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <span className="w-1 h-1 rounded-full flex-shrink-0" style={{ backgroundColor: pillar.color }} />
                     {s}
                   </li>
                 ))}

@@ -36,14 +36,11 @@ const ContactSection = () => {
 
       if (error) throw error;
 
-      // Try to send email notification via edge function
       try {
         await supabase.functions.invoke("send-contact-notification", {
           body: { name: parsed.name, email: parsed.email, company: parsed.company, message: parsed.message },
         });
-      } catch {
-        // Email notification is best-effort
-      }
+      } catch {}
 
       toast({ title: "Message sent!", description: "We'll get back to you within 24 hours." });
       setName(""); setEmail(""); setCompany(""); setMessage("");
@@ -51,69 +48,68 @@ const ContactSection = () => {
       if (err instanceof z.ZodError) {
         toast({ title: "Validation error", description: err.errors[0].message, variant: "destructive" });
       } else {
-        toast({ title: "Error", description: "Failed to send message. Please try again.", variant: "destructive" });
+        toast({ title: "Error", description: "Failed to send. Please try again.", variant: "destructive" });
       }
     } finally {
       setSubmitting(false);
     }
   };
 
-  const inputClass = "w-full px-4 py-3 rounded-xl bg-muted/50 border border-border/50 text-foreground text-sm placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary/50 focus:shadow-[0_0_15px_hsl(var(--gold)/0.1)] transition-all";
+  const inputClass = "w-full px-4 py-3 rounded-xl bg-muted/50 border border-border/50 text-foreground text-sm placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary/50 transition-all";
 
   return (
     <section id="contact" className="section-padding relative">
       <div className="max-w-6xl mx-auto">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
-          <span className="text-xs font-medium tracking-widest uppercase text-primary mb-4 block">Get In Touch</span>
-          <h2 className="text-3xl md:text-5xl font-display font-bold mb-4">
-            Ready to <span className="gradient-text">Build</span> With AI?
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
+          <h2 className="text-3xl md:text-5xl font-bold mb-4">
+            Start <span className="gradient-text">building</span>
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto">
-            Let's discuss how ZyniqAI can architect and deploy intelligent systems for your organization.
+            Get started with ZyniqAI. Let's discuss how we can architect intelligent systems for your organization.
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-5 gap-8">
-          <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="md:col-span-2 space-y-6">
+        <div className="grid md:grid-cols-5 gap-6 max-w-4xl mx-auto">
+          <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="md:col-span-2 space-y-4">
             {[
               { icon: Mail, label: "Email", value: "hello@zyniqai.com" },
               { icon: Phone, label: "Phone", value: "+27 70 773 1490" },
               { icon: MapPin, label: "HQ", value: "Cape Town, South Africa" },
             ].map((item) => (
-              <div key={item.label} className="glass-card p-4 flex items-center gap-4">
-                <div className="w-10 h-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0">
-                  <item.icon size={18} className="text-primary" />
+              <div key={item.label} className="glass-card p-4 flex items-center gap-3">
+                <div className="w-9 h-9 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0">
+                  <item.icon size={16} className="text-primary" />
                 </div>
                 <div>
-                  <p className="text-xs text-muted-foreground mb-0.5">{item.label}</p>
+                  <p className="text-[11px] text-muted-foreground">{item.label}</p>
                   <p className="text-sm font-medium">{item.value}</p>
                 </div>
               </div>
             ))}
           </motion.div>
 
-          <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="md:col-span-3 glass-card p-8">
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <div className="grid md:grid-cols-2 gap-5">
+          <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="md:col-span-3 glass-card p-6">
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="text-xs font-medium text-muted-foreground mb-2 block">Name</label>
+                  <label className="text-xs text-muted-foreground mb-1.5 block">Name</label>
                   <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Your name" className={inputClass} required />
                 </div>
                 <div>
-                  <label className="text-xs font-medium text-muted-foreground mb-2 block">Email</label>
+                  <label className="text-xs text-muted-foreground mb-1.5 block">Email</label>
                   <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@company.com" className={inputClass} required />
                 </div>
               </div>
               <div>
-                <label className="text-xs font-medium text-muted-foreground mb-2 block">Company</label>
+                <label className="text-xs text-muted-foreground mb-1.5 block">Company</label>
                 <input type="text" value={company} onChange={(e) => setCompany(e.target.value)} placeholder="Company name" className={inputClass} />
               </div>
               <div>
-                <label className="text-xs font-medium text-muted-foreground mb-2 block">How can we help?</label>
+                <label className="text-xs text-muted-foreground mb-1.5 block">Message</label>
                 <textarea rows={4} value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Tell us about your project..." className={`${inputClass} resize-none`} required />
               </div>
-              <button type="submit" disabled={submitting} className="w-full flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl bg-primary text-primary-foreground font-medium text-sm hover:shadow-[0_0_30px_hsl(var(--gold)/0.4)] transition-all duration-300 hover:bg-primary/90 disabled:opacity-50">
-                {submitting ? "Sending..." : (<>Send Message <Send size={16} /></>)}
+              <button type="submit" disabled={submitting} className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-medium text-sm hover:bg-primary/90 transition-all disabled:opacity-50">
+                {submitting ? "Sending..." : (<>Send Message <Send size={14} /></>)}
               </button>
             </form>
           </motion.div>
