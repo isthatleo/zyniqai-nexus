@@ -21,32 +21,29 @@ const PricingSection = () => {
   const [region, setRegion] = useState<Region>("za");
   const p = pricingData[region];
 
-  const retainerTiers = [
+  const tiers = [
     {
       name: "Maintenance",
       price: p.t1,
       period: "/mo",
-      description: "Keep systems healthy with ongoing monitoring and quick fixes.",
-      features: ["Bug fixes & minor improvements", "Performance monitoring", "Monthly check-in call", "Response within 48h", "System health reports"],
-      cta: "Get Started",
+      desc: "Keep systems healthy with monitoring and quick fixes.",
+      features: ["Bug fixes & improvements", "Performance monitoring", "Monthly check-in", "48h response SLA", "Health reports"],
       highlighted: false,
     },
     {
       name: "Growth",
       price: p.t2,
       period: "/mo",
-      description: "Scale your systems with new features, AI retraining, and insights.",
-      features: ["Everything in Maintenance", "Feature additions", "AI model retraining", "Infrastructure scaling", "Monthly analytics report", "24h response SLA"],
-      cta: "Start Growing",
+      desc: "Scale with new features, AI retraining, and insights.",
+      features: ["Everything in Maintenance", "Feature additions", "AI model retraining", "Infrastructure scaling", "Analytics report", "24h response SLA"],
       highlighted: true,
     },
     {
-      name: "Strategic AI Partner",
+      name: "Strategic Partner",
       price: p.t3,
       period: "/mo",
-      description: "Dedicated engineering hours with quarterly innovation planning.",
-      features: ["Everything in Growth", "Dedicated engineer hours", "AI roadmap updates", "Quarterly innovation planning", "Direct Slack access", "12h response | System priority"],
-      cta: "Contact Sales",
+      desc: "Dedicated engineering with quarterly innovation planning.",
+      features: ["Everything in Growth", "Dedicated engineer hours", "AI roadmap updates", "Innovation planning", "Direct Slack access", "12h priority SLA"],
       highlighted: false,
     },
   ];
@@ -60,21 +57,20 @@ const PricingSection = () => {
           viewport={{ once: true }}
           className="text-center mb-10"
         >
-          <span className="text-xs font-medium tracking-widest uppercase text-primary mb-4 block">Pricing</span>
-          <h2 className="text-3xl md:text-5xl font-display font-bold mb-4">
+          <h2 className="text-3xl md:text-5xl font-bold mb-4">
             Infrastructure-Grade <span className="gradient-text">Pricing</span>
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto mb-8">
-            We price like infrastructure, not freelancers. AI implementation projects plus ongoing retainer plans.
+            We price like infrastructure, not freelancers. Implementation projects plus ongoing retainer plans.
           </p>
 
-          <div className="inline-flex items-center gap-1 p-1 rounded-lg bg-muted/50 border border-border/50">
+          <div className="inline-flex items-center gap-1 p-1 rounded-full bg-muted/50 border border-border/50">
             {(Object.keys(regionLabels) as Region[]).map((r) => (
               <button
                 key={r}
                 onClick={() => setRegion(r)}
-                className={`px-3 sm:px-4 py-2 rounded-md text-xs sm:text-sm font-medium transition-all ${
-                  region === r ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
+                className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
+                  region === r ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"
                 }`}
               >
                 {regionLabels[r]}
@@ -83,59 +79,59 @@ const PricingSection = () => {
           </div>
         </motion.div>
 
+        {/* Implementation price */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="glass-card p-6 mb-8 text-center"
+          className="glass-card p-5 mb-6 text-center"
         >
-          <p className="text-xs text-muted-foreground uppercase tracking-widest mb-2">AI Implementation Projects</p>
-          <p className="text-2xl sm:text-3xl font-display font-bold text-primary">{p.impl}</p>
-          <p className="text-sm text-muted-foreground mt-1">{p.implRange} · scoped per project</p>
+          <p className="text-xs text-muted-foreground uppercase tracking-widest mb-1">AI Implementation</p>
+          <p className="text-2xl font-bold text-primary">{p.impl}</p>
+          <p className="text-xs text-muted-foreground">{p.implRange} · scoped per project</p>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {retainerTiers.map((plan, i) => (
+        {/* Tiers */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {tiers.map((plan, i) => (
             <motion.div
               key={plan.name}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className={`glass-card-hover p-6 sm:p-8 flex flex-col ${
-                plan.highlighted ? "border-primary/40 shadow-[0_0_40px_hsl(var(--gold)/0.1)]" : ""
+              className={`glass-card-hover p-6 flex flex-col ${
+                plan.highlighted ? "border-primary/40" : ""
               }`}
             >
               {plan.highlighted && (
-                <span className="text-[10px] font-medium tracking-widest uppercase text-primary-foreground bg-primary px-3 py-1 rounded-full self-start mb-4">
-                  Most Popular
+                <span className="text-[10px] font-medium uppercase text-primary-foreground bg-primary px-2.5 py-0.5 rounded-full self-start mb-3">
+                  Popular
                 </span>
               )}
-              <h3 className="text-lg font-display font-semibold">{plan.name}</h3>
-              <div className="mt-4 mb-2">
-                <span className="text-3xl sm:text-4xl font-display font-bold">{plan.price}</span>
+              <h3 className="text-base font-bold">{plan.name}</h3>
+              <div className="mt-3 mb-2">
+                <span className="text-3xl font-bold">{plan.price}</span>
                 <span className="text-muted-foreground text-sm">{plan.period}</span>
               </div>
-              <p className="text-sm text-muted-foreground mb-6">{plan.description}</p>
-
-              <ul className="space-y-3 mb-8 flex-1">
+              <p className="text-sm text-muted-foreground mb-5">{plan.desc}</p>
+              <ul className="space-y-2 mb-6 flex-1">
                 {plan.features.map((f) => (
                   <li key={f} className="flex items-center gap-2 text-sm">
-                    <Check size={14} className="text-primary flex-shrink-0" />
+                    <Check size={13} className="text-primary flex-shrink-0" />
                     <span className="text-muted-foreground">{f}</span>
                   </li>
                 ))}
               </ul>
-
               <Link
                 to="/contact"
-                className={`block text-center text-sm font-medium py-3 rounded-lg transition-all duration-300 ${
+                className={`block text-center text-sm font-medium py-2.5 rounded-full transition-all ${
                   plan.highlighted
-                    ? "bg-primary text-primary-foreground hover:shadow-[0_0_20px_hsl(var(--gold)/0.3)]"
-                    : "border border-border/60 text-foreground hover:border-primary/40 hover:bg-primary/5"
+                    ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                    : "border border-border/60 text-foreground hover:border-primary/40"
                 }`}
               >
-                {plan.cta}
+                Get Started
               </Link>
             </motion.div>
           ))}

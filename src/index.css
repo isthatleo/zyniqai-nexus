@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,89 +6,99 @@
 
 @layer base {
   :root {
-    --background: 220 20% 4%;
-    --foreground: 210 20% 95%;
+    --background: 240 6% 10%;
+    --foreground: 0 0% 93%;
 
-    --card: 220 18% 8%;
-    --card-foreground: 210 20% 95%;
+    --card: 240 5% 13%;
+    --card-foreground: 0 0% 93%;
 
-    --popover: 220 18% 8%;
-    --popover-foreground: 210 20% 95%;
+    --popover: 240 5% 13%;
+    --popover-foreground: 0 0% 93%;
 
-    --primary: 43 74% 49%;
-    --primary-foreground: 220 20% 4%;
+    --primary: 0 72% 63%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 15% 18%;
-    --secondary-foreground: 210 20% 95%;
+    --secondary: 240 4% 18%;
+    --secondary-foreground: 0 0% 85%;
 
-    --muted: 220 15% 13%;
-    --muted-foreground: 220 10% 55%;
+    --muted: 240 4% 16%;
+    --muted-foreground: 240 5% 55%;
 
-    --accent: 43 90% 55%;
-    --accent-foreground: 220 20% 4%;
+    --accent: 0 72% 63%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 12% 16%;
-    --input: 220 12% 16%;
-    --ring: 43 74% 49%;
+    --border: 240 4% 20%;
+    --input: 240 4% 20%;
+    --ring: 0 72% 63%;
 
     --radius: 0.75rem;
 
-    --sidebar-background: 220 18% 6%;
-    --sidebar-foreground: 210 20% 95%;
-    --sidebar-primary: 43 74% 49%;
-    --sidebar-primary-foreground: 220 20% 4%;
-    --sidebar-accent: 220 15% 13%;
-    --sidebar-accent-foreground: 210 20% 95%;
-    --sidebar-border: 220 12% 16%;
-    --sidebar-ring: 43 74% 49%;
+    --sidebar-background: 240 6% 8%;
+    --sidebar-foreground: 0 0% 93%;
+    --sidebar-primary: 0 72% 63%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 4% 16%;
+    --sidebar-accent-foreground: 0 0% 93%;
+    --sidebar-border: 240 4% 20%;
+    --sidebar-ring: 0 72% 63%;
 
     /* Custom tokens */
+    --coral: 0 72% 63%;
+    --coral-light: 0 80% 72%;
+    --coral-dark: 0 60% 50%;
+    --green-accent: 145 63% 49%;
+    --yellow-accent: 45 93% 58%;
+    --cyan-accent: 187 72% 55%;
+    --blue-accent: 217 91% 60%;
+    --purple-accent: 265 83% 68%;
     --gold: 43 74% 49%;
     --gold-light: 43 80% 62%;
     --gold-dark: 35 60% 35%;
-    --warm-white: 210 20% 95%;
-    --glass-bg: 220 18% 10%;
-    --glass-border: 43 74% 49%;
   }
 
   .light {
-    --background: 220 25% 97%;
-    --foreground: 220 20% 10%;
+    --background: 0 0% 98%;
+    --foreground: 240 6% 10%;
 
     --card: 0 0% 100%;
-    --card-foreground: 220 20% 10%;
+    --card-foreground: 240 6% 10%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 20% 10%;
+    --popover-foreground: 240 6% 10%;
 
-    --primary: 43 74% 42%;
+    --primary: 0 72% 55%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 15% 92%;
-    --secondary-foreground: 220 20% 10%;
+    --secondary: 240 5% 93%;
+    --secondary-foreground: 240 6% 10%;
 
-    --muted: 220 15% 94%;
-    --muted-foreground: 220 10% 40%;
+    --muted: 240 5% 95%;
+    --muted-foreground: 240 5% 40%;
 
-    --accent: 43 80% 48%;
+    --accent: 0 72% 55%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 15% 88%;
-    --input: 220 15% 88%;
-    --ring: 43 74% 42%;
+    --border: 240 6% 88%;
+    --input: 240 6% 88%;
+    --ring: 0 72% 55%;
 
+    --coral: 0 72% 55%;
+    --coral-light: 0 75% 65%;
+    --coral-dark: 0 55% 42%;
+    --green-accent: 145 63% 42%;
+    --yellow-accent: 45 90% 48%;
+    --cyan-accent: 187 72% 42%;
+    --blue-accent: 217 91% 50%;
+    --purple-accent: 265 70% 55%;
     --gold: 43 74% 42%;
     --gold-light: 43 70% 55%;
     --gold-dark: 35 50% 30%;
-    --warm-white: 220 25% 97%;
-    --glass-bg: 0 0% 100%;
-    --glass-border: 43 60% 50%;
   }
 }
 
@@ -100,85 +110,66 @@
     @apply bg-background text-foreground font-body antialiased;
   }
   h1, h2, h3, h4, h5, h6 {
-    @apply font-display;
+    @apply font-display font-bold;
   }
 }
 
 @layer components {
   .glass-card {
-    @apply bg-card/40 backdrop-blur-xl border border-border/50 rounded-2xl;
-    box-shadow: 0 0 20px hsl(var(--gold) / 0.05), inset 0 1px 0 hsl(0 0% 100% / 0.05);
+    @apply bg-card/60 backdrop-blur-xl border border-border/50 rounded-2xl;
+    box-shadow: 0 0 20px hsl(0 0% 0% / 0.1);
   }
 
   .light .glass-card {
-    @apply bg-card/80;
-    box-shadow: 0 1px 3px hsl(220 20% 10% / 0.06), 0 0 0 1px hsl(var(--border));
+    @apply bg-card/90;
+    box-shadow: 0 1px 3px hsl(0 0% 0% / 0.06), 0 0 0 1px hsl(var(--border));
   }
 
   .glass-card-hover {
     @apply glass-card transition-all duration-500;
   }
   .glass-card-hover:hover {
-    border-color: hsl(var(--gold) / 0.4);
-    box-shadow: 0 0 30px hsl(var(--gold) / 0.12), 0 0 60px hsl(var(--gold) / 0.04), inset 0 1px 0 hsl(0 0% 100% / 0.1);
+    border-color: hsl(var(--primary) / 0.4);
+    box-shadow: 0 0 30px hsl(var(--primary) / 0.1), 0 0 60px hsl(var(--primary) / 0.03);
+    transform: translateY(-2px);
   }
 
   .light .glass-card-hover:hover {
-    box-shadow: 0 4px 20px hsl(var(--gold) / 0.1), 0 0 0 1px hsl(var(--gold) / 0.2);
-  }
-
-  .gold-glow {
-    text-shadow: 0 0 10px hsl(var(--gold) / 0.5), 0 0 40px hsl(var(--gold) / 0.2);
-  }
-  .light .gold-glow {
-    text-shadow: none;
+    box-shadow: 0 8px 30px hsl(var(--primary) / 0.08), 0 0 0 1px hsl(var(--primary) / 0.15);
   }
 
   .gradient-text {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(var(--gold-light)), hsl(var(--gold)));
+    background-image: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--coral-light)));
   }
 
-  .gradient-text-warm {
+  .gradient-text-multi {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(var(--gold)), hsl(var(--gold-dark)));
+    background-image: linear-gradient(90deg, hsl(var(--green-accent)), hsl(var(--cyan-accent)), hsl(var(--blue-accent)), hsl(var(--primary)));
   }
 
-  .glow-border {
-    position: relative;
-  }
-  .glow-border::after {
-    content: '';
-    position: absolute;
-    inset: -1px;
-    border-radius: inherit;
-    padding: 1px;
-    background: linear-gradient(135deg, hsl(var(--gold) / 0.5), hsl(var(--gold-dark) / 0.5));
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.5s;
-  }
-  .glow-border:hover::after {
-    opacity: 1;
-  }
   .section-padding {
-    @apply py-20 md:py-32 px-4 md:px-8;
+    @apply py-24 md:py-36 px-4 md:px-8;
+  }
+
+  .feature-pill {
+    @apply px-3 py-1.5 rounded-full text-xs font-mono font-medium border transition-all duration-300 cursor-default;
+  }
+
+  .code-block {
+    @apply bg-card/80 border border-border/50 rounded-xl p-4 font-mono text-sm overflow-x-auto;
   }
 }
 
 @layer utilities {
   .particle-bg {
-    background-image: radial-gradient(circle at 20% 50%, hsl(var(--gold) / 0.06) 0%, transparent 50%),
-                       radial-gradient(circle at 80% 20%, hsl(var(--gold-dark) / 0.04) 0%, transparent 50%),
-                       radial-gradient(circle at 50% 80%, hsl(var(--gold-light) / 0.03) 0%, transparent 50%);
+    background-image: radial-gradient(circle at 20% 50%, hsl(var(--primary) / 0.04) 0%, transparent 50%),
+                       radial-gradient(circle at 80% 20%, hsl(var(--blue-accent) / 0.03) 0%, transparent 50%),
+                       radial-gradient(circle at 50% 80%, hsl(var(--cyan-accent) / 0.02) 0%, transparent 50%);
   }
   .light .particle-bg {
-    background-image: radial-gradient(circle at 20% 50%, hsl(var(--gold) / 0.03) 0%, transparent 50%),
-                       radial-gradient(circle at 80% 20%, hsl(var(--gold-dark) / 0.02) 0%, transparent 50%),
-                       radial-gradient(circle at 50% 80%, hsl(var(--gold-light) / 0.01) 0%, transparent 50%);
+    background-image: radial-gradient(circle at 20% 50%, hsl(var(--primary) / 0.02) 0%, transparent 50%),
+                       radial-gradient(circle at 80% 20%, hsl(var(--blue-accent) / 0.015) 0%, transparent 50%),
+                       radial-gradient(circle at 50% 80%, hsl(var(--cyan-accent) / 0.01) 0%, transparent 50%);
   }
 }

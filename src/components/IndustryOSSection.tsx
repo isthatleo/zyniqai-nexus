@@ -6,44 +6,39 @@ const modules = [
   {
     icon: Hotel,
     title: "Hospitality OS",
-    desc: "Transform your hotel into a fully digital ecosystem with booking engines, revenue analytics, and AI forecasting.",
+    desc: "Booking engines, revenue analytics, and AI forecasting for modern hotels.",
     href: "/hospitality-os",
+    color: "hsl(0, 72%, 63%)",
   },
   {
     icon: GraduationCap,
     title: "Education OS",
-    desc: "Manage your school efficiently with student management, automated attendance, fee tracking, and AI enrollment forecasting.",
+    desc: "Student management, automated attendance, fee tracking, and enrollment AI.",
     href: "/education-os",
+    color: "hsl(145, 63%, 49%)",
   },
   {
     icon: Truck,
     title: "Logistics OS",
-    desc: "Optimize your supply chain with fleet tracking, route optimization, inventory management, and predictive maintenance.",
+    desc: "Fleet tracking, route optimization, inventory management, and predictive maintenance.",
     href: "/logistics-os",
+    color: "hsl(217, 91%, 60%)",
   },
   {
     icon: Landmark,
     title: "Fintech OS",
-    desc: "Build secure financial platforms with real-time fraud detection, compliance automation, and AI-driven risk assessment.",
+    desc: "Real-time fraud detection, compliance automation, and AI-driven risk assessment.",
     href: "/fintech-os",
+    color: "hsl(45, 93%, 58%)",
   },
   {
     icon: Building2,
     title: "Enterprise SaaS",
-    desc: "Scale your SaaS with multi-tenant architecture, usage analytics, churn prediction, and automated onboarding flows.",
+    desc: "Multi-tenant architecture, usage analytics, churn prediction, and onboarding flows.",
     href: "/enterprise-saas",
+    color: "hsl(187, 72%, 55%)",
   },
 ];
-
-const container = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.1 } },
-};
-
-const item = {
-  hidden: { opacity: 0, y: 30 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-};
 
 const IndustryOSSection = () => {
   return (
@@ -55,50 +50,39 @@ const IndustryOSSection = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="text-xs font-medium tracking-widest uppercase text-primary mb-4 block">
-            Industry Solutions
-          </span>
-          <h2 className="text-3xl md:text-5xl font-display font-bold mb-4">
-            Intelligent Operations <span className="gradient-text">Systems</span>
+          <h2 className="text-3xl md:text-5xl font-bold mb-4">
+            Intelligent <span className="gradient-text">Operations Systems</span>
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Automate, analyze, optimize, and grow with modular enterprise OS platforms built for your industry.
+            Modular enterprise OS platforms built for your industry. Each one integrates AI as independent microservices.
           </p>
         </motion.div>
 
-        <motion.div
-          variants={container}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true }}
-          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"
-        >
-          {modules.map((m) => (
-            <motion.div key={m.title} variants={item}>
-              <Link to={m.href} className="glass-card-hover p-8 group flex flex-col h-full block">
-                <div className="w-12 h-12 rounded-xl border border-primary/20 bg-primary/10 flex items-center justify-center mb-5 text-primary transition-transform group-hover:scale-110">
-                  <m.icon size={22} />
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {modules.map((m, i) => (
+            <motion.div
+              key={m.title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.08 }}
+            >
+              <Link to={m.href} className="glass-card-hover p-6 group flex flex-col h-full block">
+                <div
+                  className="w-10 h-10 rounded-lg flex items-center justify-center mb-4 transition-transform group-hover:scale-110"
+                  style={{ backgroundColor: `${m.color}15`, border: `1px solid ${m.color}30` }}
+                >
+                  <m.icon size={18} style={{ color: m.color }} />
                 </div>
-                <h3 className="text-xl font-display font-bold mb-3">{m.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed flex-1 mb-5">{m.desc}</p>
-                <span className="inline-flex items-center gap-2 text-sm text-primary font-medium group-hover:gap-3 transition-all">
+                <h3 className="text-lg font-bold mb-2">{m.title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed flex-1 mb-4">{m.desc}</p>
+                <span className="inline-flex items-center gap-2 text-sm font-medium group-hover:gap-3 transition-all" style={{ color: m.color }}>
                   Learn More <ArrowRight size={14} />
                 </span>
               </Link>
             </motion.div>
           ))}
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="glass-card p-6 mt-8 text-center"
-        >
-          <p className="text-sm text-muted-foreground">
-            <span className="text-primary font-medium">AI Integration Note:</span> All OS platforms launch as v1 without AI microservice. AI modules integrate independently as microservices in v2/v3 phases.
-          </p>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

@@ -2,9 +2,9 @@ import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useTheme } from "./ThemeProvider";
-import lionLogo from "@/assets/lion-logo-front.png";
+import { ArrowDown } from "lucide-react";
 
-const Particles = () => {
+const AnimatedRing = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { resolvedTheme } = useTheme();
 
@@ -15,58 +15,105 @@ const Particles = () => {
     if (!ctx) return;
 
     let animationId: number;
-    const particles: { x: number; y: number; vx: number; vy: number; size: number; opacity: number }[] = [];
-    const count = 50;
+    let time = 0;
 
     const resize = () => {
-      canvas.width = canvas.offsetWidth * window.devicePixelRatio;
-      canvas.height = canvas.offsetHeight * window.devicePixelRatio;
-      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+      const dpr = window.devicePixelRatio || 1;
+      const size = Math.min(canvas.parentElement?.clientWidth || 500, 500);
+      canvas.width = size * dpr;
+      canvas.height = size * dpr;
+      canvas.style.width = `${size}px`;
+      canvas.style.height = `${size}px`;
+      ctx.scale(dpr, dpr);
     };
     resize();
     window.addEventListener("resize", resize);
 
-    for (let i = 0; i < count; i++) {
-      particles.push({
-        x: Math.random() * canvas.offsetWidth,
-        y: Math.random() * canvas.offsetHeight,
-        vx: (Math.random() - 0.5) * 0.2,
-        vy: (Math.random() - 0.5) * 0.2,
-        size: Math.random() * 2 + 0.5,
-        opacity: Math.random() * 0.4 + 0.1,
-      });
-    }
-
-    const particleColor = resolvedTheme === "light" ? "180, 140, 50" : "212, 175, 55";
-    const lineAlpha = resolvedTheme === "light" ? 0.04 : 0.06;
+    const colors = [
+      { color: "hsl(145, 63%, 49%)", start: 0, end: 0.25 },      // green
+      { color: "hsl(45, 93%, 58%)", start: 0.25, end: 0.4 },      // yellow
+      { color: "hsl(0, 72%, 63%)", start: 0.4, end: 0.6 },        // coral/red
+      { color: "hsl(187, 72%, 55%)", start: 0.6, end: 0.8 },      // cyan
+      { color: "hsl(217, 91%, 60%)", start: 0.8, end: 1.0 },      // blue
+    ];
 
     const draw = () => {
-      ctx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
-      particles.forEach((p, i) => {
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < 0 || p.x > canvas.offsetWidth) p.vx *= -1;
-        if (p.y < 0 || p.y > canvas.offsetHeight) p.vy *= -1;
+      const w = canvas.width / (window.devicePixelRatio || 1);
+      const h = canvas.height / (window.devicePixelRatio || 1);
+      ctx.clearRect(0, 0, w, h);
+
+      const cx = w / 2;
+      const cy = h / 2;
+      const baseRadius = Math.min(w, h) * 0.38;
+      time += 0.003;
+
+      // Outer multicolor ring
+      colors.forEach((seg) => {
+        const startAngle = seg.start * Math.PI * 2 - Math.PI / 2 + time;
+        const endAngle = seg.end * Math.PI * 2 - Math.PI / 2 + time;
+        ctx.beginPath();
+        ctx.arc(cx, cy, baseRadius, startAngle, endAngle);
+        ctx.strokeStyle = seg.color;
+        ctx.lineWidth = 3;
+        ctx.lineCap = "round";
+        ctx.stroke();
+      });
+
+      // Inner ring (subtle)
+      ctx.beginPath();
+      ctx.arc(cx, cy, baseRadius * 0.85, 0, Math.PI * 2);
+      ctx.strokeStyle = resolvedTheme === "light" ? "hsl(240, 5%, 80%)" : "hsl(240, 4%, 22%)";
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      // Tick marks
+      for (let i = 0; i < 60; i++) {
+        const angle = (i / 60) * Math.PI * 2 - Math.PI / 2 + time * 0.5;
+        const inner = baseRadius * 0.88;
+        const outer = baseRadius * (i % 5 === 0 ? 0.95 : 0.92);
+        ctx.beginPath();
+        ctx.moveTo(cx + Math.cos(angle) * inner, cy + Math.sin(angle) * inner);
+        ctx.lineTo(cx + Math.cos(angle) * outer, cy + Math.sin(angle) * outer);
+        ctx.strokeStyle = resolvedTheme === "light" ? "hsl(240, 5%, 75%)" : "hsl(240, 4%, 28%)";
+        ctx.lineWidth = i % 5 === 0 ? 1.5 : 0.5;
+        ctx.stroke();
+      }
+
+      // Animated data points (red dots forming a pattern)
+      const dotCount = 40;
+      for (let i = 0; i < dotCount; i++) {
+        const angle = (i / dotCount) * Math.PI * 2 + time * 1.5;
+        const r = baseRadius * (0.3 + 0.35 * Math.abs(Math.sin(angle * 3 + time * 2)));
+        const x = cx + Math.cos(angle) * r;
+        const y = cy + Math.sin(angle) * r;
+        const size = 2 + Math.sin(time * 3 + i) * 1;
 
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${particleColor}, ${p.opacity})`;
+        ctx.arc(x, y, size, 0, Math.PI * 2);
+        ctx.fillStyle = `hsl(0, 72%, 63%)`;
         ctx.fill();
+      }
 
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = p.x - particles[j].x;
-          const dy = p.y - particles[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 120) {
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(${particleColor}, ${lineAlpha * (1 - dist / 120)})`;
-            ctx.lineWidth = 0.5;
-            ctx.stroke();
-          }
-        }
-      });
+      // Data bars (horizontal lines in center area)
+      const barCount = 20;
+      for (let i = 0; i < barCount; i++) {
+        const y = cy - baseRadius * 0.3 + (i / barCount) * baseRadius * 0.6;
+        const barWidth = baseRadius * (0.2 + 0.5 * Math.abs(Math.sin(i * 0.5 + time * 2)));
+        const x = cx - barWidth / 2;
+
+        ctx.fillStyle = `hsla(0, 72%, 63%, ${0.15 + 0.15 * Math.sin(i + time * 2)})`;
+        ctx.fillRect(x, y, barWidth, 1.5);
+      }
+
+      // Inner dark circle
+      const innerGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, baseRadius * 0.28);
+      innerGrad.addColorStop(0, resolvedTheme === "light" ? "hsl(240, 5%, 95%)" : "hsl(240, 6%, 12%)");
+      innerGrad.addColorStop(1, resolvedTheme === "light" ? "hsl(240, 5%, 92%)" : "hsl(240, 6%, 8%)");
+      ctx.beginPath();
+      ctx.arc(cx, cy, baseRadius * 0.22, 0, Math.PI * 2);
+      ctx.fillStyle = innerGrad;
+      ctx.fill();
+
       animationId = requestAnimationFrame(draw);
     };
     draw();
@@ -77,105 +124,71 @@ const Particles = () => {
     };
   }, [resolvedTheme]);
 
-  return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" />;
+  return <canvas ref={canvasRef} className="w-full max-w-[500px] aspect-square" />;
 };
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden particle-bg">
-      <Particles />
+    <section className="relative min-h-screen flex items-center overflow-hidden pt-16">
+      <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-4 items-center min-h-[calc(100vh-4rem)]">
+          {/* Left: Text */}
+          <div className="text-center lg:text-left">
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight"
+            >
+              All-in-one
+              <br />
+              <span className="gradient-text">AI systems</span>
+              <br />
+              engine.
+            </motion.h1>
 
-      {/* Gradient orbs */}
-      <div className="absolute top-1/4 left-1/4 w-64 sm:w-96 h-64 sm:h-96 rounded-full bg-primary/5 blur-[128px]" />
-      <div className="absolute bottom-1/4 right-1/4 w-64 sm:w-96 h-64 sm:h-96 rounded-full bg-secondary/5 blur-[128px]" />
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.5 }}
+              className="mt-6 text-base sm:text-lg text-muted-foreground max-w-md mx-auto lg:mx-0 leading-relaxed"
+            >
+              A fast and flexible AI infrastructure
+              <br className="hidden sm:block" />
+              partner to power your enterprise.
+            </motion.p>
 
-      <div className="relative z-10 text-center max-w-5xl mx-auto px-4 sm:px-6">
-        {/* Lion Logo */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1 }}
-          className="mb-6"
-        >
-          <img
-            src={lionLogo}
-            alt="ZyniqAI Lion"
-            className="h-28 sm:h-36 md:h-44 w-auto mx-auto drop-shadow-[0_0_40px_hsl(var(--gold)/0.3)]"
-          />
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-        >
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/5 backdrop-blur-sm mb-6 sm:mb-8">
-            <span className="w-2 h-2 rounded-full bg-primary animate-pulse-glow" />
-            <span className="text-xs font-medium text-primary">
-              AI Systems & Infrastructure Partner
-            </span>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.7 }}
+              className="mt-8 flex flex-col sm:flex-row items-center gap-3 justify-center lg:justify-start"
+            >
+              <Link
+                to="/contact"
+                className="w-full sm:w-auto px-6 py-2.5 rounded-full bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-all text-center"
+              >
+                Get Started
+              </Link>
+              <a
+                href="#features"
+                className="w-full sm:w-auto px-6 py-2.5 rounded-full border border-border/60 text-sm font-medium text-muted-foreground hover:text-foreground hover:border-foreground/20 transition-all flex items-center justify-center gap-2"
+              >
+                Learn more <ArrowDown size={14} />
+              </a>
+            </motion.div>
           </div>
-        </motion.div>
 
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-display font-bold leading-[0.95] tracking-tight mb-4 sm:mb-6"
-        >
-          Turn Data Into Action
-          <br />
-          <span className="gradient-text">— Instantly.</span>
-        </motion.h1>
-
-        <motion.p
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.7 }}
-          className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed px-2"
-        >
-          ZyniqAI leverages cutting-edge AI to transform complex data into real-time insights, predictive intelligence, and automated decisions for enterprises that demand the future, today.
-        </motion.p>
-
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.9 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4"
-        >
-          <Link
-            to="/contact"
-            className="w-full sm:w-auto px-8 py-3.5 rounded-lg bg-primary text-primary-foreground font-medium text-sm hover:shadow-[0_0_30px_hsl(var(--gold)/0.4)] transition-all duration-300 hover:bg-primary/90 text-center"
+          {/* Right: Animated Ring */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, delay: 0.3 }}
+            className="flex justify-center lg:justify-end"
           >
-            Get Started
-          </Link>
-          <Link
-            to="/dashboard"
-            className="w-full sm:w-auto px-8 py-3.5 rounded-lg border border-border/60 text-foreground font-medium text-sm hover:border-primary/40 hover:bg-primary/5 transition-all duration-300 text-center"
-          >
-            Explore Dashboard
-          </Link>
-        </motion.div>
-
-        {/* Stats */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1.2 }}
-          className="mt-16 sm:mt-20 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-2xl mx-auto"
-        >
-          {[
-            { value: "150+", label: "Enterprise Clients" },
-            { value: "99.9%", label: "Platform Uptime" },
-            { value: "10M+", label: "AI Decisions/Day" },
-            { value: "5", label: "Service Pillars" },
-          ].map((stat) => (
-            <div key={stat.label} className="glass-card p-4 text-center">
-              <p className="text-xl sm:text-2xl font-display font-bold text-primary">{stat.value}</p>
-              <p className="text-[10px] sm:text-xs text-muted-foreground mt-1">{stat.label}</p>
-            </div>
-          ))}
-        </motion.div>
+            <AnimatedRing />
+          </motion.div>
+        </div>
       </div>
     </section>
   );

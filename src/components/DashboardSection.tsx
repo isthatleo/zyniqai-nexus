@@ -38,95 +38,78 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 
 const DashboardSection = () => {
   const { resolvedTheme } = useTheme();
-  const gridColor = resolvedTheme === "light" ? "hsl(40 15% 90%)" : "hsl(30 10% 18%)";
-  const tickColor = resolvedTheme === "light" ? "#888" : "#B0B0B0";
-  const goldMain = "#D4AF37";
-  const goldDark = "#8B6914";
+  const gridColor = resolvedTheme === "light" ? "hsl(240 5% 90%)" : "hsl(240 4% 20%)";
+  const tickColor = resolvedTheme === "light" ? "#888" : "#777";
+  const coralMain = "hsl(0, 72%, 63%)";
+  const coralDark = "hsl(0, 60%, 45%)";
 
   return (
     <section id="dashboard" className="section-padding relative">
-      <div className="absolute inset-0 particle-bg opacity-50" />
-      <div className="max-w-6xl mx-auto relative z-10">
+      <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="text-xs font-medium tracking-widest uppercase text-primary mb-4 block">
-            Platform Preview
-          </span>
-          <h2 className="text-3xl md:text-5xl font-display font-bold mb-4">
+          <h2 className="text-3xl md:text-5xl font-bold mb-4">
             Your Data, <span className="gradient-text">Visualized</span>
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto">
-            Enterprise-grade dashboards with real-time AI analytics, predictive KPIs, and actionable insights.
+            Enterprise-grade dashboards with real-time AI analytics and actionable insights.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
           {kpis.map((kpi, i) => (
             <motion.div
               key={kpi.label}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="glass-card-hover p-5"
+              transition={{ delay: i * 0.08 }}
+              className="glass-card-hover p-4 text-center"
             >
-              <div className="flex items-center justify-between mb-3">
-                <kpi.icon size={18} className="text-muted-foreground" />
-                <span className="text-xs font-medium text-primary">{kpi.change}</span>
-              </div>
-              <p className="text-2xl font-display font-bold">{kpi.value}</p>
-              <p className="text-xs text-muted-foreground mt-1">{kpi.label}</p>
+              <kpi.icon size={16} className="text-muted-foreground mx-auto mb-2" />
+              <p className="text-xl font-bold">{kpi.value}</p>
+              <p className="text-[11px] text-muted-foreground mt-0.5">{kpi.label}</p>
+              <p className="text-[11px] text-primary font-medium">{kpi.change}</p>
             </motion.div>
           ))}
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="glass-card p-6"
-          >
-            <h3 className="text-sm font-medium mb-1">AI Model Performance</h3>
-            <p className="text-xs text-muted-foreground mb-6">Accuracy trend over 8 months</p>
-            <ResponsiveContainer width="100%" height={220}>
+        <div className="grid md:grid-cols-2 gap-4">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="glass-card p-5">
+            <h3 className="text-sm font-semibold mb-1">AI Model Performance</h3>
+            <p className="text-xs text-muted-foreground mb-4">Accuracy over 8 months</p>
+            <ResponsiveContainer width="100%" height={200}>
               <AreaChart data={lineData}>
                 <defs>
-                  <linearGradient id="gradGold" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor={goldMain} stopOpacity={0.3} />
-                    <stop offset="95%" stopColor={goldMain} stopOpacity={0} />
+                  <linearGradient id="gradCoral" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor={coralMain} stopOpacity={0.3} />
+                    <stop offset="95%" stopColor={coralMain} stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
-                <XAxis dataKey="name" tick={{ fill: tickColor, fontSize: 11 }} axisLine={false} tickLine={false} />
-                <YAxis tick={{ fill: tickColor, fontSize: 11 }} axisLine={false} tickLine={false} />
+                <XAxis dataKey="name" tick={{ fill: tickColor, fontSize: 10 }} axisLine={false} tickLine={false} />
+                <YAxis tick={{ fill: tickColor, fontSize: 10 }} axisLine={false} tickLine={false} />
                 <Tooltip content={<CustomTooltip />} />
-                <Area type="monotone" dataKey="value" stroke={goldMain} strokeWidth={2} fill="url(#gradGold)" />
+                <Area type="monotone" dataKey="value" stroke={coralMain} strokeWidth={2} fill="url(#gradCoral)" />
               </AreaChart>
             </ResponsiveContainer>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="glass-card p-6"
-          >
-            <h3 className="text-sm font-medium mb-1">Revenue vs Cost</h3>
-            <p className="text-xs text-muted-foreground mb-6">Weekly breakdown analysis</p>
-            <ResponsiveContainer width="100%" height={220}>
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="glass-card p-5">
+            <h3 className="text-sm font-semibold mb-1">Revenue vs Cost</h3>
+            <p className="text-xs text-muted-foreground mb-4">Weekly analysis</p>
+            <ResponsiveContainer width="100%" height={200}>
               <BarChart data={barData}>
                 <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
-                <XAxis dataKey="name" tick={{ fill: tickColor, fontSize: 11 }} axisLine={false} tickLine={false} />
-                <YAxis tick={{ fill: tickColor, fontSize: 11 }} axisLine={false} tickLine={false} />
+                <XAxis dataKey="name" tick={{ fill: tickColor, fontSize: 10 }} axisLine={false} tickLine={false} />
+                <YAxis tick={{ fill: tickColor, fontSize: 10 }} axisLine={false} tickLine={false} />
                 <Tooltip content={<CustomTooltip />} />
-                <Bar dataKey="revenue" fill={goldMain} radius={[4, 4, 0, 0]} />
-                <Bar dataKey="cost" fill={goldDark} radius={[4, 4, 0, 0]} />
+                <Bar dataKey="revenue" fill={coralMain} radius={[3, 3, 0, 0]} />
+                <Bar dataKey="cost" fill={coralDark} radius={[3, 3, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </motion.div>
