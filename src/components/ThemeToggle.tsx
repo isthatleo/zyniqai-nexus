@@ -13,12 +13,12 @@ const ThemeToggle = () => {
   return (
     <button
       onClick={cycle}
-      className="relative w-9 h-9 rounded-lg border border-border/50 bg-muted/30 backdrop-blur-sm flex items-center justify-center hover:border-primary/40 hover:bg-muted/50 transition-all duration-300"
+      className="w-8 h-8 rounded-full flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200 flex-shrink-0"
       title={`Theme: ${theme}`}
     >
-      {theme === "light" && <Sun size={16} className="text-primary" />}
-      {theme === "dark" && <Moon size={16} className="text-primary" />}
-      {theme === "system" && <Monitor size={16} className="text-foreground" />}
+      {theme === "light" && <Sun size={15} />}
+      {theme === "dark" && <Moon size={15} />}
+      {theme === "system" && <Monitor size={15} />}
     </button>
   );
 };
