@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ChevronDown, ChevronRight, ExternalLink } from "lucide-react";
+import { Menu, X, ChevronDown, ChevronRight } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-import logo from "@/assets/lion-logo-front.png";
+import logo from "@/assets/zyniq-logo-mark.png";
 import ThemeToggle from "./ThemeToggle";
 
 const navLinks = [
@@ -55,19 +55,19 @@ const Navbar = () => {
         transition={{ duration: 0.5, ease: "easeOut" }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
-            ? "bg-background/90 backdrop-blur-xl border-b border-border/30"
+            ? "bg-background/90 backdrop-blur-xl border-b border-border/30 shadow-sm"
             : "bg-transparent"
         }`}
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 group flex-shrink-0">
+          <Link to="/" className="flex items-center gap-2.5 group flex-shrink-0">
             <img
               src={logo}
               alt="ZyniqAI"
-              className="h-7 w-auto object-contain opacity-90 group-hover:opacity-100 transition-opacity"
+              className="h-8 w-8 object-contain rounded-md"
             />
-            <span className="text-base font-bold tracking-tight hidden sm:block">
+            <span className="text-base font-bold tracking-tight">
               Zyniq<span className="text-primary">AI</span>
             </span>
           </Link>
@@ -119,11 +119,11 @@ const Navbar = () => {
           </div>
 
           {/* Desktop Right */}
-          <div className="hidden lg:flex items-center gap-3">
+          <div className="hidden lg:flex items-center gap-2">
             <ThemeToggle />
             <Link
               to="/auth"
-              className="text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors"
+              className="text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors px-3 py-1.5"
             >
               Portal
             </Link>
@@ -135,12 +135,12 @@ const Navbar = () => {
             </Link>
           </div>
 
-          {/* Mobile */}
-          <div className="flex lg:hidden items-center gap-2">
+          {/* Mobile Right */}
+          <div className="flex lg:hidden items-center gap-1">
             <ThemeToggle />
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="w-9 h-9 flex items-center justify-center rounded-lg"
+              className="w-9 h-9 flex items-center justify-center rounded-lg text-foreground"
               aria-label="Toggle menu"
             >
               <AnimatePresence mode="wait">
@@ -233,16 +233,8 @@ const Navbar = () => {
                     )}
                   </motion.div>
                 ))}
-
-                {/* Additional mobile links */}
-                <motion.div
-                  initial={{ x: -20, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: 0.35 }}
-                >
-                  <Link to="/about" className="block py-3 text-lg font-semibold text-foreground hover:text-primary transition-colors">
-                    About
-                  </Link>
+                <motion.div initial={{ x: -20, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 0.35 }}>
+                  <Link to="/about" className="block py-3 text-lg font-semibold text-foreground hover:text-primary transition-colors">About</Link>
                 </motion.div>
               </nav>
 
@@ -252,16 +244,10 @@ const Navbar = () => {
                 transition={{ delay: 0.45 }}
                 className="mt-10 w-full max-w-xs space-y-3"
               >
-                <Link
-                  to="/auth"
-                  className="block text-center text-sm font-medium px-6 py-3 rounded-full border border-border/50 text-foreground hover:border-primary/40 transition-all"
-                >
+                <Link to="/auth" className="block text-center text-sm font-medium px-6 py-3 rounded-full border border-border/50 text-foreground hover:border-primary/40 transition-all">
                   Client Portal
                 </Link>
-                <Link
-                  to="/contact"
-                  className="block text-center text-sm font-medium px-6 py-3 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-all"
-                >
+                <Link to="/contact" className="block text-center text-sm font-medium px-6 py-3 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-all">
                   Get Started
                 </Link>
               </motion.div>
