@@ -76,6 +76,7 @@ const ClientPortal = () => {
   const [submissions, setSubmissions] = useState<any[]>([]);
   const [packages, setPackages] = useState<any[]>([]);
   const [revenue, setRevenue] = useState<any[]>([]);
+  const [leads, setLeads] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [refreshKey, setRefreshKey] = useState(0);
 
