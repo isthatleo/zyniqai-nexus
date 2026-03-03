@@ -93,18 +93,20 @@ const ClientPortal = () => {
 
   const fetchData = useCallback(async () => {
     if (!user) return;
-    const [c, i, s, p, r] = await Promise.all([
+    const [c, i, s, p, r, l] = await Promise.all([
       supabase.from("clients").select("*").order("created_at", { ascending: false }),
       supabase.from("invoices").select("*").order("created_at", { ascending: false }),
       supabase.from("contact_submissions").select("*").order("created_at", { ascending: false }),
       supabase.from("packages").select("*").order("created_at", { ascending: false }),
       supabase.from("revenue_tracking").select("*").order("payment_date", { ascending: false }),
+      supabase.from("leads").select("*").order("created_at", { ascending: false }),
     ]);
     setClients(c.data || []);
     setInvoices(i.data || []);
     setSubmissions(s.data || []);
     setPackages(p.data || []);
     setRevenue(r.data || []);
+    setLeads(l.data || []);
   }, [user]);
 
   useEffect(() => { fetchData(); }, [fetchData, refreshKey]);
