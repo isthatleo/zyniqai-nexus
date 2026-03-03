@@ -166,7 +166,8 @@ const ClientPortal = () => {
     { key: "packages", label: "Packages", icon: Package },
     { key: "invoices", label: "Invoices", icon: FileText },
     { key: "revenue", label: "Revenue", icon: DollarSign },
-    { key: "submissions", label: "Leads", icon: Mail, adminOnly: true },
+    { key: "leads", label: "AI Leads", icon: BarChart3, adminOnly: true },
+    { key: "submissions", label: "Contact Leads", icon: Mail, adminOnly: true },
   ];
 
   const filteredTabs = tabs.filter(t => !t.adminOnly || isAdmin);
