@@ -25,6 +25,7 @@ import Auth from "./pages/Auth";
 import ClientPortal from "./pages/ClientPortal";
 import NotFound from "./pages/NotFound";
 import ScrollToTop from "./components/ScrollToTop";
+import AIChatWidget from "./components/AIChatWidget";
 
 const queryClient = new QueryClient();
 
@@ -58,6 +59,7 @@ const App = () => (
               <Route path="/client-portal" element={<ClientPortal />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
+            <AIChatWidget />
           </BrowserRouter>
         </TooltipProvider>
       </AuthProvider>
