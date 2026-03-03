@@ -80,6 +80,44 @@ export type Database = {
         }
         Relationships: []
       }
+      conversations: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          lead_id: string | null
+          metadata: Json | null
+          role: string
+          session_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          lead_id?: string | null
+          metadata?: Json | null
+          role: string
+          session_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          lead_id?: string | null
+          metadata?: Json | null
+          role?: string
+          session_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "conversations_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       invoices: {
         Row: {
           amount: number
@@ -142,6 +180,75 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      leads: {
+        Row: {
+          ai_maturity_score: number | null
+          budget_signal: string | null
+          company: string | null
+          created_at: string
+          data_volume: boolean | null
+          email: string
+          id: string
+          industry: string | null
+          monthly_revenue: string | null
+          multi_department: boolean | null
+          name: string
+          notes: string | null
+          ops_complexity_score: number | null
+          recommended_tier: string | null
+          score: number | null
+          status: string
+          tags: Json | null
+          team_size: number | null
+          updated_at: string
+          urgency_score: number | null
+        }
+        Insert: {
+          ai_maturity_score?: number | null
+          budget_signal?: string | null
+          company?: string | null
+          created_at?: string
+          data_volume?: boolean | null
+          email: string
+          id?: string
+          industry?: string | null
+          monthly_revenue?: string | null
+          multi_department?: boolean | null
+          name: string
+          notes?: string | null
+          ops_complexity_score?: number | null
+          recommended_tier?: string | null
+          score?: number | null
+          status?: string
+          tags?: Json | null
+          team_size?: number | null
+          updated_at?: string
+          urgency_score?: number | null
+        }
+        Update: {
+          ai_maturity_score?: number | null
+          budget_signal?: string | null
+          company?: string | null
+          created_at?: string
+          data_volume?: boolean | null
+          email?: string
+          id?: string
+          industry?: string | null
+          monthly_revenue?: string | null
+          multi_department?: boolean | null
+          name?: string
+          notes?: string | null
+          ops_complexity_score?: number | null
+          recommended_tier?: string | null
+          score?: number | null
+          status?: string
+          tags?: Json | null
+          team_size?: number | null
+          updated_at?: string
+          urgency_score?: number | null
+        }
+        Relationships: []
       }
       packages: {
         Row: {
