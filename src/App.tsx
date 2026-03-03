@@ -59,6 +59,7 @@ const App = () => (
               <Route path="/client-portal" element={<ClientPortal />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
+            <AIChatWidget />
           </BrowserRouter>
         </TooltipProvider>
       </AuthProvider>
