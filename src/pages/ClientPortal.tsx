@@ -666,6 +666,9 @@ const ClientPortal = () => {
                 </div>
               </div>
             </div>
+          )}
+
+          {/* ==================== SUBMISSIONS ==================== */}
           {activeTab === "submissions" && isAdmin && (
             <div className="glass-card overflow-hidden">
               <div className="overflow-x-auto">
