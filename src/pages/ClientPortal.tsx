@@ -607,7 +607,65 @@ const ClientPortal = () => {
             </div>
           )}
 
-          {/* ==================== SUBMISSIONS ==================== */}
+          {/* ==================== AI LEADS ==================== */}
+          {activeTab === "leads" && isAdmin && (
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+                {[
+                  { label: "Total Leads", value: leads.length, color: "hsl(217, 91%, 60%)" },
+                  { label: "Qualified", value: leads.filter(l => l.status === "qualified" || l.status === "enterprise").length, color: "hsl(145, 63%, 49%)" },
+                  { label: "Nurture", value: leads.filter(l => l.status === "nurture").length, color: "hsl(45, 93%, 58%)" },
+                  { label: "Enterprise", value: leads.filter(l => l.status === "enterprise").length, color: "hsl(0, 72%, 63%)" },
+                ].map((s, i) => (
+                  <div key={i} className="glass-card p-3 text-center">
+                    <p className="text-xl font-bold" style={{ color: s.color }}>{s.value}</p>
+                    <p className="text-[10px] text-muted-foreground">{s.label}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="glass-card overflow-hidden">
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b border-border/30">
+                        <th className="text-left p-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Name</th>
+                        <th className="text-left p-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Company</th>
+                        <th className="text-left p-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Industry</th>
+                        <th className="text-left p-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Revenue</th>
+                        <th className="text-left p-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Score</th>
+                        <th className="text-left p-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Tier</th>
+                        <th className="text-left p-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Status</th>
+                        <th className="text-left p-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {leads.map((lead) => (
+                        <tr key={lead.id} className="border-b border-border/10 hover:bg-muted/20 transition-colors">
+                          <td className="p-3">
+                            <p className="font-medium">{lead.name}</p>
+                            <p className="text-[10px] text-muted-foreground">{lead.email}</p>
+                          </td>
+                          <td className="p-3 text-muted-foreground">{lead.company || "—"}</td>
+                          <td className="p-3 text-muted-foreground">{lead.industry || "—"}</td>
+                          <td className="p-3 text-muted-foreground">{lead.monthly_revenue || "—"}</td>
+                          <td className="p-3">
+                            <span className={`text-xs font-mono font-bold ${
+                              Number(lead.score) >= 4.3 ? "text-primary" :
+                              Number(lead.score) >= 3.5 ? "text-[hsl(145,63%,49%)]" :
+                              Number(lead.score) >= 2.5 ? "text-[hsl(45,93%,58%)]" : "text-muted-foreground"
+                            }`}>{Number(lead.score).toFixed(1)}</span>
+                          </td>
+                          <td className="p-3"><StatusBadge status={lead.recommended_tier || "core"} /></td>
+                          <td className="p-3"><StatusBadge status={lead.status} /></td>
+                          <td className="p-3 text-muted-foreground text-xs">{new Date(lead.created_at).toLocaleDateString()}</td>
+                        </tr>
+                      ))}
+                      {leads.length === 0 && <tr><td colSpan={8} className="p-8 text-center text-muted-foreground">No AI-qualified leads yet. Leads are captured from the chat widget.</td></tr>}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
           {activeTab === "submissions" && isAdmin && (
             <div className="glass-card overflow-hidden">
               <div className="overflow-x-auto">
