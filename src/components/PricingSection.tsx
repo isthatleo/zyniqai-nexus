@@ -83,14 +83,13 @@ const PricingSection = () => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          anime({
-            targets: cards,
+          animate(cards, {
             opacity: [0, 1],
             translateY: [50, 0],
             scale: [0.95, 1],
             duration: 900,
-            delay: anime.stagger(150, { start: 100 }),
-            easing: "easeOutExpo",
+            delay: stagger(150, { start: 100 }),
+            ease: "outExpo",
           });
           observer.unobserve(entry.target);
         }
