@@ -44,10 +44,9 @@ const Footer = () => {
   return (
     <footer className="w-full border-t border-border/30 py-12 sm:py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
-        {/* Mobile: centered single column. Desktop: grid */}
-        <div className="flex flex-col items-center text-center gap-8 sm:text-left sm:items-start sm:grid sm:grid-cols-2 md:grid-cols-5 sm:gap-8 mb-10">
+        <div className="flex flex-col items-center text-center gap-8 sm:grid sm:grid-cols-2 md:grid-cols-5 sm:text-center sm:items-center sm:gap-8 mb-10">
           {/* Brand */}
-          <div className="flex flex-col items-center sm:items-start sm:col-span-2 md:col-span-1">
+          <div className="flex flex-col items-center sm:col-span-2 md:col-span-1">
             <Link to="/" className="inline-block mb-3">
               <img src={logo} alt="ZyniqAI" className="h-8 w-auto object-contain opacity-80" />
             </Link>
@@ -60,11 +59,11 @@ const Footer = () => {
 
           {/* Columns */}
           {footerColumns.map((col) => (
-            <div key={col.title} className="flex flex-col items-center sm:items-start">
+            <div key={col.title} className="flex flex-col items-center">
               <h4 className="text-xs font-semibold uppercase tracking-wider mb-3 text-foreground">{col.title}</h4>
               <ul className="space-y-2">
                 {col.links.map((link) => (
-                  <li key={link.label} className="text-center sm:text-left">
+                  <li key={link.label} className="text-center">
                     <Link to={link.to} className="text-xs text-muted-foreground hover:text-foreground transition-colors">
                       {link.label}
                     </Link>
