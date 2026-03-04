@@ -1,5 +1,5 @@
 import { useEffect, useRef, useCallback } from "react";
-import anime from "animejs";
+import { animate, stagger } from "animejs";
 
 // Staggered fade-in for grid items
 export function useStaggerFadeIn(selector: string, options?: { delay?: number; duration?: number; stagger?: number }) {

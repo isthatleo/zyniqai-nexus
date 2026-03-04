@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Check, Info, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import anime from "animejs";
+import { animate, stagger } from "animejs";
 
 type Region = "za" | "uk" | "us";
 
