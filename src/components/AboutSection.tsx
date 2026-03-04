@@ -1,5 +1,7 @@
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Target, Code, Shield, Globe, Users, Zap } from "lucide-react";
+import { animate, stagger } from "animejs";
 
 const values = [
   { icon: Target, title: "Mission-Driven", desc: "Every system solves a real business problem at scale." },
@@ -11,14 +13,39 @@ const values = [
 ];
 
 const AboutSection = () => {
+  const gridRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!gridRef.current) return;
+    const cards = gridRef.current.querySelectorAll(".about-card");
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          animate(cards, {
+            opacity: [0, 1],
+            translateY: [30, 0],
+            scale: [0.95, 1],
+            duration: 800,
+            delay: stagger(80),
+            ease: "outExpo",
+          });
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.15 }
+    );
+    observer.observe(gridRef.current);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section id="about" className="section-padding relative">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-6xl mx-auto text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="mb-16"
         >
           <h2 className="text-3xl md:text-5xl font-bold mb-4">
             AI Systems & <span className="gradient-text">Infrastructure Partner</span>
@@ -28,22 +55,18 @@ const AboutSection = () => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {values.map((item, i) => (
-            <motion.div
+        <div ref={gridRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {values.map((item) => (
+            <div
               key={item.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.06 }}
-              className="glass-card-hover p-6 text-center group"
+              className="about-card glass-card-hover p-6 text-center group opacity-0"
             >
               <div className="w-10 h-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
                 <item.icon size={18} className="text-primary" />
               </div>
               <h4 className="font-semibold text-sm mb-1">{item.title}</h4>
               <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

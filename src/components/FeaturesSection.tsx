@@ -1,5 +1,7 @@
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Brain, BarChart3, Cpu, LayoutDashboard, Zap, Database, Server, Workflow, Shield, Globe } from "lucide-react";
+import { animate, stagger } from "animejs";
 
 const pills = [
   { label: "AI Models", color: "hsl(0, 72%, 63%)" },
@@ -61,16 +63,41 @@ const features = [
 ];
 
 const FeaturesSection = () => {
+  const pillsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!pillsRef.current) return;
+    const pills = pillsRef.current.querySelectorAll(".pill-item");
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          animate(pills, {
+            opacity: [0, 1],
+            scale: [0.8, 1],
+            translateY: [15, 0],
+            duration: 600,
+            delay: stagger(50, { start: 100 }),
+            ease: "outExpo",
+          });
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.3 }
+    );
+    observer.observe(pillsRef.current);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section id="features" className="section-padding relative">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-6xl mx-auto text-center">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-12"
+          className="mb-12"
         >
           <h2 className="text-3xl md:text-5xl font-bold mb-4">
             The complete <br className="sm:hidden" />
@@ -81,18 +108,15 @@ const FeaturesSection = () => {
           </p>
         </motion.div>
 
-        {/* Feature Pills */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+        {/* Feature Pills with anime.js stagger */}
+        <div
+          ref={pillsRef}
           className="flex flex-wrap items-center justify-center gap-2 mb-20"
         >
           {pills.map((pill) => (
             <span
               key={pill.label}
-              className="feature-pill"
+              className="pill-item feature-pill opacity-0"
               style={{
                 borderColor: `${pill.color}40`,
                 color: pill.color,
@@ -102,7 +126,7 @@ const FeaturesSection = () => {
               {pill.label}
             </span>
           ))}
-        </motion.div>
+        </div>
 
         {/* Feature Sections */}
         <div className="space-y-24">
@@ -135,7 +159,6 @@ const FeaturesSection = () => {
               <div className={`${i % 2 === 1 ? "md:order-1" : ""}`}>
                 <div className="glass-card p-8 flex items-center justify-center aspect-[4/3]">
                   <div className="relative">
-                    {/* Decorative circles */}
                     <div
                       className="w-32 h-32 rounded-full opacity-10 animate-ring-pulse"
                       style={{ backgroundColor: feature.accentColor }}

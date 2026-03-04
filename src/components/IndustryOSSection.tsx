@@ -1,6 +1,8 @@
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Hotel, GraduationCap, Truck, Landmark, Building2, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { animate, stagger } from "animejs";
 
 const modules = [
   {
@@ -41,14 +43,39 @@ const modules = [
 ];
 
 const IndustryOSSection = () => {
+  const gridRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!gridRef.current) return;
+    const cards = gridRef.current.querySelectorAll(".os-card");
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          animate(cards, {
+            opacity: [0, 1],
+            translateY: [40, 0],
+            rotateX: [15, 0],
+            duration: 1000,
+            delay: stagger(120),
+            ease: "outExpo",
+          });
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.15 }
+    );
+    observer.observe(gridRef.current);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section className="section-padding relative">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-6xl mx-auto text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="mb-16"
         >
           <h2 className="text-3xl md:text-5xl font-bold mb-4">
             Intelligent <span className="gradient-text">Operations Systems</span>
@@ -58,29 +85,21 @@ const IndustryOSSection = () => {
           </p>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {modules.map((m, i) => (
-            <motion.div
-              key={m.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.08 }}
-            >
-              <Link to={m.href} className="glass-card-hover p-6 group flex flex-col h-full block">
-                <div
-                  className="w-10 h-10 rounded-lg flex items-center justify-center mb-4 transition-transform group-hover:scale-110"
-                  style={{ backgroundColor: `${m.color}15`, border: `1px solid ${m.color}30` }}
-                >
-                  <m.icon size={18} style={{ color: m.color }} />
-                </div>
-                <h3 className="text-lg font-bold mb-2">{m.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed flex-1 mb-4">{m.desc}</p>
-                <span className="inline-flex items-center gap-2 text-sm font-medium group-hover:gap-3 transition-all" style={{ color: m.color }}>
-                  Learn More <ArrowRight size={14} />
-                </span>
-              </Link>
-            </motion.div>
+        <div ref={gridRef} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {modules.map((m) => (
+            <Link key={m.title} to={m.href} className="os-card glass-card-hover p-6 group flex flex-col h-full opacity-0 text-center">
+              <div
+                className="w-10 h-10 rounded-lg flex items-center justify-center mb-4 mx-auto transition-transform group-hover:scale-110"
+                style={{ backgroundColor: `${m.color}15`, border: `1px solid ${m.color}30` }}
+              >
+                <m.icon size={18} style={{ color: m.color }} />
+              </div>
+              <h3 className="text-lg font-bold mb-2">{m.title}</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed flex-1 mb-4">{m.desc}</p>
+              <span className="inline-flex items-center justify-center gap-2 text-sm font-medium group-hover:gap-3 transition-all" style={{ color: m.color }}>
+                Learn More <ArrowRight size={14} />
+              </span>
+            </Link>
           ))}
         </div>
       </div>

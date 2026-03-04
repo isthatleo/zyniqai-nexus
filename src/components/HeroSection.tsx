@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useTheme } from "./ThemeProvider";
 import { ArrowDown } from "lucide-react";
+import { animate, stagger } from "animejs";
 
 const AnimatedRing = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -30,24 +31,22 @@ const AnimatedRing = () => {
     window.addEventListener("resize", resize);
 
     const colors = [
-      { color: "hsl(145, 63%, 49%)", start: 0, end: 0.25 },      // green
-      { color: "hsl(45, 93%, 58%)", start: 0.25, end: 0.4 },      // yellow
-      { color: "hsl(0, 72%, 63%)", start: 0.4, end: 0.6 },        // coral/red
-      { color: "hsl(187, 72%, 55%)", start: 0.6, end: 0.8 },      // cyan
-      { color: "hsl(217, 91%, 60%)", start: 0.8, end: 1.0 },      // blue
+      { color: "hsl(145, 63%, 49%)", start: 0, end: 0.25 },
+      { color: "hsl(45, 93%, 58%)", start: 0.25, end: 0.4 },
+      { color: "hsl(0, 72%, 63%)", start: 0.4, end: 0.6 },
+      { color: "hsl(187, 72%, 55%)", start: 0.6, end: 0.8 },
+      { color: "hsl(217, 91%, 60%)", start: 0.8, end: 1.0 },
     ];
 
     const draw = () => {
       const w = canvas.width / (window.devicePixelRatio || 1);
       const h = canvas.height / (window.devicePixelRatio || 1);
       ctx.clearRect(0, 0, w, h);
-
       const cx = w / 2;
       const cy = h / 2;
       const baseRadius = Math.min(w, h) * 0.38;
       time += 0.003;
 
-      // Outer multicolor ring
       colors.forEach((seg) => {
         const startAngle = seg.start * Math.PI * 2 - Math.PI / 2 + time;
         const endAngle = seg.end * Math.PI * 2 - Math.PI / 2 + time;
@@ -59,14 +58,12 @@ const AnimatedRing = () => {
         ctx.stroke();
       });
 
-      // Inner ring (subtle)
       ctx.beginPath();
       ctx.arc(cx, cy, baseRadius * 0.85, 0, Math.PI * 2);
       ctx.strokeStyle = resolvedTheme === "light" ? "hsl(240, 5%, 80%)" : "hsl(240, 4%, 22%)";
       ctx.lineWidth = 1;
       ctx.stroke();
 
-      // Tick marks
       for (let i = 0; i < 60; i++) {
         const angle = (i / 60) * Math.PI * 2 - Math.PI / 2 + time * 0.5;
         const inner = baseRadius * 0.88;
@@ -79,7 +76,6 @@ const AnimatedRing = () => {
         ctx.stroke();
       }
 
-      // Animated data points (red dots forming a pattern)
       const dotCount = 40;
       for (let i = 0; i < dotCount; i++) {
         const angle = (i / dotCount) * Math.PI * 2 + time * 1.5;
@@ -87,25 +83,21 @@ const AnimatedRing = () => {
         const x = cx + Math.cos(angle) * r;
         const y = cy + Math.sin(angle) * r;
         const size = 2 + Math.sin(time * 3 + i) * 1;
-
         ctx.beginPath();
         ctx.arc(x, y, size, 0, Math.PI * 2);
         ctx.fillStyle = `hsl(0, 72%, 63%)`;
         ctx.fill();
       }
 
-      // Data bars (horizontal lines in center area)
       const barCount = 20;
       for (let i = 0; i < barCount; i++) {
         const y = cy - baseRadius * 0.3 + (i / barCount) * baseRadius * 0.6;
         const barWidth = baseRadius * (0.2 + 0.5 * Math.abs(Math.sin(i * 0.5 + time * 2)));
         const x = cx - barWidth / 2;
-
         ctx.fillStyle = `hsla(0, 72%, 63%, ${0.15 + 0.15 * Math.sin(i + time * 2)})`;
         ctx.fillRect(x, y, barWidth, 1.5);
       }
 
-      // Inner dark circle
       const innerGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, baseRadius * 0.28);
       innerGrad.addColorStop(0, resolvedTheme === "light" ? "hsl(240, 5%, 95%)" : "hsl(240, 6%, 12%)");
       innerGrad.addColorStop(1, resolvedTheme === "light" ? "hsl(240, 5%, 92%)" : "hsl(240, 6%, 8%)");
@@ -128,42 +120,44 @@ const AnimatedRing = () => {
 };
 
 const HeroSection = () => {
+  const textRef = useRef<HTMLDivElement>(null);
+  const pillsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Anime.js stagger for hero text elements
+    if (textRef.current) {
+      const els = textRef.current.querySelectorAll(".hero-anim");
+      animate(els, {
+        opacity: [0, 1],
+        translateY: [40, 0],
+        duration: 1200,
+        delay: stagger(150, { start: 300 }),
+        ease: "outExpo",
+      });
+    }
+  }, []);
+
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden pt-16">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
       <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-4 items-center min-h-[calc(100vh-4rem)]">
           {/* Left: Text */}
-          <div className="text-center lg:text-left">
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight"
-            >
+          <div ref={textRef} className="text-center lg:text-left">
+            <h1 className="hero-anim text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight opacity-0">
               All-in-one
               <br />
               <span className="gradient-text">AI systems</span>
               <br />
               engine.
-            </motion.h1>
+            </h1>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.5 }}
-              className="mt-6 text-base sm:text-lg text-muted-foreground max-w-md mx-auto lg:mx-0 leading-relaxed"
-            >
+            <p className="hero-anim mt-6 text-base sm:text-lg text-muted-foreground max-w-md mx-auto lg:mx-0 leading-relaxed opacity-0">
               A fast and flexible AI infrastructure
               <br className="hidden sm:block" />
               partner to power your enterprise.
-            </motion.p>
+            </p>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.7 }}
-              className="mt-8 flex flex-col sm:flex-row items-center gap-3 justify-center lg:justify-start"
-            >
+            <div className="hero-anim mt-8 flex flex-col sm:flex-row items-center gap-3 justify-center lg:justify-start opacity-0">
               <Link
                 to="/contact"
                 className="w-full sm:w-auto px-6 py-2.5 rounded-full bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-all text-center"
@@ -176,7 +170,7 @@ const HeroSection = () => {
               >
                 Learn more <ArrowDown size={14} />
               </a>
-            </motion.div>
+            </div>
           </div>
 
           {/* Right: Animated Ring */}
