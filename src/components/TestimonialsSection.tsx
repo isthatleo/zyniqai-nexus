@@ -1,5 +1,7 @@
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Quote } from "lucide-react";
+import { animate, stagger } from "animejs";
 
 const testimonials = [
   {
@@ -25,14 +27,61 @@ const testimonials = [
 const clientLogos = ["NovaTech", "Meridian", "Apex", "Quantum", "Helix", "Stratos"];
 
 const TestimonialsSection = () => {
+  const logosRef = useRef<HTMLDivElement>(null);
+  const cardsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!logosRef.current) return;
+    const logos = logosRef.current.querySelectorAll(".logo-pill");
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          animate(logos, {
+            opacity: [0, 0.5],
+            scale: [0.8, 1],
+            duration: 600,
+            delay: stagger(80, { start: 200 }),
+            ease: "outExpo",
+          });
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.3 }
+    );
+    observer.observe(logosRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!cardsRef.current) return;
+    const cards = cardsRef.current.querySelectorAll(".testimonial-card");
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          animate(cards, {
+            opacity: [0, 1],
+            translateX: [-30, 0],
+            duration: 900,
+            delay: stagger(150),
+            ease: "outExpo",
+          });
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.15 }
+    );
+    observer.observe(cardsRef.current);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section id="testimonials" className="section-padding relative">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-6xl mx-auto text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          className="mb-12"
         >
           <h2 className="text-3xl md:text-5xl font-bold mb-4">
             Trusted by <span className="gradient-text">industry leaders</span>
@@ -43,40 +92,31 @@ const TestimonialsSection = () => {
         </motion.div>
 
         {/* Client logos */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="flex flex-wrap items-center justify-center gap-3 mb-16"
-        >
+        <div ref={logosRef} className="flex flex-wrap items-center justify-center gap-3 mb-16">
           {clientLogos.map((name) => (
             <div
               key={name}
-              className="px-5 py-2.5 rounded-lg border border-border/30 bg-muted/20 text-muted-foreground font-mono text-xs tracking-wider opacity-50 hover:opacity-100 hover:border-primary/30 transition-all duration-300"
+              className="logo-pill px-5 py-2.5 rounded-lg border border-border/30 bg-muted/20 text-muted-foreground font-mono text-xs tracking-wider opacity-0 hover:opacity-100 hover:border-primary/30 transition-all duration-300"
             >
               {name}
             </div>
           ))}
-        </motion.div>
+        </div>
 
         {/* Testimonial cards */}
-        <div className="grid md:grid-cols-3 gap-4">
-          {testimonials.map((t, i) => (
-            <motion.div
+        <div ref={cardsRef} className="grid md:grid-cols-3 gap-4">
+          {testimonials.map((t) => (
+            <div
               key={t.name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="glass-card-hover p-6 flex flex-col"
+              className="testimonial-card glass-card-hover p-6 flex flex-col text-center opacity-0"
             >
-              <Quote size={20} className="text-primary/30 mb-3" />
+              <Quote size={20} className="text-primary/30 mb-3 mx-auto" />
               <p className="text-sm text-muted-foreground leading-relaxed flex-1 mb-4">"{t.quote}"</p>
               <div>
                 <p className="text-sm font-semibold">{t.name}</p>
                 <p className="text-xs text-muted-foreground">{t.title}, {t.company}</p>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

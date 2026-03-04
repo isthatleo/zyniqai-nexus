@@ -1,5 +1,7 @@
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Brain, Code2, Server, GraduationCap, RefreshCw } from "lucide-react";
+import { animate, stagger } from "animejs";
 
 const pillars = [
   {
@@ -75,14 +77,38 @@ const pillars = [
 ];
 
 const ServicesSection = () => {
+  const gridRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!gridRef.current) return;
+    const cards = gridRef.current.querySelectorAll(".service-card");
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          animate(cards, {
+            opacity: [0, 1],
+            translateY: [30, 0],
+            duration: 800,
+            delay: stagger(100),
+            ease: "outExpo",
+          });
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.1 }
+    );
+    observer.observe(gridRef.current);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section id="services" className="section-padding relative">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-6xl mx-auto text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="mb-16"
         >
           <h2 className="text-3xl md:text-5xl font-bold mb-4">
             Full Stack. <span className="gradient-text">Enterprise Ready.</span>
@@ -92,37 +118,33 @@ const ServicesSection = () => {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div ref={gridRef} className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           {pillars.map((pillar, i) => (
-            <motion.div
+            <div
               key={pillar.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.08 }}
-              className={`glass-card-hover p-6 group ${i === 0 ? "lg:col-span-2" : ""}`}
+              className={`service-card glass-card-hover p-6 group text-center opacity-0 ${i === 0 ? "lg:col-span-2" : ""}`}
             >
-              <div className="flex items-start gap-3 mb-4">
+              <div className="flex items-center justify-center gap-3 mb-4">
                 <div
                   className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 transition-transform group-hover:scale-110"
                   style={{ backgroundColor: `${pillar.color}15`, border: `1px solid ${pillar.color}30` }}
                 >
                   <pillar.icon size={18} style={{ color: pillar.color }} />
                 </div>
-                <div>
+                <div className="text-left">
                   <h3 className="text-base font-bold">{pillar.title}</h3>
                   <p className="text-xs text-muted-foreground">{pillar.subtitle}</p>
                 </div>
               </div>
               <ul className={`grid gap-1.5 ${i === 0 ? "sm:grid-cols-2" : ""}`}>
                 {pillar.services.map((s) => (
-                  <li key={s} className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <li key={s} className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
                     <span className="w-1 h-1 rounded-full flex-shrink-0" style={{ backgroundColor: pillar.color }} />
                     {s}
                   </li>
                 ))}
               </ul>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
