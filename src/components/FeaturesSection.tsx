@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { Brain, BarChart3, Cpu, LayoutDashboard, Zap, Database, Server, Workflow, Shield, Globe } from "lucide-react";
+import { Brain, BarChart3, Cpu, LayoutDashboard, Zap, Database, Server, Workflow, Shield, Globe, Palette } from "lucide-react";
 import { animate, stagger } from "animejs";
 
 const pills = [
@@ -12,6 +12,7 @@ const pills = [
   { label: "DevOps", color: "hsl(265, 83%, 68%)" },
   { label: "Platforms", color: "hsl(0, 72%, 63%)" },
   { label: "Security", color: "hsl(145, 63%, 49%)" },
+  { label: "Web Design", color: "hsl(45, 93%, 58%)" },
   { label: "NLP", color: "hsl(217, 91%, 60%)" },
   { label: "Forecasting", color: "hsl(45, 93%, 58%)" },
   { label: "APIs", color: "hsl(187, 72%, 55%)" },
@@ -54,13 +55,88 @@ const features = [
     accentColor: "hsl(187, 72%, 55%)",
   },
   {
-    icon: Database,
-    title: "Data Pipelines",
-    description: "End-to-end ETL, data warehousing, and model serving infrastructure.",
-    bullets: ["Stream & batch processing", "Data lake architecture", "Model serving at scale"],
+    icon: Palette,
+    title: "Web Design & Development",
+    description: "Premium websites for startups and brands — from landing pages to full digital platforms.",
+    bullets: ["Responsive design systems", "Brand identity & UX", "Launch-ready in weeks"],
     accentColor: "hsl(265, 83%, 68%)",
   },
 ];
+
+/* ---- Animated grid stagger canvas ---- */
+const GridStaggerCanvas = ({ color }: { color: string }) => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const dpr = window.devicePixelRatio || 1;
+    const size = 280;
+    canvas.width = size * dpr;
+    canvas.height = size * dpr;
+    canvas.style.width = `${size}px`;
+    canvas.style.height = `${size}px`;
+    ctx.scale(dpr, dpr);
+
+    const rows = 12;
+    const cols = 12;
+    const dotSize = 3;
+    const gap = size / (rows + 1);
+    let time = 0;
+    let fromIndex = Math.floor(Math.random() * rows * cols);
+    let targetIndex = fromIndex;
+    let transitionProgress = 1;
+    let animId: number;
+
+    const getPos = (i: number) => ({
+      x: (i % cols + 1) * gap,
+      y: (Math.floor(i / cols) + 1) * gap,
+    });
+
+    const dist = (i: number, from: number) => {
+      const a = getPos(i);
+      const b = getPos(from);
+      return Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2);
+    };
+
+    const draw = () => {
+      ctx.clearRect(0, 0, size, size);
+      time += 0.02;
+
+      if (transitionProgress >= 1) {
+        fromIndex = targetIndex;
+        targetIndex = Math.floor(Math.random() * rows * cols);
+        transitionProgress = 0;
+      }
+      transitionProgress += 0.005;
+
+      const maxDist = size * 0.7;
+
+      for (let i = 0; i < rows * cols; i++) {
+        const pos = getPos(i);
+        const d = dist(i, fromIndex);
+        const normalizedDist = d / maxDist;
+        const wave = Math.sin(time * 2 - normalizedDist * 6);
+        const scale = 1 + wave * 0.8;
+        const alpha = 0.3 + wave * 0.4;
+
+        ctx.beginPath();
+        ctx.arc(pos.x, pos.y, dotSize * Math.max(0.3, scale), 0, Math.PI * 2);
+        ctx.fillStyle = color.replace(")", ` / ${Math.max(0.1, alpha)})`).replace("hsl(", "hsla(");
+        ctx.fill();
+      }
+
+      animId = requestAnimationFrame(draw);
+    };
+    draw();
+    return () => cancelAnimationFrame(animId);
+  }, [color]);
+
+  return <canvas ref={canvasRef} className="mx-auto" />;
+};
 
 const FeaturesSection = () => {
   const pillsRef = useRef<HTMLDivElement>(null);
@@ -155,22 +231,10 @@ const FeaturesSection = () => {
                 </ul>
               </div>
 
-              {/* Visual side */}
+              {/* Visual side - Animated Grid */}
               <div className={`${i % 2 === 1 ? "md:order-1" : ""}`}>
                 <div className="glass-card p-8 flex items-center justify-center aspect-[4/3]">
-                  <div className="relative">
-                    <div
-                      className="w-32 h-32 rounded-full opacity-10 animate-ring-pulse"
-                      style={{ backgroundColor: feature.accentColor }}
-                    />
-                    <div
-                      className="absolute inset-4 rounded-full opacity-20 animate-ring-pulse"
-                      style={{ backgroundColor: feature.accentColor, animationDelay: "0.5s" }}
-                    />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <feature.icon size={40} style={{ color: feature.accentColor }} />
-                    </div>
-                  </div>
+                  <GridStaggerCanvas color={feature.accentColor} />
                 </div>
               </div>
             </motion.div>

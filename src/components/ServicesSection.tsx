@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { Brain, Code2, Server, GraduationCap, RefreshCw } from "lucide-react";
+import { Brain, Code2, Server, GraduationCap, RefreshCw, Palette } from "lucide-react";
 import { animate, stagger } from "animejs";
 
 const pillars = [
@@ -16,6 +16,20 @@ const pillars = [
       "NLP integrations & AI assistants",
       "AI data pipelines (ETL + serving)",
       "Intelligent decision engines",
+    ],
+  },
+  {
+    title: "Web Design & Development",
+    subtitle: "Premium sites for startups & brands",
+    icon: Palette,
+    color: "hsl(265, 83%, 68%)",
+    services: [
+      "Startup landing pages & MVPs",
+      "Brand identity & UI/UX design",
+      "Responsive web applications",
+      "E-commerce platforms",
+      "Portfolio & corporate sites",
+      "CMS integration & maintenance",
     ],
   },
   {
@@ -114,15 +128,15 @@ const ServicesSection = () => {
             Full Stack. <span className="gradient-text">Enterprise Ready.</span>
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Five core pillars powering everything from AI development to ongoing infrastructure optimization.
+            Six core pillars powering everything from web design to AI development and ongoing infrastructure optimization.
           </p>
         </motion.div>
 
         <div ref={gridRef} className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {pillars.map((pillar, i) => (
+          {pillars.map((pillar) => (
             <div
               key={pillar.title}
-              className={`service-card glass-card-hover p-6 group text-center opacity-0 ${i === 0 ? "lg:col-span-2" : ""}`}
+              className="service-card glass-card-hover p-6 group text-center opacity-0"
             >
               <div className="flex items-center justify-center gap-3 mb-4">
                 <div
@@ -136,7 +150,7 @@ const ServicesSection = () => {
                   <p className="text-xs text-muted-foreground">{pillar.subtitle}</p>
                 </div>
               </div>
-              <ul className={`grid gap-1.5 ${i === 0 ? "sm:grid-cols-2" : ""}`}>
+              <ul className="grid gap-1.5">
                 {pillar.services.map((s) => (
                   <li key={s} className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
                     <span className="w-1 h-1 rounded-full flex-shrink-0" style={{ backgroundColor: pillar.color }} />

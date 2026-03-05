@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Check, Info, Sparkles } from "lucide-react";
+import { Check, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { animate, stagger } from "animejs";
@@ -13,7 +13,6 @@ const regionLabels: Record<Region, string> = {
   us: "🇺🇸 United States",
 };
 
-// Conversion rates from USD base
 const conversionRates: Record<Region, { symbol: string; rate: number }> = {
   us: { symbol: "$", rate: 1 },
   uk: { symbol: "£", rate: 0.82 },
@@ -26,7 +25,6 @@ const implPricing: Record<Region, string> = {
   us: "$5k – $20k+",
 };
 
-// Breakdown details for each tier
 const tierBreakdowns: Record<string, { category: string; detail: string }[]> = {
   "Zyniq Core": [
     { category: "AI Audit", detail: "Full operational AI readiness assessment" },
@@ -74,7 +72,6 @@ const PricingSection = () => {
     fetchPackages();
   }, []);
 
-  // Anime.js stagger animation for pricing cards
   useEffect(() => {
     if (!cardsRef.current || packages.length === 0) return;
     const cards = cardsRef.current.querySelectorAll(".pricing-card");
@@ -190,7 +187,7 @@ const PricingSection = () => {
                   ))}
                 </ul>
 
-                {/* Hover Breakdown Tooltip */}
+                {/* Hover Breakdown Tooltip — FIXED: solid opaque background */}
                 <AnimatePresence>
                   {hoveredTier === pkg.name && breakdowns.length > 0 && (
                     <motion.div
@@ -200,7 +197,7 @@ const PricingSection = () => {
                       transition={{ duration: 0.2 }}
                       className="absolute left-0 right-0 -bottom-2 translate-y-full z-30 mx-2"
                     >
-                      <div className="glass-card p-4 border border-primary/20 shadow-xl">
+                      <div className="bg-card border border-primary/20 rounded-2xl p-4 shadow-2xl">
                         <div className="flex items-center gap-1.5 mb-3">
                           <Sparkles size={12} className="text-primary" />
                           <p className="text-xs font-semibold text-primary">What's Included</p>
@@ -218,7 +215,7 @@ const PricingSection = () => {
                         </div>
                         <div className="mt-3 pt-2 border-t border-border/30">
                           <p className="text-[10px] text-muted-foreground text-center">
-                            Hover for details · {formatPrice(Number(pkg.price_monthly))}/mo billed monthly
+                            {formatPrice(Number(pkg.price_monthly))}/mo billed monthly
                           </p>
                         </div>
                       </div>
