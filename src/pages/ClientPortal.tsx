@@ -291,7 +291,7 @@ const ClientPortal = () => {
           <div className="flex flex-col sm:flex-row items-center justify-between mb-8 gap-4">
             <div className="text-center sm:text-left">
               <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
-                <h1 className="text-2xl font-bold">Client Portal</h1>
+                <h1 className="text-2xl font-bold">{isAdmin ? "Admin Control Centre" : "Client Overview"}</h1>
                 {isAdmin && (
                   <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-primary/10 text-primary border border-primary/30">
                     <Shield size={10} /> Admin
