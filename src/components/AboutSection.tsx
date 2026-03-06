@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Target, Code, Shield, Globe, Users, Zap } from "lucide-react";
 import { animate, stagger } from "animejs";
+import CharacterReveal from "./CharacterReveal";
 
 const values = [
   { icon: Target, title: "Mission-Driven", desc: "Every system solves a real business problem at scale." },
@@ -48,7 +49,7 @@ const AboutSection = () => {
           className="mb-16"
         >
           <h2 className="text-3xl md:text-5xl font-bold mb-4">
-            AI Systems & <span className="gradient-text">Infrastructure Partner</span>
+            AI Systems & <CharacterReveal text="Infrastructure Partner" className="gradient-text" staggerDelay={25} />
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             We build systems. We optimize continuously. We own the infrastructure. We become mission-critical.

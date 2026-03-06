@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Hotel, GraduationCap, Truck, Landmark, Building2, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { animate, stagger } from "animejs";
+import HoverSplitText from "./HoverSplitText";
 
 const modules = [
   {
@@ -78,7 +79,7 @@ const IndustryOSSection = () => {
           className="mb-16"
         >
           <h2 className="text-3xl md:text-5xl font-bold mb-4">
-            Intelligent <span className="gradient-text">Operations Systems</span>
+            Intelligent <HoverSplitText text="Operations Systems" className="gradient-text" />
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Modular enterprise OS platforms built for your industry. Each one integrates AI as independent microservices.
@@ -87,7 +88,13 @@ const IndustryOSSection = () => {
 
         <div ref={gridRef} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {modules.map((m) => (
-            <Link key={m.title} to={m.href} className="os-card glass-card-hover p-6 group flex flex-col h-full opacity-0 text-center">
+            <Link key={m.title} to={m.href} className="os-card glass-card-hover p-6 group flex flex-col h-full opacity-0 text-center relative overflow-hidden transition-all duration-300 hover:shadow-lg">
+              {/* Gradient overlay on hover */}
+              <div
+                className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-300 pointer-events-none"
+                style={{ backgroundColor: m.color }}
+              />
+              
               <div
                 className="w-10 h-10 rounded-lg flex items-center justify-center mb-4 mx-auto transition-transform group-hover:scale-110"
                 style={{ backgroundColor: `${m.color}15`, border: `1px solid ${m.color}30` }}

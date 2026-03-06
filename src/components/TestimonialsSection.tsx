@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Quote } from "lucide-react";
 import { animate, stagger } from "animejs";
+import HoverSplitText from "./HoverSplitText";
 
 const testimonials = [
   {
@@ -84,7 +85,7 @@ const TestimonialsSection = () => {
           className="mb-12"
         >
           <h2 className="text-3xl md:text-5xl font-bold mb-4">
-            Trusted by <span className="gradient-text">industry leaders</span>
+            Trusted by <HoverSplitText text="industry leaders" className="gradient-text" />
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto">
             Enterprises across industries rely on ZyniqAI for intelligent systems at scale.
@@ -106,17 +107,22 @@ const TestimonialsSection = () => {
         {/* Testimonial cards */}
         <div ref={cardsRef} className="grid md:grid-cols-3 gap-4">
           {testimonials.map((t) => (
-            <div
+            <motion.div
               key={t.name}
-              className="testimonial-card glass-card-hover p-6 flex flex-col text-center opacity-0"
+              whileHover={{ y: -5 }}
+              transition={{ duration: 0.3 }}
+              className="testimonial-card glass-card-hover p-6 flex flex-col text-center opacity-0 group relative overflow-hidden"
             >
-              <Quote size={20} className="text-primary/30 mb-3 mx-auto" />
+              {/* Gradient overlay on hover */}
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+              
+              <Quote size={20} className="text-primary/30 mb-3 mx-auto group-hover:text-primary/50 transition-colors" />
               <p className="text-sm text-muted-foreground leading-relaxed flex-1 mb-4">"{t.quote}"</p>
-              <div>
+              <div className="relative z-10">
                 <p className="text-sm font-semibold">{t.name}</p>
                 <p className="text-xs text-muted-foreground">{t.title}, {t.company}</p>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

@@ -2,6 +2,12 @@ import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Brain, BarChart3, Cpu, LayoutDashboard, Zap, Database, Server, Workflow, Shield, Globe, Palette } from "lucide-react";
 import { animate, stagger } from "animejs";
+import CharacterReveal from "./CharacterReveal";
+import HoverSplitText from "./HoverSplitText";
+import TypewriterEffect from "./TypewriterEffect";
+import SVGLineAccent from "./SVGLineAccent";
+import RotatingBurst from "./RotatingBurst";
+import ScalingPulse from "./ScalingPulse";
 
 const pills = [
   { label: "AI Models", color: "hsl(0, 72%, 63%)" },
@@ -63,80 +69,7 @@ const features = [
   },
 ];
 
-/* ---- Animated grid stagger canvas ---- */
-const GridStaggerCanvas = ({ color }: { color: string }) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    const dpr = window.devicePixelRatio || 1;
-    const size = 280;
-    canvas.width = size * dpr;
-    canvas.height = size * dpr;
-    canvas.style.width = `${size}px`;
-    canvas.style.height = `${size}px`;
-    ctx.scale(dpr, dpr);
-
-    const rows = 12;
-    const cols = 12;
-    const dotSize = 3;
-    const gap = size / (rows + 1);
-    let time = 0;
-    let fromIndex = Math.floor(Math.random() * rows * cols);
-    let targetIndex = fromIndex;
-    let transitionProgress = 1;
-    let animId: number;
-
-    const getPos = (i: number) => ({
-      x: (i % cols + 1) * gap,
-      y: (Math.floor(i / cols) + 1) * gap,
-    });
-
-    const dist = (i: number, from: number) => {
-      const a = getPos(i);
-      const b = getPos(from);
-      return Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2);
-    };
-
-    const draw = () => {
-      ctx.clearRect(0, 0, size, size);
-      time += 0.02;
-
-      if (transitionProgress >= 1) {
-        fromIndex = targetIndex;
-        targetIndex = Math.floor(Math.random() * rows * cols);
-        transitionProgress = 0;
-      }
-      transitionProgress += 0.005;
-
-      const maxDist = size * 0.7;
-
-      for (let i = 0; i < rows * cols; i++) {
-        const pos = getPos(i);
-        const d = dist(i, fromIndex);
-        const normalizedDist = d / maxDist;
-        const wave = Math.sin(time * 2 - normalizedDist * 6);
-        const scale = 1 + wave * 0.8;
-        const alpha = 0.3 + wave * 0.4;
-
-        ctx.beginPath();
-        ctx.arc(pos.x, pos.y, dotSize * Math.max(0.3, scale), 0, Math.PI * 2);
-        ctx.fillStyle = color.replace(")", ` / ${Math.max(0.1, alpha)})`).replace("hsl(", "hsla(");
-        ctx.fill();
-      }
-
-      animId = requestAnimationFrame(draw);
-    };
-    draw();
-    return () => cancelAnimationFrame(animId);
-  }, [color]);
-
-  return <canvas ref={canvasRef} className="mx-auto" />;
-};
 
 const FeaturesSection = () => {
   const pillsRef = useRef<HTMLDivElement>(null);
@@ -177,7 +110,7 @@ const FeaturesSection = () => {
         >
           <h2 className="text-3xl md:text-5xl font-bold mb-4">
             The complete <br className="sm:hidden" />
-            <span className="gradient-text">AI toolbox</span>
+            <CharacterReveal text="AI toolbox" className="gradient-text" staggerDelay={30} />
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto">
             Break free from limitations and build anything with a single platform.
@@ -204,41 +137,59 @@ const FeaturesSection = () => {
           ))}
         </div>
 
-        {/* Feature Sections */}
-        <div className="space-y-24">
-          {features.map((feature, i) => (
-            <motion.div
-              key={feature.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.6 }}
-              className={`grid md:grid-cols-2 gap-8 md:gap-12 items-center ${
-                i % 2 === 1 ? "md:direction-rtl" : ""
-              }`}
-            >
-              {/* Text side */}
-              <div className={`text-center md:text-left ${i % 2 === 1 ? "md:order-2" : ""}`}>
-                <h3 className="text-2xl md:text-3xl font-bold mb-3">{feature.title}</h3>
-                <p className="text-muted-foreground mb-6 leading-relaxed">{feature.description}</p>
-                <ul className="space-y-2">
-                  {feature.bullets.map((bullet) => (
-                    <li key={bullet} className="flex items-center gap-2 text-sm text-muted-foreground justify-center md:justify-start">
-                      <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: feature.accentColor }} />
-                      {bullet}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+        {/* Feature Cards with Alternating Animations */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {features.map((feature, i) => {
+            // Rotate through different animations
+            const animationIndex = i % 4;
+            const AnimationComponent = [
+              TypewriterEffect,
+              SVGLineAccent,
+              RotatingBurst,
+              ScalingPulse,
+            ][animationIndex];
 
-              {/* Visual side - Animated Grid */}
-              <div className={`${i % 2 === 1 ? "md:order-1" : ""}`}>
-                <div className="glass-card p-8 flex items-center justify-center aspect-[4/3]">
-                  <GridStaggerCanvas color={feature.accentColor} />
+            return (
+              <motion.div
+                key={feature.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.6, delay: i * 0.1 }}
+                className="group"
+              >
+                {/* Animated Icon/Accent */}
+                <div className="mb-6 flex justify-center lg:justify-start">
+                  {animationIndex === 0 ? (
+                    <TypewriterEffect text={feature.title.charAt(0).toUpperCase()} 
+                      className="text-4xl font-bold" style={{ color: feature.accentColor }} />
+                  ) : animationIndex === 1 ? (
+                    <SVGLineAccent color={feature.accentColor} />
+                  ) : animationIndex === 2 ? (
+                    <RotatingBurst color={feature.accentColor} />
+                  ) : (
+                    <ScalingPulse color={feature.accentColor} />
+                  )}
                 </div>
-              </div>
-            </motion.div>
-          ))}
+
+                {/* Feature Content */}
+                <div className="text-center lg:text-left">
+                  <h3 className="text-xl md:text-2xl font-bold mb-3 group-hover:gradient-text transition-all">
+                    {feature.title}
+                  </h3>
+                  <p className="text-muted-foreground mb-4 leading-relaxed">{feature.description}</p>
+                  <ul className="space-y-2">
+                    {feature.bullets.map((bullet) => (
+                      <li key={bullet} className="flex items-center gap-2 text-sm text-muted-foreground justify-center lg:justify-start">
+                        <span className="w-1 h-1 rounded-full flex-shrink-0" style={{ backgroundColor: feature.accentColor }} />
+                        {bullet}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

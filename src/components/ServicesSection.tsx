@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Brain, Code2, Server, GraduationCap, RefreshCw, Palette } from "lucide-react";
 import { animate, stagger } from "animejs";
+import WavyText from "./WavyText";
 
 const pillars = [
   {
@@ -92,6 +93,7 @@ const pillars = [
 
 const ServicesSection = () => {
   const gridRef = useRef<HTMLDivElement>(null);
+  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     if (!gridRef.current) return;
@@ -115,6 +117,23 @@ const ServicesSection = () => {
     return () => observer.disconnect();
   }, []);
 
+  // Animate service items on hover
+  useEffect(() => {
+    cardsRef.current.forEach((card) => {
+      if (!card) return;
+      card.addEventListener("mouseenter", () => {
+        const items = card.querySelectorAll(".service-item");
+        animate(items, {
+          opacity: [0.6, 1],
+          translateX: [5, 0],
+          duration: 300,
+          delay: stagger(30),
+          ease: "outQuad",
+        });
+      });
+    });
+  }, []);
+
   return (
     <section id="services" className="section-padding relative">
       <div className="max-w-6xl mx-auto text-center">
@@ -125,7 +144,7 @@ const ServicesSection = () => {
           className="mb-16"
         >
           <h2 className="text-3xl md:text-5xl font-bold mb-4">
-            Full Stack. <span className="gradient-text">Enterprise Ready.</span>
+            Full Stack. <WavyText text="Enterprise Ready." className="gradient-text" staggerDelay={40} />
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Six core pillars powering everything from web design to AI development and ongoing infrastructure optimization.
@@ -133,9 +152,10 @@ const ServicesSection = () => {
         </motion.div>
 
         <div ref={gridRef} className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {pillars.map((pillar) => (
+          {pillars.map((pillar, idx) => (
             <div
               key={pillar.title}
+              ref={(el) => (cardsRef.current[idx] = el)}
               className="service-card glass-card-hover p-6 group text-center opacity-0"
             >
               <div className="flex items-center justify-center gap-3 mb-4">
@@ -152,7 +172,7 @@ const ServicesSection = () => {
               </div>
               <ul className="grid gap-1.5">
                 {pillar.services.map((s) => (
-                  <li key={s} className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
+                  <li key={s} className="service-item flex items-center justify-center gap-2 text-sm text-muted-foreground">
                     <span className="w-1 h-1 rounded-full flex-shrink-0" style={{ backgroundColor: pillar.color }} />
                     {s}
                   </li>

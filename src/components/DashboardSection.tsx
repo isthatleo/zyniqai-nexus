@@ -1,7 +1,10 @@
 import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
 import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
 import { TrendingUp, Activity, Clock, DollarSign } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
+import { animate, stagger } from "animejs";
+import WavyText from "./WavyText";
 
 const lineData = [
   { name: "Jan", value: 65 }, { name: "Feb", value: 72 }, { name: "Mar", value: 68 },
@@ -42,6 +45,30 @@ const DashboardSection = () => {
   const tickColor = resolvedTheme === "light" ? "#888" : "#777";
   const coralMain = "hsl(0, 72%, 63%)";
   const coralDark = "hsl(0, 60%, 45%)";
+  const kpisRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!kpisRef.current) return;
+    const cards = kpisRef.current.querySelectorAll(".kpi-card");
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          animate(cards, {
+            opacity: [0, 1],
+            translateY: [30, 0],
+            scale: [0.95, 1],
+            duration: 700,
+            delay: stagger(100),
+            ease: "outExpo",
+          });
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.2 }
+    );
+    observer.observe(kpisRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section id="dashboard" className="section-padding relative">
@@ -53,28 +80,24 @@ const DashboardSection = () => {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-5xl font-bold mb-4">
-            Your Data, <span className="gradient-text">Visualized</span>
+            Your Data, <WavyText text="Visualized" className="gradient-text" staggerDelay={40} />
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto">
             Enterprise-grade dashboards with real-time AI analytics and actionable insights.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
-          {kpis.map((kpi, i) => (
-            <motion.div
+        <div ref={kpisRef} className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+          {kpis.map((kpi) => (
+            <div
               key={kpi.label}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.08 }}
-              className="glass-card-hover p-4 text-center"
+              className="kpi-card glass-card-hover p-4 text-center opacity-0"
             >
               <kpi.icon size={16} className="text-muted-foreground mx-auto mb-2" />
               <p className="text-xl font-bold">{kpi.value}</p>
               <p className="text-[11px] text-muted-foreground mt-0.5">{kpi.label}</p>
               <p className="text-[11px] text-primary font-medium">{kpi.change}</p>
-            </motion.div>
+            </div>
           ))}
         </div>
 

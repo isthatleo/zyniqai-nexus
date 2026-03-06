@@ -4,6 +4,7 @@ import { Check, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { animate, stagger } from "animejs";
+import CharacterReveal from "./CharacterReveal";
 
 type Region = "za" | "uk" | "us";
 
@@ -113,7 +114,7 @@ const PricingSection = () => {
           className="mb-10"
         >
           <h2 className="text-3xl md:text-5xl font-bold mb-4">
-            Infrastructure-Grade <span className="gradient-text">Pricing</span>
+            Infrastructure-Grade <CharacterReveal text="Pricing" className="gradient-text" staggerDelay={35} />
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto mb-8">
             We price like infrastructure, not freelancers. Implementation projects plus ongoing retainer plans.
@@ -155,30 +156,40 @@ const PricingSection = () => {
             const features = Array.isArray(pkg.features) ? (pkg.features as string[]) : [];
 
             return (
-              <div
+              <motion.div
                 key={pkg.id}
-                className={`pricing-card glass-card-hover p-6 flex flex-col relative opacity-0 ${
-                  isHighlighted ? "border-primary/40" : ""
+                whileHover={{ y: -5 }}
+                transition={{ duration: 0.3 }}
+                className={`pricing-card glass-card-hover p-6 flex flex-col relative opacity-0 overflow-hidden group ${
+                  isHighlighted ? "border-primary/40 md:scale-105" : ""
                 }`}
                 onMouseEnter={() => setHoveredTier(pkg.name)}
                 onMouseLeave={() => setHoveredTier(null)}
               >
+                {/* Gradient overlay on hover */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                
                 {tag && (
-                  <span className="text-[10px] font-medium uppercase text-primary-foreground bg-primary px-2.5 py-0.5 rounded-full self-start mb-3">
+                  <motion.span
+                    initial={{ scale: 0 }}
+                    whileInView={{ scale: 1 }}
+                    viewport={{ once: true }}
+                    className="text-[10px] font-medium uppercase text-primary-foreground bg-primary px-2.5 py-0.5 rounded-full self-start mb-3 relative z-10"
+                  >
                     {tag}
-                  </span>
+                  </motion.span>
                 )}
-                <h3 className="text-base font-bold text-left">{pkg.name}</h3>
-                <p className="text-xs text-muted-foreground text-left mt-1 mb-3">{pkg.description}</p>
-                <div className="text-left mt-1 mb-2">
+                <h3 className="text-base font-bold text-left relative z-10">{pkg.name}</h3>
+                <p className="text-xs text-muted-foreground text-left mt-1 mb-3 relative z-10">{pkg.description}</p>
+                <div className="text-left mt-1 mb-2 relative z-10">
                   <span className="text-3xl font-bold">{formatPrice(Number(pkg.price_monthly))}</span>
                   <span className="text-muted-foreground text-sm">/mo</span>
                 </div>
-                <p className="text-[11px] text-muted-foreground text-left mb-4">
+                <p className="text-[11px] text-muted-foreground text-left mb-4 relative z-10">
                   {formatPrice(Number(pkg.price_yearly))}/yr
                 </p>
 
-                <ul className="space-y-2 mb-6 flex-1">
+                <ul className="space-y-2 mb-6 flex-1 relative z-10">
                   {features.map((f) => (
                     <li key={f} className="flex items-center gap-2 text-sm text-left">
                       <Check size={13} className="text-primary flex-shrink-0" />
@@ -187,7 +198,7 @@ const PricingSection = () => {
                   ))}
                 </ul>
 
-                {/* Hover Breakdown Tooltip — FIXED: solid opaque background */}
+                {/* Hover Breakdown Tooltip */}
                 <AnimatePresence>
                   {hoveredTier === pkg.name && breakdowns.length > 0 && (
                     <motion.div
@@ -225,7 +236,7 @@ const PricingSection = () => {
 
                 <Link
                   to="/contact"
-                  className={`block text-center text-sm font-medium py-2.5 rounded-full transition-all ${
+                  className={`block text-center text-sm font-medium py-2.5 rounded-full transition-all relative z-10 ${
                     isHighlighted
                       ? "bg-primary text-primary-foreground hover:bg-primary/90"
                       : "border border-border/60 text-foreground hover:border-primary/40"
@@ -233,7 +244,7 @@ const PricingSection = () => {
                 >
                   Get Started
                 </Link>
-              </div>
+              </motion.div>
             );
           })}
           {packages.length === 0 && (

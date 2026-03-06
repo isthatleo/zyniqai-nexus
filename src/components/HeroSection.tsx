@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useTheme } from "./ThemeProvider";
 import { ArrowDown } from "lucide-react";
 import { animate, stagger } from "animejs";
+import CharacterReveal from "./CharacterReveal";
 
 const AnimatedRing = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -139,25 +140,40 @@ const HeroSection = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
-      <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-4 items-center min-h-[calc(100vh-4rem)]">
           {/* Left: Text */}
           <div ref={textRef} className="text-center lg:text-left">
-            <h1 className="hero-anim text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight opacity-0">
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.1 }}
+              className="hero-anim text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight"
+            >
               All-in-one
               <br />
-              <span className="gradient-text">AI systems</span>
+              <CharacterReveal text="AI systems" className="gradient-text" staggerDelay={40} />
               <br />
               engine.
-            </h1>
+            </motion.h1>
 
-            <p className="hero-anim mt-6 text-base sm:text-lg text-muted-foreground max-w-md mx-auto lg:mx-0 leading-relaxed opacity-0">
+            <motion.p
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="hero-anim mt-6 text-base sm:text-lg text-muted-foreground max-w-md mx-auto lg:mx-0 leading-relaxed"
+            >
               A fast and flexible AI infrastructure
               <br className="hidden sm:block" />
               partner to power your enterprise.
-            </p>
+            </motion.p>
 
-            <div className="hero-anim mt-8 flex flex-col sm:flex-row items-center gap-3 justify-center lg:justify-start opacity-0">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="hero-anim mt-8 flex flex-col sm:flex-row items-center gap-3 justify-center lg:justify-start"
+            >
               <Link
                 to="/contact"
                 className="w-full sm:w-auto px-6 py-2.5 rounded-full bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-all text-center"
@@ -170,7 +186,7 @@ const HeroSection = () => {
               >
                 Learn more <ArrowDown size={14} />
               </a>
-            </div>
+            </motion.div>
           </div>
 
           {/* Right: Animated Ring */}
