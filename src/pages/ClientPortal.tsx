@@ -671,6 +671,15 @@ const ClientPortal = () => {
             </div>
           )}
 
+          {/* ==================== OS DEMOS ==================== */}
+          {activeTab === "demos" && isAdmin && (
+            <div className="space-y-4">
+              <h3 className="text-lg font-bold">Dashboard Demos & MVP Prompts</h3>
+              <p className="text-sm text-muted-foreground">Preview dashboard mockups for each Industry OS and copy the MVP prompt to spin up a demo quickly.</p>
+              <MVPPromptsPanel />
+            </div>
+          )}
+
           {/* ==================== SUBMISSIONS ==================== */}
           {activeTab === "submissions" && isAdmin && (
             <div className="glass-card overflow-hidden">
