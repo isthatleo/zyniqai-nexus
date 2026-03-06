@@ -169,6 +169,7 @@ const ClientPortal = () => {
     { key: "invoices", label: "Invoices", icon: FileText },
     { key: "revenue", label: "Revenue", icon: DollarSign },
     { key: "leads", label: "AI Leads", icon: BarChart3, adminOnly: true },
+    { key: "demos", label: "OS Demos", icon: Shield, adminOnly: true },
     { key: "submissions", label: "Contact Leads", icon: Mail, adminOnly: true },
   ];
 
