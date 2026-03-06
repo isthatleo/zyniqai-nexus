@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Send, Mail, MapPin, Phone } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { z } from "zod";
+import { useLocation } from "react-router-dom";
 
 const contactSchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100),
@@ -19,6 +20,18 @@ const ContactSection = () => {
   const [message, setMessage] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const { toast } = useToast();
+  const location = useLocation();
+
+  useEffect(() => {
+    // Prefill message if a tier was selected from pricing
+    const search = new URLSearchParams(location.search);
+    const tierFromQuery = search.get("tier");
+    const tierFromState = (location.state as any)?.selectedTier;
+    const selected = tierFromState || tierFromQuery;
+    if (selected) {
+      setMessage(`Hi — I'm interested in the ${selected} offering. Please share next steps and availability.`);
+    }
+  }, [location.search, location.state]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

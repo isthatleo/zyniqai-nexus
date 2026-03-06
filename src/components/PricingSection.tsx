@@ -1,14 +1,10 @@
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Check, Sparkles, Globe } from "lucide-react";
+import { motion } from "framer-motion";
+import { Check, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { animate, stagger } from "animejs";
-<<<<<<< HEAD
 import CharacterReveal from "./CharacterReveal";
-=======
-import ScrollTextReveal from "./ScrollTextReveal";
->>>>>>> 8062e1e4365cf03a1f0954840f33a73e347b9ef0
 
 type Region = "za" | "uk" | "us";
 
@@ -84,7 +80,6 @@ const PricingSection = () => {
     const fetchPackages = async () => {
       const { data } = await supabase.from("packages").select("*").eq("is_active", true).order("price_monthly", { ascending: true });
       if (data && data.length > 0) {
-        // Sort by predefined order
         const sorted = [...data].sort((a, b) => {
           const ai = tierOrder.indexOf(a.name);
           const bi = tierOrder.indexOf(b.name);
@@ -129,7 +124,6 @@ const PricingSection = () => {
   return (
     <section id="pricing" className="section-padding relative">
       <div className="max-w-6xl mx-auto text-center">
-<<<<<<< HEAD
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -139,11 +133,6 @@ const PricingSection = () => {
           <h2 className="text-3xl md:text-5xl font-bold mb-4">
             Infrastructure-Grade <CharacterReveal text="Pricing" className="gradient-text" staggerDelay={35} />
           </h2>
-=======
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-10">
-          <ScrollTextReveal text="Infrastructure-Grade Pricing" tag="h2"
-            className="text-3xl md:text-5xl font-bold mb-4 gradient-text" staggerDelay={25} />
->>>>>>> 8062e1e4365cf03a1f0954840f33a73e347b9ef0
           <p className="text-muted-foreground max-w-xl mx-auto mb-8">
             From startup websites to enterprise AI infrastructure. Implementation projects plus ongoing retainer plans.
           </p>
@@ -160,7 +149,6 @@ const PricingSection = () => {
           </div>
         </motion.div>
 
-        {/* Implementation price */}
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
           className="glass-card p-5 mb-6">
           <p className="text-xs text-muted-foreground uppercase tracking-widest mb-1">AI Implementation</p>
@@ -168,7 +156,6 @@ const PricingSection = () => {
           <p className="text-xs text-muted-foreground">once-off · scoped per project</p>
         </motion.div>
 
-        {/* Tiers from DB */}
         <div ref={cardsRef} className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {packages.map((pkg) => {
             const tag = tierTags[pkg.name] || "";
@@ -177,129 +164,110 @@ const PricingSection = () => {
             const breakdowns = tierBreakdowns[pkg.name] || [];
             const features = Array.isArray(pkg.features) ? (pkg.features as string[]) : [];
 
+            const ctaBase = hoveredTier === pkg.name
+              ? "bg-card/90 text-foreground border border-border/60"
+              : isHighlighted
+                ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                : isWebDesign
+                  ? "border border-cyan-500/40 text-foreground hover:border-cyan-400/60"
+                  : "border border-border/60 text-foreground hover:border-primary/40";
+
             return (
-<<<<<<< HEAD
               <motion.div
                 key={pkg.id}
                 whileHover={{ y: -5 }}
                 transition={{ duration: 0.3 }}
-                className={`pricing-card glass-card-hover p-6 flex flex-col relative opacity-0 overflow-hidden group ${
+                className={`pricing-card glass-card-hover p-6 flex flex-col relative opacity-0 overflow-visible group ${
                   isHighlighted ? "border-primary/40 md:scale-105" : ""
                 }`}
-=======
-              <div key={pkg.id}
-                className={`pricing-card glass-card-hover p-5 flex flex-col relative opacity-0 ${
-                  isHighlighted ? "border-primary/40" : ""
-                } ${isWebDesign ? "border-cyan-500/30" : ""}`}
->>>>>>> 8062e1e4365cf03a1f0954840f33a73e347b9ef0
                 onMouseEnter={() => setHoveredTier(pkg.name)}
                 onMouseLeave={() => setHoveredTier(null)}
               >
-                {/* Gradient overlay on hover */}
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
                 
                 {tag && (
-<<<<<<< HEAD
                   <motion.span
                     initial={{ scale: 0 }}
                     whileInView={{ scale: 1 }}
                     viewport={{ once: true }}
                     className="text-[10px] font-medium uppercase text-primary-foreground bg-primary px-2.5 py-0.5 rounded-full self-start mb-3 relative z-10"
                   >
-=======
-                  <span className={`text-[10px] font-medium uppercase px-2.5 py-0.5 rounded-full self-start mb-3 ${
-                    isWebDesign
-                      ? "text-cyan-400 bg-cyan-500/10 border border-cyan-500/20"
-                      : "text-primary-foreground bg-primary"
-                  }`}>
->>>>>>> 8062e1e4365cf03a1f0954840f33a73e347b9ef0
                     {tag}
                   </motion.span>
                 )}
-<<<<<<< HEAD
                 <h3 className="text-base font-bold text-left relative z-10">{pkg.name}</h3>
                 <p className="text-xs text-muted-foreground text-left mt-1 mb-3 relative z-10">{pkg.description}</p>
                 <div className="text-left mt-1 mb-2 relative z-10">
                   <span className="text-3xl font-bold">{formatPrice(Number(pkg.price_monthly))}</span>
-=======
-                {isWebDesign && <Globe size={14} className="absolute top-4 right-4 text-cyan-400/60" />}
-                <h3 className="text-base font-bold text-left">{pkg.name}</h3>
-                <p className="text-xs text-muted-foreground text-left mt-1 mb-3 line-clamp-2">{pkg.description}</p>
-                <div className="text-left mt-1 mb-2">
-                  <span className="text-2xl font-bold">{formatPrice(Number(pkg.price_monthly))}</span>
->>>>>>> 8062e1e4365cf03a1f0954840f33a73e347b9ef0
                   <span className="text-muted-foreground text-sm">/mo</span>
                 </div>
                 <p className="text-[11px] text-muted-foreground text-left mb-4 relative z-10">
                   {formatPrice(Number(pkg.price_yearly))}/yr
                 </p>
 
-<<<<<<< HEAD
                 <ul className="space-y-2 mb-6 flex-1 relative z-10">
                   {features.map((f) => (
                     <li key={f} className="flex items-center gap-2 text-sm text-left">
                       <Check size={13} className="text-primary flex-shrink-0" />
-=======
-                <ul className="space-y-1.5 mb-5 flex-1">
-                  {features.slice(0, 6).map((f) => (
-                    <li key={f} className="flex items-start gap-2 text-[12px] text-left">
-                      <Check size={12} className="text-primary flex-shrink-0 mt-0.5" />
->>>>>>> 8062e1e4365cf03a1f0954840f33a73e347b9ef0
                       <span className="text-muted-foreground">{f}</span>
                     </li>
                   ))}
                 </ul>
 
-<<<<<<< HEAD
-                {/* Hover Breakdown Tooltip */}
-=======
-                {/* Hover Breakdown */}
->>>>>>> 8062e1e4365cf03a1f0954840f33a73e347b9ef0
-                <AnimatePresence>
-                  {hoveredTier === pkg.name && breakdowns.length > 0 && (
-                    <motion.div initial={{ opacity: 0, y: 10, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                      transition={{ duration: 0.2 }}
-                      className="absolute left-0 right-0 -bottom-2 translate-y-full z-30 mx-2">
-                      <div className="bg-card border border-primary/20 rounded-2xl p-4 shadow-2xl">
-                        <div className="flex items-center gap-1.5 mb-3">
-                          <Sparkles size={12} className="text-primary" />
-                          <p className="text-xs font-semibold text-primary">What's Included</p>
-                        </div>
-                        <div className="space-y-2">
-                          {breakdowns.map((b) => (
-                            <div key={b.category} className="flex items-start gap-2">
-                              <div className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 flex-shrink-0" />
-                              <div className="text-left">
-                                <p className="text-xs font-medium text-foreground">{b.category}</p>
-                                <p className="text-[10px] text-muted-foreground">{b.detail}</p>
-                              </div>
+                {hoveredTier === pkg.name && breakdowns.length > 0 && (
+                  <motion.div 
+                    initial={{ opacity: 0, y: 6, scale: 0.98 }} 
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ duration: 0.18 }}
+                    className="absolute left-0 right-0 top-0 -translate-y-full z-50 mx-2 pointer-events-none"
+                  >
+                    <div className="bg-card border border-primary/20 rounded-2xl p-5 shadow-2xl max-w-sm pointer-events-none">
+                      <div className="flex items-center gap-1.5 mb-4">
+                        <Sparkles size={14} className="text-primary" />
+                        <p className="text-sm font-bold text-primary">What's Included</p>
+                      </div>
+                      <div className="space-y-3">
+                        {breakdowns.map((b, idx) => (
+                          <motion.div 
+                            key={b.category} 
+                            className="flex items-start gap-2.5"
+                            initial={{ opacity: 0, x: -4 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: idx * 0.05 }}
+                          >
+                            <div className="w-2 h-2 rounded-full bg-primary mt-1.5 flex-shrink-0" />
+                            <div className="text-left flex-1">
+                              <p className="text-xs font-semibold text-foreground">{b.category}</p>
+                              <p className="text-[11px] text-muted-foreground leading-relaxed">{b.detail}</p>
                             </div>
-                          ))}
+                          </motion.div>
+                        ))}
+                      </div>
+                      <div className="mt-4 pt-3 border-t border-border/30 space-y-2 pointer-events-none">
+                        <div className="flex justify-between items-center text-xs">
+                          <span className="text-muted-foreground">Monthly</span>
+                          <p className="text-sm font-bold text-primary">
+                            {formatPrice(Number(pkg.price_monthly))}
+                          </p>
                         </div>
-                        <div className="mt-3 pt-2 border-t border-border/30">
-                          <p className="text-[10px] text-muted-foreground text-center">
-                            {formatPrice(Number(pkg.price_monthly))}/mo billed monthly
+                        <div className="flex justify-between items-center text-xs">
+                          <span className="text-muted-foreground">Annually (Save 15%)</span>
+                          <p className="text-xs font-semibold text-primary/80">
+                            {formatPrice(Number(pkg.price_yearly))}
                           </p>
                         </div>
                       </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                      <p className="text-[10px] text-muted-foreground text-center mt-3 italic pointer-events-none">
+                        Custom plans available for enterprise needs
+                      </p>
+                    </div>
+                  </motion.div>
+                )}
 
-<<<<<<< HEAD
                 <Link
-                  to="/contact"
-                  className={`block text-center text-sm font-medium py-2.5 rounded-full transition-all relative z-10 ${
-=======
-                <Link to="/contact"
-                  className={`block text-center text-sm font-medium py-2.5 rounded-full transition-all ${
->>>>>>> 8062e1e4365cf03a1f0954840f33a73e347b9ef0
-                    isHighlighted
-                      ? "bg-primary text-primary-foreground hover:bg-primary/90"
-                      : isWebDesign
-                        ? "border border-cyan-500/40 text-foreground hover:border-cyan-400/60"
-                        : "border border-border/60 text-foreground hover:border-primary/40"
-                  }`}>
+                  to={{ pathname: "/contact", search: `?tier=${encodeURIComponent(pkg.name)}` }}
+                  state={{ selectedTier: pkg.name }}
+                  className={`block text-center text-sm font-medium py-2.5 rounded-full transition-all transform duration-200 relative z-10 group-hover:translate-y-12 pointer-events-auto ${ctaBase}`}>
                   {isWebDesign ? "Get a Website" : "Get Started"}
                 </Link>
               </motion.div>
@@ -315,3 +283,4 @@ const PricingSection = () => {
 };
 
 export default PricingSection;
+

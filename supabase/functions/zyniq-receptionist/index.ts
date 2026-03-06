@@ -3,7 +3,9 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.1";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
+  "Access-Control-Max-Age": "600",
 };
 
 const SYSTEM_PROMPT = `You are ZyniqAI Reception — the official AI Front Desk and Gatekeeper for ZyniqAI.
@@ -93,7 +95,7 @@ OPENING: If this is the first message in the conversation, open with:
 "Welcome to ZyniqAI. Are you optimizing workflows, or building AI-native infrastructure?"`;
 
 serve(async (req) => {
-  if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
+  if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: corsHeaders });
 
   try {
     const { messages, session_id } = await req.json();
