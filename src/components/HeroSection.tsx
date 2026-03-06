@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useTheme } from "./ThemeProvider";
 import { ArrowDown } from "lucide-react";
 import { animate, stagger } from "animejs";
+import ScrollTextReveal from "./ScrollTextReveal";
 
 const AnimatedRing = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
