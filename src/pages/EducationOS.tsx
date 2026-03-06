@@ -4,6 +4,9 @@ import { GraduationCap, BookOpen, ClipboardCheck, DollarSign, BarChart3, Brain, 
 import { Link } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import { animate, stagger } from "animejs";
+import ScrollTextReveal from "@/components/ScrollTextReveal";
+import ParallaxSection from "@/components/ParallaxSection";
+import { EducationDashboardMockup } from "@/components/DashboardMockups";
 
 type Region = "za" | "uk" | "us";
 const pricing: Record<Region, { build: string; t1: string; t2: string; t3: string }> = {
