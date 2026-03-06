@@ -6,6 +6,9 @@ import { useState, useEffect, useRef } from "react";
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, BarChart, Bar } from "recharts";
 import { useTheme } from "@/components/ThemeProvider";
 import { animate, stagger } from "animejs";
+import ScrollTextReveal from "@/components/ScrollTextReveal";
+import ParallaxSection from "@/components/ParallaxSection";
+import { HospitalityDashboardMockup } from "@/components/DashboardMockups";
 
 const occupancyData = [
   { month: "Jan", rate: 62 }, { month: "Feb", rate: 68 }, { month: "Mar", rate: 75 },
