@@ -107,9 +107,8 @@ const HospitalityOS = () => {
           <div className="max-w-6xl mx-auto text-center">
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-16">
               <span className="text-xs font-medium tracking-widest uppercase text-primary mb-4 block">Industry OS</span>
-              <h1 className="text-3xl md:text-5xl font-display font-bold mb-4">
-                ZyniqAI <span className="gradient-text">Hospitality OS</span>
-              </h1>
+              <ScrollTextReveal text="ZyniqAI Hospitality OS" tag="h1"
+                className="text-3xl md:text-5xl font-display font-bold mb-4 gradient-text" staggerDelay={35} />
               <p className="text-muted-foreground max-w-2xl mx-auto">
                 Transform your hotel into a fully digital ecosystem. Centralize operations, increase direct bookings, and make data-driven decisions with AI-powered intelligence.
               </p>
