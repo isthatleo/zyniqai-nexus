@@ -6,6 +6,9 @@ import { useState, useEffect, useRef } from "react";
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, BarChart, Bar } from "recharts";
 import { useTheme } from "@/components/ThemeProvider";
 import { animate, stagger } from "animejs";
+import ScrollTextReveal from "@/components/ScrollTextReveal";
+import ParallaxSection from "@/components/ParallaxSection";
+import { HospitalityDashboardMockup } from "@/components/DashboardMockups";
 
 const occupancyData = [
   { month: "Jan", rate: 62 }, { month: "Feb", rate: 68 }, { month: "Mar", rate: 75 },
@@ -104,9 +107,8 @@ const HospitalityOS = () => {
           <div className="max-w-6xl mx-auto text-center">
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-16">
               <span className="text-xs font-medium tracking-widest uppercase text-primary mb-4 block">Industry OS</span>
-              <h1 className="text-3xl md:text-5xl font-display font-bold mb-4">
-                ZyniqAI <span className="gradient-text">Hospitality OS</span>
-              </h1>
+              <ScrollTextReveal text="ZyniqAI Hospitality OS" tag="h1"
+                className="text-3xl md:text-5xl font-display font-bold mb-4 gradient-text" staggerDelay={35} />
               <p className="text-muted-foreground max-w-2xl mx-auto">
                 Transform your hotel into a fully digital ecosystem. Centralize operations, increase direct bookings, and make data-driven decisions with AI-powered intelligence.
               </p>
@@ -125,44 +127,15 @@ const HospitalityOS = () => {
             </div>
 
             {/* Dashboard Preview */}
+            <ParallaxSection speed={0.2}>
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-16">
-              <h2 className="text-2xl font-display font-bold mb-8">Dashboard Preview</h2>
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="glass-card p-6">
-                  <h3 className="text-sm font-medium mb-1">Occupancy Rate</h3>
-                  <p className="text-xs text-muted-foreground mb-4">Monthly trend</p>
-                  <ResponsiveContainer width="100%" height={200}>
-                    <AreaChart data={occupancyData}>
-                      <defs>
-                        <linearGradient id="gradOcc" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#D4AF37" stopOpacity={0.3} />
-                          <stop offset="95%" stopColor="#D4AF37" stopOpacity={0} />
-                        </linearGradient>
-                      </defs>
-                      <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
-                      <XAxis dataKey="month" tick={{ fill: tickColor, fontSize: 11 }} axisLine={false} tickLine={false} />
-                      <YAxis tick={{ fill: tickColor, fontSize: 11 }} axisLine={false} tickLine={false} />
-                      <Tooltip content={<CustomTooltip />} />
-                      <Area type="monotone" dataKey="rate" stroke="#D4AF37" strokeWidth={2} fill="url(#gradOcc)" />
-                    </AreaChart>
-                  </ResponsiveContainer>
-                </div>
-                <div className="glass-card p-6">
-                  <h3 className="text-sm font-medium mb-1">Revenue Channels</h3>
-                  <p className="text-xs text-muted-foreground mb-4">Direct vs OTA bookings (k)</p>
-                  <ResponsiveContainer width="100%" height={200}>
-                    <BarChart data={revenueData}>
-                      <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
-                      <XAxis dataKey="month" tick={{ fill: tickColor, fontSize: 11 }} axisLine={false} tickLine={false} />
-                      <YAxis tick={{ fill: tickColor, fontSize: 11 }} axisLine={false} tickLine={false} />
-                      <Tooltip content={<CustomTooltip />} />
-                      <Bar dataKey="direct" fill="#D4AF37" radius={[4, 4, 0, 0]} />
-                      <Bar dataKey="ota" fill="#8B6914" radius={[4, 4, 0, 0]} />
-                    </BarChart>
-                  </ResponsiveContainer>
-                </div>
+              <ScrollTextReveal text="Dashboard Preview" tag="h2"
+                className="text-2xl font-display font-bold mb-8" staggerDelay={40} />
+              <div className="glass-card p-6">
+                <HospitalityDashboardMockup />
               </div>
             </motion.div>
+            </ParallaxSection>
 
             {/* Pricing */}
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>

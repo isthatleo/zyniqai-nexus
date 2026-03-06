@@ -17,7 +17,9 @@ import {
 import { useTheme } from "@/components/ThemeProvider";
 import { useToast } from "@/hooks/use-toast";
 
-type Tab = "overview" | "clients" | "packages" | "invoices" | "revenue" | "submissions" | "leads";
+import { MVPPromptsPanel } from "@/components/DashboardMockups";
+
+type Tab = "overview" | "clients" | "packages" | "invoices" | "revenue" | "submissions" | "leads" | "demos";
 
 const statusColors: Record<string, string> = {
   active: "hsl(145, 63%, 49%)",
@@ -167,6 +169,7 @@ const ClientPortal = () => {
     { key: "invoices", label: "Invoices", icon: FileText },
     { key: "revenue", label: "Revenue", icon: DollarSign },
     { key: "leads", label: "AI Leads", icon: BarChart3, adminOnly: true },
+    { key: "demos", label: "OS Demos", icon: Shield, adminOnly: true },
     { key: "submissions", label: "Contact Leads", icon: Mail, adminOnly: true },
   ];
 
@@ -665,6 +668,15 @@ const ClientPortal = () => {
                   </table>
                 </div>
               </div>
+            </div>
+          )}
+
+          {/* ==================== OS DEMOS ==================== */}
+          {activeTab === "demos" && isAdmin && (
+            <div className="space-y-4">
+              <h3 className="text-lg font-bold">Dashboard Demos & MVP Prompts</h3>
+              <p className="text-sm text-muted-foreground">Preview dashboard mockups for each Industry OS and copy the MVP prompt to spin up a demo quickly.</p>
+              <MVPPromptsPanel />
             </div>
           )}
 
