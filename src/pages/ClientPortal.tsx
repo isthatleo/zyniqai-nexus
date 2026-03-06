@@ -17,7 +17,9 @@ import {
 import { useTheme } from "@/components/ThemeProvider";
 import { useToast } from "@/hooks/use-toast";
 
-type Tab = "overview" | "clients" | "packages" | "invoices" | "revenue" | "submissions" | "leads";
+import { MVPPromptsPanel } from "@/components/DashboardMockups";
+
+type Tab = "overview" | "clients" | "packages" | "invoices" | "revenue" | "submissions" | "leads" | "demos";
 
 const statusColors: Record<string, string> = {
   active: "hsl(145, 63%, 49%)",
