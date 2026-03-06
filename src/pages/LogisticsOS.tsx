@@ -102,39 +102,15 @@ const LogisticsOS = () => {
             </div>
 
             {/* Dashboard mockup */}
+            <ParallaxSection speed={0.2}>
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-16">
-              <h2 className="text-2xl font-display font-bold mb-8">Dashboard Preview</h2>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                {[
-                  { label: "Active Vehicles", value: "142" },
-                  { label: "On-Time Rate", value: "96.4%" },
-                  { label: "Fuel Savings", value: "38%" },
-                  { label: "AI Predictions", value: "2.1k/day" },
-                ].map((kpi) => (
-                  <div key={kpi.label} className="glass-card p-4">
-                    <p className="text-xl font-display font-bold text-primary">{kpi.value}</p>
-                    <p className="text-[10px] text-muted-foreground mt-1">{kpi.label}</p>
-                  </div>
-                ))}
-              </div>
-              <div ref={statusRef} className="grid md:grid-cols-3 gap-4">
-                {[
-                  { status: "En Route", count: 87, pct: 61 },
-                  { status: "At Warehouse", count: 38, pct: 27 },
-                  { status: "Maintenance", count: 17, pct: 12 },
-                ].map((s) => (
-                  <div key={s.status} className="status-bar glass-card p-5 opacity-0">
-                    <div className="flex items-center justify-between mb-3">
-                      <p className="text-sm font-medium">{s.status}</p>
-                      <span className="text-xs font-bold text-primary">{s.count}</span>
-                    </div>
-                    <div className="w-full h-2 rounded-full bg-muted/50">
-                      <div className="h-full rounded-full bg-primary transition-all duration-1000" style={{ width: `${s.pct}%` }} />
-                    </div>
-                  </div>
-                ))}
+              <ScrollTextReveal text="Dashboard Preview" tag="h2"
+                className="text-2xl font-display font-bold mb-8" staggerDelay={40} />
+              <div className="glass-card p-6">
+                <LogisticsDashboardMockup />
               </div>
             </motion.div>
+            </ParallaxSection>
 
             {/* Pricing */}
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>

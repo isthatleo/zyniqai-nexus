@@ -103,35 +103,15 @@ const EducationOS = () => {
             </div>
 
             {/* Dashboard mockup */}
+            <ParallaxSection speed={0.2}>
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-16">
-              <h2 className="text-2xl font-display font-bold mb-8">Dashboard Preview</h2>
-              <div ref={kpisRef} className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                {[
-                  { label: "Total Students", value: "2,340" },
-                  { label: "Attendance Rate", value: "94.2%" },
-                  { label: "Fee Collection", value: "98.5%" },
-                  { label: "AI Accuracy", value: "91.3%" },
-                ].map((kpi) => (
-                  <div key={kpi.label} className="kpi-item glass-card p-4 opacity-0">
-                    <p className="text-xl font-display font-bold text-primary">{kpi.value}</p>
-                    <p className="text-[10px] text-muted-foreground mt-1">{kpi.label}</p>
-                  </div>
-                ))}
-              </div>
+              <ScrollTextReveal text="Dashboard Preview" tag="h2"
+                className="text-2xl font-display font-bold mb-8" staggerDelay={40} />
               <div className="glass-card p-6">
-                <div className="grid grid-cols-5 gap-1 h-32">
-                  {Array.from({ length: 25 }, (_, i) => {
-                    const intensity = Math.random();
-                    return (
-                      <div key={i} className="rounded" style={{
-                        backgroundColor: `hsl(var(--gold) / ${0.1 + intensity * 0.6})`,
-                      }} title={`${Math.round(intensity * 100)}% attendance`} />
-                    );
-                  })}
-                </div>
-                <p className="text-xs text-muted-foreground mt-3">Attendance Heatmap — Last 5 Weeks</p>
+                <EducationDashboardMockup />
               </div>
             </motion.div>
+            </ParallaxSection>
 
             {/* Pricing */}
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
