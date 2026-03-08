@@ -157,7 +157,7 @@ const HeroSection = () => {
           >
             <Link
               to="/contact"
-              className="w-full sm:w-auto px-6 py-2.5 rounded-full bg-white text-black text-sm font-medium hover:bg-white/90 transition-all text-center shadow-lg"
+              className="w-full sm:w-auto px-6 py-2.5 rounded-full bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-all text-center shadow-lg"
             >
               Get Started
             </Link>
