@@ -431,7 +431,7 @@ const AIChatWidget = () => {
 
         // Speak the response if voice is enabled
         if (voiceEnabled) {
-          await speakText(assistantResponse);
+          await speakText(stripLeadData(assistantResponse));
         }
       }
     } catch (error) {
