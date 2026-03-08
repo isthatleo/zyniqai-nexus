@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { animate, stagger, AnimeInstance } from "animejs";
+import { animate, stagger } from "animejs";
 
 interface UseAnimateOnScrollOptions {
   threshold?: number;
@@ -37,7 +37,7 @@ export const useAnimateOnScroll = (options: UseAnimateOnScrollOptions = {}) => {
               opacity: [0, 1],
               translateY: [30, 0],
               duration,
-              delay: stagger(staggerAmount, { start: delay, direction: staggerDirection as any }),
+              delay: stagger(staggerAmount, { start: delay } as any),
               ease,
             });
           }
@@ -78,7 +78,7 @@ export const useAnimateElements = () => {
             animate(elements, {
               ...props,
               duration,
-              delay: stagger(staggerAmount, { start: delay, direction: staggerDirection as any }),
+              delay: stagger(staggerAmount, { start: delay } as any),
               ease,
             });
           }
