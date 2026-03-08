@@ -131,7 +131,7 @@ const HeroSection = () => {
             <br />
             <CharacterReveal
               text="AI systems"
-              className="bg-gradient-to-r from-[hsl(45,93%,58%)] via-[hsl(0,72%,63%)] to-[hsl(280,70%,60%)] bg-clip-text text-transparent"
+              className="bg-gradient-to-r from-yellow-accent via-primary to-purple-accent bg-clip-text text-transparent"
               staggerDelay={40}
             />
             <br />
