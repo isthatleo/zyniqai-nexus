@@ -552,7 +552,7 @@ const AIChatWidget = () => {
                       >
                         {msg.role === "assistant" ? (
                           <div className="prose prose-sm prose-invert max-w-none [&>p]:m-0 [&>p+p]:mt-1 [&>ul]:my-1 [&>ol]:my-1 [&_li]:text-[12px] sm:[&_li]:text-[13px]">
-                            <ReactMarkdown>{msg.content}</ReactMarkdown>
+                            <ReactMarkdown>{stripLeadData(msg.content)}</ReactMarkdown>
                           </div>
                         ) : (
                           msg.content.split("\n").map((line, j) => (
