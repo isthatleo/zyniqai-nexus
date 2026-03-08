@@ -315,6 +315,10 @@ const AIChatWidget = () => {
     setLeadCaptured(true);
   };
 
+  const stripLeadData = (text: string): string => {
+    return text.replace(/<lead_data>[\s\S]*?<\/lead_data>/g, '').trim();
+  };
+
   const extractLeadData = (text: string) => {
     const match = text.match(/<lead_data>(.*?)<\/lead_data>/s);
     if (match) {
