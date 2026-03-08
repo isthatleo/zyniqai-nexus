@@ -315,6 +315,10 @@ const AIChatWidget = () => {
     setLeadCaptured(true);
   };
 
+  const stripLeadData = (text: string): string => {
+    return text.replace(/<lead_data>[\s\S]*?<\/lead_data>/g, '').trim();
+  };
+
   const extractLeadData = (text: string) => {
     const match = text.match(/<lead_data>(.*?)<\/lead_data>/s);
     if (match) {
@@ -427,7 +431,7 @@ const AIChatWidget = () => {
 
         // Speak the response if voice is enabled
         if (voiceEnabled) {
-          await speakText(assistantResponse);
+          await speakText(stripLeadData(assistantResponse));
         }
       }
     } catch (error) {
@@ -548,7 +552,7 @@ const AIChatWidget = () => {
                       >
                         {msg.role === "assistant" ? (
                           <div className="prose prose-sm prose-invert max-w-none [&>p]:m-0 [&>p+p]:mt-1 [&>ul]:my-1 [&>ol]:my-1 [&_li]:text-[12px] sm:[&_li]:text-[13px]">
-                            <ReactMarkdown>{msg.content}</ReactMarkdown>
+                            <ReactMarkdown>{stripLeadData(msg.content)}</ReactMarkdown>
                           </div>
                         ) : (
                           msg.content.split("\n").map((line, j) => (
