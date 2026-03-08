@@ -47,8 +47,7 @@ const HeroSection = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative w-screen min-h-screen flex items-center justify-center overflow-hidden -mx-[50vw] left-1/2 right-1/2 ml-[-50vw] mr-[-50vw]"
-      style={{ width: "100vw", maxWidth: "100vw" }}
+      className="relative w-full min-h-screen flex items-center justify-center overflow-hidden"
     >
       {/* Layer 0: Sky background */}
       <motion.div className="absolute inset-0 z-0" style={{ y: skyY }}>
