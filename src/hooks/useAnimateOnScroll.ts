@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { animate, stagger, AnimeInstance } from "animejs";
+import { animate, stagger } from "animejs";
 
 interface UseAnimateOnScrollOptions {
   threshold?: number;
