@@ -78,7 +78,7 @@ export const useAnimateElements = () => {
             animate(elements, {
               ...props,
               duration,
-              delay: stagger(staggerAmount, { start: delay, direction: staggerDirection as any }),
+              delay: stagger(staggerAmount, { start: delay } as any),
               ease,
             });
           }

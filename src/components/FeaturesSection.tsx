@@ -162,7 +162,7 @@ const FeaturesSection = () => {
                 <div className="mb-6 flex justify-center lg:justify-start">
                   {animationIndex === 0 ? (
                     <TypewriterEffect text={feature.title.charAt(0).toUpperCase()} 
-                      className="text-4xl font-bold" style={{ color: feature.accentColor }} />
+                      className="text-4xl font-bold" />
                   ) : animationIndex === 1 ? (
                     <SVGLineAccent color={feature.accentColor} />
                   ) : animationIndex === 2 ? (
