@@ -1,131 +1,35 @@
-import { useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Link } from "react-router-dom";
-import { useTheme } from "./ThemeProvider";
 import { ArrowDown } from "lucide-react";
 import { animate, stagger } from "animejs";
 import CharacterReveal from "./CharacterReveal";
 
-const AnimatedRing = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const { resolvedTheme } = useTheme();
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    let animationId: number;
-    let time = 0;
-
-    const resize = () => {
-      const dpr = window.devicePixelRatio || 1;
-      const size = Math.min(canvas.parentElement?.clientWidth || 500, 500);
-      canvas.width = size * dpr;
-      canvas.height = size * dpr;
-      canvas.style.width = `${size}px`;
-      canvas.style.height = `${size}px`;
-      ctx.scale(dpr, dpr);
-    };
-    resize();
-    window.addEventListener("resize", resize);
-
-    const colors = [
-      { color: "hsl(145, 63%, 49%)", start: 0, end: 0.25 },
-      { color: "hsl(45, 93%, 58%)", start: 0.25, end: 0.4 },
-      { color: "hsl(0, 72%, 63%)", start: 0.4, end: 0.6 },
-      { color: "hsl(187, 72%, 55%)", start: 0.6, end: 0.8 },
-      { color: "hsl(217, 91%, 60%)", start: 0.8, end: 1.0 },
-    ];
-
-    const draw = () => {
-      const w = canvas.width / (window.devicePixelRatio || 1);
-      const h = canvas.height / (window.devicePixelRatio || 1);
-      ctx.clearRect(0, 0, w, h);
-      const cx = w / 2;
-      const cy = h / 2;
-      const baseRadius = Math.min(w, h) * 0.38;
-      time += 0.003;
-
-      colors.forEach((seg) => {
-        const startAngle = seg.start * Math.PI * 2 - Math.PI / 2 + time;
-        const endAngle = seg.end * Math.PI * 2 - Math.PI / 2 + time;
-        ctx.beginPath();
-        ctx.arc(cx, cy, baseRadius, startAngle, endAngle);
-        ctx.strokeStyle = seg.color;
-        ctx.lineWidth = 3;
-        ctx.lineCap = "round";
-        ctx.stroke();
-      });
-
-      ctx.beginPath();
-      ctx.arc(cx, cy, baseRadius * 0.85, 0, Math.PI * 2);
-      ctx.strokeStyle = resolvedTheme === "light" ? "hsl(240, 5%, 80%)" : "hsl(240, 4%, 22%)";
-      ctx.lineWidth = 1;
-      ctx.stroke();
-
-      for (let i = 0; i < 60; i++) {
-        const angle = (i / 60) * Math.PI * 2 - Math.PI / 2 + time * 0.5;
-        const inner = baseRadius * 0.88;
-        const outer = baseRadius * (i % 5 === 0 ? 0.95 : 0.92);
-        ctx.beginPath();
-        ctx.moveTo(cx + Math.cos(angle) * inner, cy + Math.sin(angle) * inner);
-        ctx.lineTo(cx + Math.cos(angle) * outer, cy + Math.sin(angle) * outer);
-        ctx.strokeStyle = resolvedTheme === "light" ? "hsl(240, 5%, 75%)" : "hsl(240, 4%, 28%)";
-        ctx.lineWidth = i % 5 === 0 ? 1.5 : 0.5;
-        ctx.stroke();
-      }
-
-      const dotCount = 40;
-      for (let i = 0; i < dotCount; i++) {
-        const angle = (i / dotCount) * Math.PI * 2 + time * 1.5;
-        const r = baseRadius * (0.3 + 0.35 * Math.abs(Math.sin(angle * 3 + time * 2)));
-        const x = cx + Math.cos(angle) * r;
-        const y = cy + Math.sin(angle) * r;
-        const size = 2 + Math.sin(time * 3 + i) * 1;
-        ctx.beginPath();
-        ctx.arc(x, y, size, 0, Math.PI * 2);
-        ctx.fillStyle = `hsl(0, 72%, 63%)`;
-        ctx.fill();
-      }
-
-      const barCount = 20;
-      for (let i = 0; i < barCount; i++) {
-        const y = cy - baseRadius * 0.3 + (i / barCount) * baseRadius * 0.6;
-        const barWidth = baseRadius * (0.2 + 0.5 * Math.abs(Math.sin(i * 0.5 + time * 2)));
-        const x = cx - barWidth / 2;
-        ctx.fillStyle = `hsla(0, 72%, 63%, ${0.15 + 0.15 * Math.sin(i + time * 2)})`;
-        ctx.fillRect(x, y, barWidth, 1.5);
-      }
-
-      const innerGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, baseRadius * 0.28);
-      innerGrad.addColorStop(0, resolvedTheme === "light" ? "hsl(240, 5%, 95%)" : "hsl(240, 6%, 12%)");
-      innerGrad.addColorStop(1, resolvedTheme === "light" ? "hsl(240, 5%, 92%)" : "hsl(240, 6%, 8%)");
-      ctx.beginPath();
-      ctx.arc(cx, cy, baseRadius * 0.22, 0, Math.PI * 2);
-      ctx.fillStyle = innerGrad;
-      ctx.fill();
-
-      animationId = requestAnimationFrame(draw);
-    };
-    draw();
-
-    return () => {
-      cancelAnimationFrame(animationId);
-      window.removeEventListener("resize", resize);
-    };
-  }, [resolvedTheme]);
-
-  return <canvas ref={canvasRef} className="w-full max-w-[500px] aspect-square" />;
-};
+import skyBg from "@/assets/hero/sky.jpg";
+import mountain1 from "@/assets/hero/mountain-1.png";
+import mountain2 from "@/assets/hero/mountain-2.png";
+import planets from "@/assets/hero/planets.png";
+import codingPov from "@/assets/hero/coding-pov.png";
 
 const HeroSection = () => {
+  const sectionRef = useRef<HTMLElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
-  const pillsRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+
+  // Parallax layers at different speeds
+  const skyY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
+  const planetsY = useTransform(scrollYProgress, [0, 1], ["0%", "35%"]);
+  const mountain2Y = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
+  const mountain1Y = useTransform(scrollYProgress, [0, 1], ["0%", "8%"]);
+  const codingY = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
+  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+  const overlayOpacity = useTransform(scrollYProgress, [0, 0.8], [0, 0.6]);
 
   useEffect(() => {
-    // Anime.js stagger for hero text elements
     if (textRef.current) {
       const els = textRef.current.querySelectorAll(".hero-anim");
       animate(els, {
@@ -139,67 +43,139 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
-      <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-4 items-center min-h-[calc(100vh-4rem)]">
-          {/* Left: Text */}
-          <div ref={textRef} className="text-center lg:text-left">
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.1 }}
-              className="hero-anim text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight"
-            >
-              All-in-one
-              <br />
-              <CharacterReveal text="AI systems" className="gradient-text" staggerDelay={40} />
-              <br />
-              engine.
-            </motion.h1>
+    <section
+      ref={sectionRef}
+      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+    >
+      {/* Layer 0: Sky background */}
+      <motion.div
+        className="absolute inset-0 z-0"
+        style={{ y: skyY }}
+      >
+        <img
+          src={skyBg}
+          alt=""
+          className="w-full h-full object-cover scale-110"
+        />
+      </motion.div>
 
-            <motion.p
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="hero-anim mt-6 text-base sm:text-lg text-muted-foreground max-w-md mx-auto lg:mx-0 leading-relaxed"
-            >
-              A fast and flexible AI infrastructure
-              <br className="hidden sm:block" />
-              partner to power your enterprise.
-            </motion.p>
+      {/* Layer 1: Planets floating */}
+      <motion.div
+        className="absolute inset-0 z-[1]"
+        style={{ y: planetsY }}
+      >
+        <img
+          src={planets}
+          alt=""
+          className="w-full h-full object-cover opacity-70"
+        />
+      </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="hero-anim mt-8 flex flex-col sm:flex-row items-center gap-3 justify-center lg:justify-start"
-            >
-              <Link
-                to="/contact"
-                className="w-full sm:w-auto px-6 py-2.5 rounded-full bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-all text-center"
-              >
-                Get Started
-              </Link>
-              <a
-                href="#features"
-                className="w-full sm:w-auto px-6 py-2.5 rounded-full border border-border/60 text-sm font-medium text-muted-foreground hover:text-foreground hover:border-foreground/20 transition-all flex items-center justify-center gap-2"
-              >
-                Learn more <ArrowDown size={14} />
-              </a>
-            </motion.div>
-          </div>
+      {/* Layer 2: Coding POV - floating center-right */}
+      <motion.div
+        className="absolute z-[2] right-[5%] top-[15%] w-[45%] max-w-[650px] hidden lg:block"
+        style={{ y: codingY }}
+        initial={{ opacity: 0, x: 60, rotateY: -10 }}
+        animate={{ opacity: 1, x: 0, rotateY: 0 }}
+        transition={{ duration: 1.2, delay: 0.5, ease: "easeOut" }}
+      >
+        <img
+          src={codingPov}
+          alt="Code editor"
+          className="w-full drop-shadow-2xl"
+          style={{ filter: "drop-shadow(0 20px 60px rgba(0,0,0,0.5))" }}
+        />
+      </motion.div>
 
-          {/* Right: Animated Ring */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.3 }}
-            className="flex justify-center lg:justify-end"
+      {/* Layer 3: Mountain back (with planet) */}
+      <motion.div
+        className="absolute bottom-0 left-0 right-0 z-[3]"
+        style={{ y: mountain2Y }}
+      >
+        <img
+          src={mountain2}
+          alt=""
+          className="w-full object-cover object-bottom"
+        />
+      </motion.div>
+
+      {/* Layer 4: Mountain front */}
+      <motion.div
+        className="absolute bottom-0 left-0 right-0 z-[4]"
+        style={{ y: mountain1Y }}
+      >
+        <img
+          src={mountain1}
+          alt=""
+          className="w-full object-cover object-bottom"
+        />
+      </motion.div>
+
+      {/* Scroll darkening overlay */}
+      <motion.div
+        className="absolute inset-0 z-[5] bg-background pointer-events-none"
+        style={{ opacity: overlayOpacity }}
+      />
+
+      {/* Content */}
+      <div className="relative z-[6] w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-16">
+        <motion.div
+          ref={textRef}
+          className="text-center lg:text-left max-w-2xl"
+          style={{ y: textY }}
+        >
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+            className="hero-anim text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight text-white drop-shadow-lg"
           >
-            <AnimatedRing />
+            All-in-one
+            <br />
+            <CharacterReveal
+              text="AI systems"
+              className="bg-gradient-to-r from-[hsl(45,93%,58%)] via-[hsl(0,72%,63%)] to-[hsl(280,70%,60%)] bg-clip-text text-transparent"
+              staggerDelay={40}
+            />
+            <br />
+            engine.
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="hero-anim mt-6 text-base sm:text-lg text-white/80 max-w-md mx-auto lg:mx-0 leading-relaxed drop-shadow-md"
+          >
+            A fast and flexible AI infrastructure
+            <br className="hidden sm:block" />
+            partner to power your enterprise.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="hero-anim mt-8 flex flex-col sm:flex-row items-center gap-3 justify-center lg:justify-start"
+          >
+            <Link
+              to="/contact"
+              className="w-full sm:w-auto px-6 py-2.5 rounded-full bg-white text-black text-sm font-medium hover:bg-white/90 transition-all text-center shadow-lg"
+            >
+              Get Started
+            </Link>
+            <a
+              href="#features"
+              className="w-full sm:w-auto px-6 py-2.5 rounded-full border border-white/30 text-sm font-medium text-white/90 hover:text-white hover:border-white/60 transition-all flex items-center justify-center gap-2 backdrop-blur-sm"
+            >
+              Learn more <ArrowDown size={14} />
+            </a>
           </motion.div>
-        </div>
+        </motion.div>
       </div>
+
+      {/* Bottom fade into page */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent z-[7]" />
     </section>
   );
 };
