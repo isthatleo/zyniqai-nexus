@@ -67,10 +67,27 @@ const HeroSection = () => {
         animate={{ opacity: 1, y: 0, rotate: 8 }}
         transition={{ duration: 2, delay: 0.6, ease: "easeOut" }}
       >
+        {/* Coral halo glow */}
+        <motion.div
+          className="absolute inset-0 -inset-x-[20%] -inset-y-[15%] rounded-full"
+          style={{
+            background: "radial-gradient(circle, hsl(var(--primary) / 0.35) 0%, hsl(var(--primary) / 0.12) 40%, transparent 70%)",
+            filter: "blur(40px)",
+          }}
+          animate={{
+            scale: [1, 1.08, 1],
+            opacity: [0.7, 1, 0.7],
+          }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
         <motion.img
           src={astronaut}
           alt="Falling astronaut"
-          className="w-full drop-shadow-2xl"
+          className="relative w-full drop-shadow-2xl"
           style={{ filter: "drop-shadow(0 20px 80px hsl(var(--primary) / 0.4))" }}
           animate={{
             y: [0, 15, 0],
