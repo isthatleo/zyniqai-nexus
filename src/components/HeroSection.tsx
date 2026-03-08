@@ -47,11 +47,12 @@ const HeroSection = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative w-screen min-h-screen flex items-center justify-center overflow-hidden -mx-[50vw] left-1/2 right-1/2 ml-[-50vw] mr-[-50vw]"
+      style={{ width: "100vw", maxWidth: "100vw" }}
     >
       {/* Layer 0: Sky background */}
       <motion.div className="absolute inset-0 z-0" style={{ y: skyY }}>
-        <img src={skyBg} alt="" className="w-full h-full object-cover scale-110" />
+        <img src={skyBg} alt="" className="w-full h-[120%] object-cover" />
       </motion.div>
 
       {/* Layer 1: Planets */}
@@ -61,7 +62,7 @@ const HeroSection = () => {
 
       {/* Layer 2: Falling Astronaut */}
       <motion.div
-        className="absolute z-[2] right-[8%] top-[10%] w-[28%] max-w-[380px]"
+        className="absolute z-[2] right-[5%] sm:right-[8%] top-[8%] sm:top-[10%] w-[35%] sm:w-[28%] md:w-[22%] lg:w-[18%] max-w-[320px]"
         style={{ y: astronautY, rotate: astronautRotate }}
         initial={{ opacity: 0, y: -120, rotate: -15 }}
         animate={{ opacity: 1, y: 0, rotate: 8 }}
@@ -115,17 +116,17 @@ const HeroSection = () => {
       />
 
       {/* Content */}
-      <div className="relative z-[6] w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-16">
+      <div className="relative z-[6] w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-20 sm:pt-24">
         <motion.div
           ref={textRef}
-          className="text-center lg:text-left max-w-2xl"
+          className="text-center sm:text-left max-w-2xl mx-auto sm:mx-0"
           style={{ y: textY }}
         >
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="hero-anim text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight text-white drop-shadow-lg"
+            className="hero-anim text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.08] tracking-tight text-white drop-shadow-lg"
           >
             All-in-one
             <br />
@@ -142,7 +143,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="hero-anim mt-6 text-base sm:text-lg text-white/80 max-w-md mx-auto lg:mx-0 leading-relaxed drop-shadow-md"
+            className="hero-anim mt-4 sm:mt-6 text-sm sm:text-base md:text-lg text-white/80 max-w-md mx-auto sm:mx-0 leading-relaxed drop-shadow-md"
           >
             A fast and flexible AI infrastructure
             <br className="hidden sm:block" />
@@ -153,7 +154,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="hero-anim mt-8 flex flex-col sm:flex-row items-center gap-3 justify-center lg:justify-start"
+            className="hero-anim mt-6 sm:mt-8 flex flex-col sm:flex-row items-center gap-3 justify-center sm:justify-start"
           >
             <Link
               to="/contact"
