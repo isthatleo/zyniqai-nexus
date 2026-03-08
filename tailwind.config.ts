@@ -62,6 +62,11 @@ export default {
           light: "hsl(var(--gold-light))",
           dark: "hsl(var(--gold-dark))",
         },
+        "yellow-accent": "hsl(var(--yellow-accent))",
+        "cyan-accent": "hsl(var(--cyan-accent))",
+        "blue-accent": "hsl(var(--blue-accent))",
+        "purple-accent": "hsl(var(--purple-accent))",
+        "green-accent": "hsl(var(--green-accent))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
