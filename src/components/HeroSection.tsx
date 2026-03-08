@@ -61,7 +61,7 @@ const HeroSection = () => {
 
       {/* Layer 2: Falling Astronaut */}
       <motion.div
-        className="absolute z-[2] right-[5%] sm:right-[8%] top-[8%] sm:top-[10%] w-[35%] sm:w-[28%] md:w-[22%] lg:w-[18%] max-w-[320px]"
+        className="absolute z-[2] right-[2%] sm:right-[5%] lg:right-[8%] top-[5%] sm:top-[8%] w-[45%] sm:w-[38%] md:w-[32%] lg:w-[28%] max-w-[480px]"
         style={{ y: astronautY, rotate: astronautRotate }}
         initial={{ opacity: 0, y: -120, rotate: -15 }}
         animate={{ opacity: 1, y: 0, rotate: 8 }}
@@ -71,7 +71,7 @@ const HeroSection = () => {
           src={astronaut}
           alt="Falling astronaut"
           className="w-full drop-shadow-2xl"
-          style={{ filter: "drop-shadow(0 20px 80px rgba(100,150,255,0.4))" }}
+          style={{ filter: "drop-shadow(0 20px 80px hsl(var(--primary) / 0.4))" }}
           animate={{
             y: [0, 15, 0],
             rotate: [0, 3, -2, 0],
