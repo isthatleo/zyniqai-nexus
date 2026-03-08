@@ -37,7 +37,7 @@ export const useAnimateOnScroll = (options: UseAnimateOnScrollOptions = {}) => {
               opacity: [0, 1],
               translateY: [30, 0],
               duration,
-              delay: stagger(staggerAmount, { start: delay, direction: staggerDirection as any }),
+              delay: stagger(staggerAmount, { start: delay } as any),
               ease,
             });
           }
