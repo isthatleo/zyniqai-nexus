@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowDown } from "lucide-react";
@@ -7,9 +7,10 @@ import CharacterReveal from "./CharacterReveal";
 
 import skyBg from "@/assets/hero/sky.jpg";
 import mountain1 from "@/assets/hero/mountain-1.png";
+import mountain1B from "@/assets/hero/mountain-1-2.png";
 import mountain2 from "@/assets/hero/mountain-2.png";
 import planets from "@/assets/hero/planets.png";
-import codingPov from "@/assets/hero/coding-pov.png";
+import astronaut from "@/assets/hero/astronaut.png";
 
 const HeroSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -20,12 +21,13 @@ const HeroSection = () => {
     offset: ["start start", "end start"],
   });
 
-  // Parallax layers at different speeds
   const skyY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
   const planetsY = useTransform(scrollYProgress, [0, 1], ["0%", "35%"]);
   const mountain2Y = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
+  const mountain1BY = useTransform(scrollYProgress, [0, 1], ["0%", "10%"]);
   const mountain1Y = useTransform(scrollYProgress, [0, 1], ["0%", "8%"]);
-  const codingY = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
+  const astronautY = useTransform(scrollYProgress, [0, 1], ["0%", "120%"]);
+  const astronautRotate = useTransform(scrollYProgress, [0, 1], [0, 25]);
   const textY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
   const overlayOpacity = useTransform(scrollYProgress, [0, 0.8], [0, 0.6]);
 
@@ -48,55 +50,54 @@ const HeroSection = () => {
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
       {/* Layer 0: Sky background */}
-      <motion.div
-        className="absolute inset-0 z-0"
-        style={{ y: skyY }}
-      >
-        <img
-          src={skyBg}
-          alt=""
-          className="w-full h-full object-cover scale-110"
-        />
+      <motion.div className="absolute inset-0 z-0" style={{ y: skyY }}>
+        <img src={skyBg} alt="" className="w-full h-full object-cover scale-110" />
       </motion.div>
 
-      {/* Layer 1: Planets floating */}
-      <motion.div
-        className="absolute inset-0 z-[1]"
-        style={{ y: planetsY }}
-      >
-        <img
-          src={planets}
-          alt=""
-          className="w-full h-full object-cover opacity-70"
-        />
+      {/* Layer 1: Planets */}
+      <motion.div className="absolute inset-0 z-[1]" style={{ y: planetsY }}>
+        <img src={planets} alt="" className="w-full h-full object-cover opacity-70" />
       </motion.div>
 
-      {/* Layer 2: Coding POV - floating center-right */}
+      {/* Layer 2: Falling Astronaut */}
       <motion.div
-        className="absolute z-[2] right-[5%] top-[15%] w-[45%] max-w-[650px] hidden lg:block"
-        style={{ y: codingY }}
-        initial={{ opacity: 0, x: 60, rotateY: -10 }}
-        animate={{ opacity: 1, x: 0, rotateY: 0 }}
-        transition={{ duration: 1.2, delay: 0.5, ease: "easeOut" }}
+        className="absolute z-[2] right-[8%] top-[10%] w-[28%] max-w-[380px]"
+        style={{ y: astronautY, rotate: astronautRotate }}
+        initial={{ opacity: 0, y: -120, rotate: -15 }}
+        animate={{ opacity: 1, y: 0, rotate: 8 }}
+        transition={{ duration: 2, delay: 0.6, ease: "easeOut" }}
       >
-        <img
-          src={codingPov}
-          alt="Code editor"
+        <motion.img
+          src={astronaut}
+          alt="Falling astronaut"
           className="w-full drop-shadow-2xl"
-          style={{ filter: "drop-shadow(0 20px 60px rgba(0,0,0,0.5))" }}
+          style={{ filter: "drop-shadow(0 20px 80px rgba(100,150,255,0.4))" }}
+          animate={{
+            y: [0, 15, 0],
+            rotate: [0, 3, -2, 0],
+          }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
         />
       </motion.div>
 
-      {/* Layer 3: Mountain back (with planet) */}
+      {/* Layer 3: Mountain back */}
       <motion.div
         className="absolute bottom-0 left-0 right-0 z-[3]"
         style={{ y: mountain2Y }}
       >
-        <img
-          src={mountain2}
-          alt=""
-          className="w-full object-cover object-bottom"
-        />
+        <img src={mountain2} alt="" className="w-full object-cover object-bottom" />
+      </motion.div>
+
+      {/* Layer 3.5: Mountain mid */}
+      <motion.div
+        className="absolute bottom-0 left-0 right-0 z-[3]"
+        style={{ y: mountain1BY }}
+      >
+        <img src={mountain1B} alt="" className="w-full object-cover object-bottom" />
       </motion.div>
 
       {/* Layer 4: Mountain front */}
@@ -104,11 +105,7 @@ const HeroSection = () => {
         className="absolute bottom-0 left-0 right-0 z-[4]"
         style={{ y: mountain1Y }}
       >
-        <img
-          src={mountain1}
-          alt=""
-          className="w-full object-cover object-bottom"
-        />
+        <img src={mountain1} alt="" className="w-full object-cover object-bottom" />
       </motion.div>
 
       {/* Scroll darkening overlay */}
@@ -174,7 +171,7 @@ const HeroSection = () => {
         </motion.div>
       </div>
 
-      {/* Bottom fade into page */}
+      {/* Bottom fade */}
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent z-[7]" />
     </section>
   );
