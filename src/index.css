@@ -45,7 +45,7 @@
     --sidebar-border: 240 4% 20%;
     --sidebar-ring: 0 72% 63%;
 
-    /* Custom tokens */
+    /* Custom accent tokens */
     --coral: 0 72% 63%;
     --coral-light: 0 80% 72%;
     --coral-dark: 0 60% 50%;
@@ -115,6 +115,7 @@
 }
 
 @layer components {
+  /* ── Glass Cards ─────────────────────────────────── */
   .glass-card {
     @apply bg-card/60 backdrop-blur-xl border border-border/50 rounded-2xl;
     box-shadow: 0 0 20px hsl(0 0% 0% / 0.1);
@@ -126,18 +127,22 @@
   }
 
   .glass-card-hover {
-    @apply glass-card transition-all duration-500;
+    @apply glass-card transition-all duration-500 cursor-default;
   }
   .glass-card-hover:hover {
-    border-color: hsl(var(--primary) / 0.4);
-    box-shadow: 0 0 30px hsl(var(--primary) / 0.1), 0 0 60px hsl(var(--primary) / 0.03);
-    transform: translateY(-2px);
+    border-color: hsl(var(--primary) / 0.35);
+    box-shadow:
+      0 0 0 1px hsl(var(--primary) / 0.12),
+      0 8px 40px hsl(0 0% 0% / 0.18),
+      0 2px 8px hsl(var(--primary) / 0.08);
+    transform: translateY(-3px);
   }
 
   .light .glass-card-hover:hover {
     box-shadow: 0 8px 30px hsl(var(--primary) / 0.08), 0 0 0 1px hsl(var(--primary) / 0.15);
   }
 
+  /* ── Typography ───────────────────────────────────── */
   .gradient-text {
     @apply bg-clip-text text-transparent;
     background-image: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--coral-light)));
@@ -145,31 +150,156 @@
 
   .gradient-text-multi {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(90deg, hsl(var(--green-accent)), hsl(var(--cyan-accent)), hsl(var(--blue-accent)), hsl(var(--primary)));
+    background-image: linear-gradient(90deg,
+      hsl(var(--green-accent)),
+      hsl(var(--cyan-accent)),
+      hsl(var(--blue-accent)),
+      hsl(var(--primary))
+    );
   }
 
+  .gradient-text-gold {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(var(--gold)), hsl(var(--gold-light)));
+  }
+
+  /* ── Layout ───────────────────────────────────────── */
   .section-padding {
     @apply py-24 md:py-36 px-4 md:px-8;
   }
 
+  /* ── Pills & Tags ─────────────────────────────────── */
   .feature-pill {
     @apply px-3 py-1.5 rounded-full text-xs font-mono font-medium border transition-all duration-300 cursor-default;
+  }
+  .feature-pill:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px currentColor / 0.15;
   }
 
   .code-block {
     @apply bg-card/80 border border-border/50 rounded-xl p-4 font-mono text-sm overflow-x-auto;
   }
+
+  /* ── Accent Icon Containers ───────────────────────── */
+  .icon-box {
+    @apply w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300;
+  }
+  .icon-box:hover {
+    transform: scale(1.12) rotate(4deg);
+  }
+
+  /* ── Glow Borders ─────────────────────────────────── */
+  .glow-border-primary {
+    border: 1px solid hsl(var(--primary) / 0.3);
+    box-shadow: 0 0 16px hsl(var(--primary) / 0.12), inset 0 0 16px hsl(var(--primary) / 0.04);
+    transition: all 0.4s ease;
+  }
+  .glow-border-primary:hover {
+    border-color: hsl(var(--primary) / 0.6);
+    box-shadow: 0 0 28px hsl(var(--primary) / 0.2), inset 0 0 20px hsl(var(--primary) / 0.06);
+  }
+
+  /* ── Interactive Hover Lift ───────────────────────── */
+  .hover-lift {
+    @apply transition-all duration-400;
+  }
+  .hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px hsl(0 0% 0% / 0.2);
+  }
+
+  /* ── Shimmer effect ───────────────────────────────── */
+  .shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+  .shimmer::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      105deg,
+      transparent 40%,
+      hsl(var(--foreground) / 0.04) 50%,
+      transparent 60%
+    );
+    background-size: 200% 100%;
+    animation: shimmer-slide 2.5s ease-in-out infinite;
+  }
 }
 
 @layer utilities {
+  /* ── Background particles ─────────────────────────── */
   .particle-bg {
-    background-image: radial-gradient(circle at 20% 50%, hsl(var(--primary) / 0.04) 0%, transparent 50%),
-                       radial-gradient(circle at 80% 20%, hsl(var(--blue-accent) / 0.03) 0%, transparent 50%),
-                       radial-gradient(circle at 50% 80%, hsl(var(--cyan-accent) / 0.02) 0%, transparent 50%);
+    background-image:
+      radial-gradient(circle at 20% 50%, hsl(var(--primary) / 0.04) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, hsl(var(--blue-accent) / 0.03) 0%, transparent 50%),
+      radial-gradient(circle at 50% 80%, hsl(var(--cyan-accent) / 0.02) 0%, transparent 50%);
   }
   .light .particle-bg {
-    background-image: radial-gradient(circle at 20% 50%, hsl(var(--primary) / 0.02) 0%, transparent 50%),
-                       radial-gradient(circle at 80% 20%, hsl(var(--blue-accent) / 0.015) 0%, transparent 50%),
-                       radial-gradient(circle at 50% 80%, hsl(var(--cyan-accent) / 0.01) 0%, transparent 50%);
+    background-image:
+      radial-gradient(circle at 20% 50%, hsl(var(--primary) / 0.02) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, hsl(var(--blue-accent) / 0.015) 0%, transparent 50%),
+      radial-gradient(circle at 50% 80%, hsl(var(--cyan-accent) / 0.01) 0%, transparent 50%);
   }
+
+  /* ── Section glow accents ─────────────────────────── */
+  .section-glow-primary {
+    background-image: radial-gradient(
+      ellipse 60% 30% at 50% 0%,
+      hsl(var(--primary) / 0.06) 0%,
+      transparent 70%
+    );
+  }
+  .section-glow-blue {
+    background-image: radial-gradient(
+      ellipse 60% 30% at 50% 0%,
+      hsl(var(--blue-accent) / 0.05) 0%,
+      transparent 70%
+    );
+  }
+  .section-glow-purple {
+    background-image: radial-gradient(
+      ellipse 60% 30% at 50% 100%,
+      hsl(var(--purple-accent) / 0.05) 0%,
+      transparent 70%
+    );
+  }
+
+  /* ── Text selection ───────────────────────────────── */
+  ::selection {
+    background: hsl(var(--primary) / 0.25);
+    color: hsl(var(--foreground));
+  }
+}
+
+/* ── Keyframe Animations ──────────────────────────────── */
+@keyframes shimmer-slide {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes float-gentle {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 12px hsl(var(--primary) / 0.3), 0 0 24px hsl(var(--primary) / 0.1);
+  }
+  50% {
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.5), 0 0 40px hsl(var(--primary) / 0.2);
+  }
+}
+
+@keyframes border-glow {
+  0%, 100% { border-color: hsl(var(--primary) / 0.2); }
+  50%       { border-color: hsl(var(--primary) / 0.5); }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }

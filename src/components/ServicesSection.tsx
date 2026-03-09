@@ -9,7 +9,7 @@ const pillars = [
     title: "AI Systems & Intelligence",
     subtitle: "Custom AI for real-world operations",
     icon: Brain,
-    color: "hsl(0, 72%, 63%)",
+    colorRaw: "hsl(0,72%,63%)",
     services: [
       "Custom AI model development",
       "Predictive analytics systems",
@@ -23,7 +23,7 @@ const pillars = [
     title: "Web Design & Development",
     subtitle: "Premium sites for startups & brands",
     icon: Palette,
-    color: "hsl(265, 83%, 68%)",
+    colorRaw: "hsl(265,83%,68%)",
     services: [
       "Startup landing pages & MVPs",
       "Brand identity & UI/UX design",
@@ -37,7 +37,7 @@ const pillars = [
     title: "Software Engineering",
     subtitle: "Enterprise platforms built from zero",
     icon: Code2,
-    color: "hsl(145, 63%, 49%)",
+    colorRaw: "hsl(145,63%,49%)",
     services: [
       "Enterprise web platforms (React/Next.js)",
       "SaaS products & admin systems",
@@ -51,7 +51,7 @@ const pillars = [
     title: "Systems Architecture",
     subtitle: "Infrastructure that scales",
     icon: Server,
-    color: "hsl(217, 91%, 60%)",
+    colorRaw: "hsl(217,91%,60%)",
     services: [
       "System audits & infrastructure design",
       "Cloud migration & scaling",
@@ -65,7 +65,7 @@ const pillars = [
     title: "AI Onboarding",
     subtitle: "Your AI transformation partner",
     icon: GraduationCap,
-    color: "hsl(45, 93%, 58%)",
+    colorRaw: "hsl(45,93%,58%)",
     services: [
       "Current system audits",
       "Automation opportunity mapping",
@@ -79,7 +79,7 @@ const pillars = [
     title: "Ongoing Optimization",
     subtitle: "Recurring value, not just support",
     icon: RefreshCw,
-    color: "hsl(187, 72%, 55%)",
+    colorRaw: "hsl(187,72%,55%)",
     services: [
       "System monitoring & tuning",
       "AI model retraining",
@@ -103,31 +103,30 @@ const ServicesSection = () => {
         if (entry.isIntersecting) {
           animate(cards, {
             opacity: [0, 1],
-            translateY: [30, 0],
-            duration: 800,
-            delay: stagger(100),
+            translateY: [32, 0],
+            duration: 850,
+            delay: stagger(90),
             ease: "outExpo",
           });
           observer.unobserve(entry.target);
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.08 }
     );
     observer.observe(gridRef.current);
     return () => observer.disconnect();
   }, []);
 
-  // Animate service items on hover
   useEffect(() => {
     cardsRef.current.forEach((card) => {
       if (!card) return;
       card.addEventListener("mouseenter", () => {
         const items = card.querySelectorAll(".service-item");
         animate(items, {
-          opacity: [0.6, 1],
-          translateX: [5, 0],
-          duration: 300,
-          delay: stagger(30),
+          opacity: [0.55, 1],
+          translateX: [6, 0],
+          duration: 350,
+          delay: stagger(28),
           ease: "outQuad",
         });
       });
@@ -135,14 +134,19 @@ const ServicesSection = () => {
   }, []);
 
   return (
-    <section id="services" className="section-padding relative">
+    <section id="services" className="section-padding relative section-glow-primary">
       <div className="max-w-6xl mx-auto text-center">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 22 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
+          transition={{ duration: 0.65 }}
           className="mb-16"
         >
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border/40 bg-muted/20 text-[11px] font-mono text-muted-foreground tracking-wider mb-5">
+            <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+            Six Core Pillars
+          </div>
           <h2 className="text-3xl md:text-5xl font-bold mb-4">
             Full Stack. <WavyText text="Enterprise Ready." className="gradient-text" staggerDelay={40} />
           </h2>
@@ -156,24 +160,45 @@ const ServicesSection = () => {
             <div
               key={pillar.title}
               ref={(el) => (cardsRef.current[idx] = el)}
-              className="service-card glass-card-hover p-6 group text-center opacity-0"
+              className="service-card glass-card-hover p-6 group text-left opacity-0 relative overflow-hidden"
             >
-              <div className="flex items-center justify-center gap-3 mb-4">
+              {/* Hover color wash */}
+              <div
+                className="absolute inset-0 opacity-0 group-hover:opacity-[0.04] transition-opacity duration-500 rounded-2xl pointer-events-none"
+                style={{ backgroundColor: pillar.colorRaw }}
+              />
+              {/* Left accent bar */}
+              <div
+                className="absolute left-0 top-4 bottom-4 w-0 group-hover:w-0.5 transition-all duration-500 rounded-full"
+                style={{ backgroundColor: pillar.colorRaw }}
+              />
+
+              <div className="flex items-center gap-3 mb-5">
                 <div
-                  className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 transition-transform group-hover:scale-110"
-                  style={{ backgroundColor: `${pillar.color}15`, border: `1px solid ${pillar.color}30` }}
+                  className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-400 group-hover:scale-110 group-hover:rotate-3"
+                  style={{
+                    backgroundColor: `${pillar.colorRaw}18`,
+                    border: `1px solid ${pillar.colorRaw}35`,
+                  }}
                 >
-                  <pillar.icon size={18} style={{ color: pillar.color }} />
+                  <pillar.icon size={17} style={{ color: pillar.colorRaw }} />
                 </div>
-                <div className="text-left">
-                  <h3 className="text-base font-bold">{pillar.title}</h3>
-                  <p className="text-xs text-muted-foreground">{pillar.subtitle}</p>
+                <div>
+                  <h3 className="text-[15px] font-bold leading-tight">{pillar.title}</h3>
+                  <p className="text-xs text-muted-foreground mt-0.5">{pillar.subtitle}</p>
                 </div>
               </div>
+
               <ul className="grid gap-1.5">
                 {pillar.services.map((s) => (
-                  <li key={s} className="service-item flex items-center justify-center gap-2 text-sm text-muted-foreground">
-                    <span className="w-1 h-1 rounded-full flex-shrink-0" style={{ backgroundColor: pillar.color }} />
+                  <li
+                    key={s}
+                    className="service-item flex items-center gap-2.5 text-sm text-muted-foreground group-hover:text-muted-foreground/80 transition-colors"
+                  >
+                    <span
+                      className="w-1 h-1 rounded-full flex-shrink-0 transition-transform duration-300 group-hover:scale-150"
+                      style={{ backgroundColor: pillar.colorRaw }}
+                    />
                     {s}
                   </li>
                 ))}

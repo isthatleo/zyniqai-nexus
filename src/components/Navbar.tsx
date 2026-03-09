@@ -31,8 +31,8 @@ const Navbar = () => {
   const location = useLocation();
 
   useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handler);
+    const handler = () => setScrolled(window.scrollY > 40);
+    window.addEventListener("scroll", handler, { passive: true });
     return () => window.removeEventListener("scroll", handler);
   }, []);
 
@@ -49,115 +49,145 @@ const Navbar = () => {
 
   return (
     <>
-      <motion.nav
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled
-            ? "bg-background/90 backdrop-blur-xl border-b border-border/30 shadow-sm"
-            : "bg-transparent"
-        }`}
+      {/* Floating Glassmorphic Navbar */}
+      <motion.div
+        initial={{ y: -80, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        className="fixed top-3 sm:top-4 left-3 sm:left-4 right-3 sm:right-4 z-50 flex justify-center pointer-events-none"
       >
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-2.5 group flex-shrink-0">
-            <img
-              src={logo}
-              alt="ZyniqAI"
-              className="h-8 w-8 object-contain rounded-md"
-            />
-            <span className="text-base font-bold tracking-tight">
-              Zyniq<span className="text-primary">AI</span>
-            </span>
-          </Link>
+        <nav
+          className={`pointer-events-auto w-full max-w-6xl rounded-[8px] transition-all duration-500 ${
+            scrolled
+              ? "bg-background/85 backdrop-blur-2xl border border-border/60 shadow-2xl shadow-black/30"
+              : "bg-background/25 backdrop-blur-2xl border border-white/10 shadow-lg shadow-black/10"
+          }`}
+        >
+          <div className="px-4 sm:px-5 h-14 flex items-center justify-between">
+            {/* Logo */}
+            <Link to="/" className="flex items-center gap-2.5 group flex-shrink-0">
+              <motion.img
+                src={logo}
+                alt="ZyniqAI"
+                className="h-7 w-7 object-contain rounded-md"
+                whileHover={{ scale: 1.08, rotate: 5 }}
+                transition={{ type: "spring", stiffness: 400, damping: 20 }}
+              />
+              <span className="text-sm font-bold tracking-tight">
+                Zyniq<span className="text-primary">AI</span>
+              </span>
+            </Link>
 
-          {/* Desktop Nav */}
-          <div className="hidden lg:flex items-center gap-6">
-            {navLinks.map((link) => (
-              <div
-                key={link.label}
-                className="relative"
-                onMouseEnter={() => link.children && setDropdownOpen(link.label)}
-                onMouseLeave={() => setDropdownOpen(null)}
-              >
-                <Link
-                  to={link.href}
-                  className={`text-[13px] font-medium flex items-center gap-1 transition-colors ${
-                    location.pathname === link.href
-                      ? "text-foreground"
-                      : "text-muted-foreground hover:text-foreground"
-                  }`}
+            {/* Desktop Nav */}
+            <div className="hidden lg:flex items-center gap-1">
+              {navLinks.map((link) => (
+                <div
+                  key={link.label}
+                  className="relative"
+                  onMouseEnter={() => link.children && setDropdownOpen(link.label)}
+                  onMouseLeave={() => setDropdownOpen(null)}
                 >
-                  {link.label}
-                  {link.children && <ChevronDown size={11} className="opacity-50" />}
+                  <Link
+                    to={link.href}
+                    className={`relative text-[13px] font-medium flex items-center gap-1 px-3 py-1.5 rounded-md transition-all duration-200 group ${
+                      location.pathname === link.href
+                        ? "text-foreground bg-muted/50"
+                        : "text-muted-foreground hover:text-foreground hover:bg-muted/30"
+                    }`}
+                  >
+                    {link.label}
+                    {link.children && (
+                      <ChevronDown
+                        size={11}
+                        className={`opacity-50 transition-transform duration-200 ${
+                          dropdownOpen === link.label ? "rotate-180" : ""
+                        }`}
+                      />
+                    )}
+                    {/* Active underline */}
+                    {location.pathname === link.href && (
+                      <motion.span
+                        layoutId="nav-active"
+                        className="absolute bottom-0 left-2 right-2 h-px bg-primary rounded-full"
+                      />
+                    )}
+                  </Link>
+                  <AnimatePresence>
+                    {link.children && dropdownOpen === link.label && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 8, scale: 0.96 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 8, scale: 0.96 }}
+                        transition={{ duration: 0.18, ease: "easeOut" }}
+                        className="absolute top-full left-0 mt-2 w-52 bg-card/95 backdrop-blur-2xl border border-border/50 py-1.5 rounded-xl shadow-2xl shadow-black/20 overflow-hidden"
+                      >
+                        {link.children.map((child, ci) => (
+                          <motion.div
+                            key={child.label}
+                            initial={{ opacity: 0, x: -8 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: ci * 0.04 }}
+                          >
+                            <Link
+                              to={child.href}
+                              className="flex items-center justify-between px-3.5 py-2 text-[13px] text-muted-foreground hover:text-foreground hover:bg-muted/40 transition-all duration-150 group"
+                            >
+                              {child.label}
+                              <ChevronRight size={10} className="opacity-0 group-hover:opacity-40 transition-opacity" />
+                            </Link>
+                          </motion.div>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              ))}
+            </div>
+
+            {/* Desktop Right */}
+            <div className="hidden lg:flex items-center gap-2">
+              <ThemeToggle />
+              <Link
+                to="/auth"
+                className="text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors px-3 py-1.5 rounded-md hover:bg-muted/30"
+              >
+                Portal
+              </Link>
+              <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+                <Link
+                  to="/contact"
+                  className="text-[13px] font-medium px-4 py-1.5 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-200 shadow-sm shadow-primary/20"
+                >
+                  Get Started
                 </Link>
-                <AnimatePresence>
-                  {link.children && dropdownOpen === link.label && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 6 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 6 }}
-                      transition={{ duration: 0.15 }}
-                      className="absolute top-full left-0 mt-2 w-48 bg-card/95 backdrop-blur-xl border border-border/50 py-1.5 rounded-lg shadow-xl"
-                    >
-                      {link.children.map((child) => (
-                        <Link
-                          key={child.label}
-                          to={child.href}
-                          className="flex items-center justify-between px-3 py-2 text-[13px] text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
-                        >
-                          {child.label}
-                          <ChevronRight size={10} className="opacity-30" />
-                        </Link>
-                      ))}
+              </motion.div>
+            </div>
+
+            {/* Mobile Right */}
+            <div className="flex lg:hidden items-center gap-1">
+              <ThemeToggle />
+              <motion.button
+                onClick={() => setMobileOpen(!mobileOpen)}
+                className="w-9 h-9 flex items-center justify-center rounded-lg text-foreground hover:bg-muted/30 transition-colors"
+                aria-label="Toggle menu"
+                whileTap={{ scale: 0.92 }}
+              >
+                <AnimatePresence mode="wait">
+                  {mobileOpen ? (
+                    <motion.div key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.15 }}>
+                      <X size={19} />
+                    </motion.div>
+                  ) : (
+                    <motion.div key="menu" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.15 }}>
+                      <Menu size={19} />
                     </motion.div>
                   )}
                 </AnimatePresence>
-              </div>
-            ))}
+              </motion.button>
+            </div>
           </div>
-
-          {/* Desktop Right */}
-          <div className="hidden lg:flex items-center gap-2">
-            <ThemeToggle />
-            <Link
-              to="/auth"
-              className="text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors px-3 py-1.5"
-            >
-              Portal
-            </Link>
-            <Link
-              to="/contact"
-              className="text-[13px] font-medium px-4 py-1.5 rounded-full border border-primary/60 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-200"
-            >
-              Get Started
-            </Link>
-          </div>
-
-          {/* Mobile Right */}
-          <div className="flex lg:hidden items-center gap-1">
-            <ThemeToggle />
-            <button
-              onClick={() => setMobileOpen(!mobileOpen)}
-              className="w-9 h-9 flex items-center justify-center rounded-lg text-foreground"
-              aria-label="Toggle menu"
-            >
-              <AnimatePresence mode="wait">
-                {mobileOpen ? (
-                  <motion.div key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.15 }}>
-                    <X size={20} />
-                  </motion.div>
-                ) : (
-                  <motion.div key="menu" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.15 }}>
-                    <Menu size={20} />
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </button>
-          </div>
-        </div>
-      </motion.nav>
+        </nav>
+      </motion.div>
 
       {/* Mobile Menu */}
       <AnimatePresence>
@@ -169,27 +199,37 @@ const Navbar = () => {
             transition={{ duration: 0.2 }}
             className="fixed inset-0 z-40 lg:hidden"
           >
-            <div className="absolute inset-0 bg-background/98 backdrop-blur-2xl" />
+            {/* Blurred backdrop */}
             <motion.div
-              initial={{ y: 20, opacity: 0 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 bg-background/95 backdrop-blur-2xl"
+            />
+            {/* Decorative glow */}
+            <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full pointer-events-none"
+              style={{ background: "radial-gradient(circle, hsl(var(--primary) / 0.08) 0%, transparent 70%)" }} />
+
+            <motion.div
+              initial={{ y: 24, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              exit={{ y: 20, opacity: 0 }}
-              transition={{ duration: 0.25, delay: 0.05 }}
+              exit={{ y: 24, opacity: 0 }}
+              transition={{ duration: 0.28, delay: 0.05 }}
               className="relative z-10 flex flex-col items-center justify-center min-h-screen px-8 pt-20 pb-8"
             >
               <nav className="w-full max-w-xs space-y-1">
                 {navLinks.map((link, i) => (
                   <motion.div
                     key={link.label}
-                    initial={{ x: -20, opacity: 0 }}
+                    initial={{ x: -24, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: 0.1 + i * 0.05 }}
+                    transition={{ delay: 0.08 + i * 0.06, ease: [0.22, 1, 0.36, 1] }}
                   >
                     {link.children ? (
                       <div>
                         <button
                           onClick={() => setMobileDropdownOpen(mobileDropdownOpen === link.label ? null : link.label)}
-                          className="w-full flex items-center justify-between py-3 text-lg font-semibold text-foreground"
+                          className="w-full flex items-center justify-between py-3 text-lg font-semibold text-foreground hover:text-primary transition-colors"
                         >
                           {link.label}
                           <ChevronDown
@@ -233,21 +273,21 @@ const Navbar = () => {
                     )}
                   </motion.div>
                 ))}
-                <motion.div initial={{ x: -20, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 0.35 }}>
+                <motion.div initial={{ x: -24, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 0.38, ease: [0.22, 1, 0.36, 1] }}>
                   <Link to="/about" className="block py-3 text-lg font-semibold text-foreground hover:text-primary transition-colors">About</Link>
                 </motion.div>
               </nav>
 
               <motion.div
-                initial={{ y: 20, opacity: 0 }}
+                initial={{ y: 24, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.45 }}
+                transition={{ delay: 0.48, ease: [0.22, 1, 0.36, 1] }}
                 className="mt-10 w-full max-w-xs space-y-3"
               >
-                <Link to="/auth" className="block text-center text-sm font-medium px-6 py-3 rounded-full border border-border/50 text-foreground hover:border-primary/40 transition-all">
+                <Link to="/auth" className="block text-center text-sm font-medium px-6 py-3 rounded-full border border-border/50 text-foreground hover:border-primary/40 hover:text-primary transition-all duration-300">
                   Client Portal
                 </Link>
-                <Link to="/contact" className="block text-center text-sm font-medium px-6 py-3 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-all">
+                <Link to="/contact" className="block text-center text-sm font-medium px-6 py-3 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 shadow-lg shadow-primary/25">
                   Get Started
                 </Link>
               </motion.div>
