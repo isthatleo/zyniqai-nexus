@@ -49,21 +49,35 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Floating Glassmorphic Navbar */}
+      {/* Floating Glassmorphic Pill Navbar */}
       <motion.div
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
         className="fixed top-3 sm:top-4 left-3 sm:left-4 right-3 sm:right-4 z-50 flex justify-center pointer-events-none"
       >
         <nav
-          className={`pointer-events-auto w-full max-w-6xl rounded-[8px] transition-all duration-500 ${
-            scrolled
-              ? "bg-background/85 backdrop-blur-2xl border border-border/60 shadow-2xl shadow-black/30"
-              : "bg-background/25 backdrop-blur-2xl border border-white/10 shadow-lg shadow-black/10"
-          }`}
+          className="pointer-events-auto w-full max-w-5xl rounded-full transition-all duration-500"
+          style={{
+            background: scrolled
+              ? "hsl(var(--background) / 0.82)"
+              : "hsl(0 0% 100% / 0.04)",
+            backdropFilter: "blur(40px) saturate(180%)",
+            WebkitBackdropFilter: "blur(40px) saturate(180%)",
+            border: scrolled
+              ? "1px solid hsl(0 0% 100% / 0.13)"
+              : "1px solid hsl(0 0% 100% / 0.08)",
+            boxShadow: scrolled
+              ? "0 8px 40px hsl(0 0% 0% / 0.28), 0 2px 8px hsl(0 0% 0% / 0.14), inset 0 1px 0 hsl(0 0% 100% / 0.08)"
+              : "0 4px 24px hsl(0 0% 0% / 0.18), inset 0 1px 0 hsl(0 0% 100% / 0.05)",
+          }}
         >
-          <div className="px-4 sm:px-5 h-14 flex items-center justify-between">
+          {/* Inner glass sheen */}
+          <div className="absolute inset-0 rounded-full overflow-hidden pointer-events-none">
+            <div className="absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+          </div>
+
+          <div className="relative px-4 sm:px-5 h-13 flex items-center justify-between" style={{ height: "52px" }}>
             {/* Logo */}
             <Link to="/" className="flex items-center gap-2.5 group flex-shrink-0">
               <motion.img
@@ -79,7 +93,7 @@ const Navbar = () => {
             </Link>
 
             {/* Desktop Nav */}
-            <div className="hidden lg:flex items-center gap-1">
+            <div className="hidden lg:flex items-center gap-0.5">
               {navLinks.map((link) => (
                 <div
                   key={link.label}
@@ -89,10 +103,10 @@ const Navbar = () => {
                 >
                   <Link
                     to={link.href}
-                    className={`relative text-[13px] font-medium flex items-center gap-1 px-3 py-1.5 rounded-md transition-all duration-200 group ${
+                    className={`relative text-[13px] font-medium flex items-center gap-1 px-3.5 py-1.5 rounded-full transition-all duration-200 group ${
                       location.pathname === link.href
-                        ? "text-foreground bg-muted/50"
-                        : "text-muted-foreground hover:text-foreground hover:bg-muted/30"
+                        ? "text-foreground bg-white/10"
+                        : "text-muted-foreground hover:text-foreground hover:bg-white/[0.07]"
                     }`}
                   >
                     {link.label}
@@ -104,13 +118,6 @@ const Navbar = () => {
                         }`}
                       />
                     )}
-                    {/* Active underline */}
-                    {location.pathname === link.href && (
-                      <motion.span
-                        layoutId="nav-active"
-                        className="absolute bottom-0 left-2 right-2 h-px bg-primary rounded-full"
-                      />
-                    )}
                   </Link>
                   <AnimatePresence>
                     {link.children && dropdownOpen === link.label && (
@@ -118,8 +125,14 @@ const Navbar = () => {
                         initial={{ opacity: 0, y: 8, scale: 0.96 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 8, scale: 0.96 }}
-                        transition={{ duration: 0.18, ease: "easeOut" }}
-                        className="absolute top-full left-0 mt-2 w-52 bg-card/95 backdrop-blur-2xl border border-border/50 py-1.5 rounded-xl shadow-2xl shadow-black/20 overflow-hidden"
+                        transition={{ duration: 0.18, ease: "easeOut" as const }}
+                        className="absolute top-full left-0 mt-2 w-52 py-1.5 rounded-2xl overflow-hidden"
+                        style={{
+                          background: "hsl(var(--card) / 0.92)",
+                          backdropFilter: "blur(24px)",
+                          border: "1px solid hsl(var(--border) / 0.5)",
+                          boxShadow: "0 20px 60px hsl(0 0% 0% / 0.22)",
+                        }}
                       >
                         {link.children.map((child, ci) => (
                           <motion.div
@@ -130,7 +143,7 @@ const Navbar = () => {
                           >
                             <Link
                               to={child.href}
-                              className="flex items-center justify-between px-3.5 py-2 text-[13px] text-muted-foreground hover:text-foreground hover:bg-muted/40 transition-all duration-150 group"
+                              className="flex items-center justify-between px-3.5 py-2 text-[13px] text-muted-foreground hover:text-foreground hover:bg-white/[0.06] transition-all duration-150 group"
                             >
                               {child.label}
                               <ChevronRight size={10} className="opacity-0 group-hover:opacity-40 transition-opacity" />
@@ -149,14 +162,14 @@ const Navbar = () => {
               <ThemeToggle />
               <Link
                 to="/auth"
-                className="text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors px-3 py-1.5 rounded-md hover:bg-muted/30"
+                className="text-[13px] font-medium text-muted-foreground hover:text-foreground transition-all px-3 py-1.5 rounded-full hover:bg-white/[0.07]"
               >
                 Portal
               </Link>
               <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
                 <Link
                   to="/contact"
-                  className="text-[13px] font-medium px-4 py-1.5 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-200 shadow-sm shadow-primary/20"
+                  className="text-[13px] font-medium px-4 py-1.5 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-200 shadow-sm shadow-primary/30"
                 >
                   Get Started
                 </Link>
@@ -168,7 +181,7 @@ const Navbar = () => {
               <ThemeToggle />
               <motion.button
                 onClick={() => setMobileOpen(!mobileOpen)}
-                className="w-9 h-9 flex items-center justify-center rounded-lg text-foreground hover:bg-muted/30 transition-colors"
+                className="w-9 h-9 flex items-center justify-center rounded-full text-foreground hover:bg-white/[0.07] transition-colors"
                 aria-label="Toggle menu"
                 whileTap={{ scale: 0.92 }}
               >
@@ -199,17 +212,16 @@ const Navbar = () => {
             transition={{ duration: 0.2 }}
             className="fixed inset-0 z-40 lg:hidden"
           >
-            {/* Blurred backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               className="absolute inset-0 bg-background/95 backdrop-blur-2xl"
             />
-            {/* Decorative glow */}
-            <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full pointer-events-none"
-              style={{ background: "radial-gradient(circle, hsl(var(--primary) / 0.08) 0%, transparent 70%)" }} />
-
+            <div
+              className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full pointer-events-none"
+              style={{ background: "radial-gradient(circle, hsl(var(--primary) / 0.08) 0%, transparent 70%)" }}
+            />
             <motion.div
               initial={{ y: 24, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -223,7 +235,7 @@ const Navbar = () => {
                     key={link.label}
                     initial={{ x: -24, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: 0.08 + i * 0.06, ease: [0.22, 1, 0.36, 1] }}
+                    transition={{ delay: 0.08 + i * 0.06, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
                   >
                     {link.children ? (
                       <div>
@@ -273,15 +285,14 @@ const Navbar = () => {
                     )}
                   </motion.div>
                 ))}
-                <motion.div initial={{ x: -24, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 0.38, ease: [0.22, 1, 0.36, 1] }}>
+                <motion.div initial={{ x: -24, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 0.38, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}>
                   <Link to="/about" className="block py-3 text-lg font-semibold text-foreground hover:text-primary transition-colors">About</Link>
                 </motion.div>
               </nav>
-
               <motion.div
                 initial={{ y: 24, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.48, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ delay: 0.48, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
                 className="mt-10 w-full max-w-xs space-y-3"
               >
                 <Link to="/auth" className="block text-center text-sm font-medium px-6 py-3 rounded-full border border-border/50 text-foreground hover:border-primary/40 hover:text-primary transition-all duration-300">
