@@ -131,9 +131,9 @@ const FeaturesSection = () => {
               key={`${pill.label}-${i}`}
               className="pill-item feature-pill opacity-0 cursor-default select-none"
               style={{
-                borderColor: `${pill.accentRaw}45`,
-                color: pill.accentRaw,
-                backgroundColor: `${pill.accentRaw}0a`,
+                borderColor: `${pill.raw}45`,
+                color: pill.raw,
+                backgroundColor: `${pill.raw}0a`,
               }}
             >
               {pill.label}
