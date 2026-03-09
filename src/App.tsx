@@ -31,10 +31,10 @@ import ScrollProgress from "./components/ScrollProgress";
 
 const queryClient = new QueryClient();
 
-const pageVariants = {
+const pageVariants: Variants = {
   initial: { opacity: 0, y: 14 },
   animate: { opacity: 1, y: 0, transition: { duration: 0.42, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } },
-  exit: { opacity: 0, y: -10, transition: { duration: 0.26, ease: "easeIn" } },
+  exit: { opacity: 0, y: -10, transition: { duration: 0.26, ease: "easeIn" as const } },
 };
 
 const AnimatedRoutes = () => {
