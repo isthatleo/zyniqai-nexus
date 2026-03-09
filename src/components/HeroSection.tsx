@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, type Variants } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowDown } from "lucide-react";
 import CharacterReveal from "./CharacterReveal";
@@ -11,14 +11,16 @@ import mountain2 from "@/assets/hero/mountain-2.png";
 import planets from "@/assets/hero/planets.png";
 import astronaut from "@/assets/hero/astronaut.png";
 
-const containerVariants = {
+const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
+
+const containerVariants: Variants = {
   hidden: {},
   visible: { transition: { staggerChildren: 0.13, delayChildren: 0.4 } },
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { opacity: 0, y: 32 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] as number[] } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.9, ease: EASE } },
 };
 
 const HeroSection = () => {
