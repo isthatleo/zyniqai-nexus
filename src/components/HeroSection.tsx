@@ -21,15 +21,15 @@ const HeroSection = () => {
     offset: ["start start", "end start"],
   });
 
-  const skyY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
-  const planetsY = useTransform(scrollYProgress, [0, 1], ["0%", "35%"]);
-  const mountain2Y = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
-  const mountain1BY = useTransform(scrollYProgress, [0, 1], ["0%", "10%"]);
-  const mountain1Y = useTransform(scrollYProgress, [0, 1], ["0%", "8%"]);
-  const astronautY = useTransform(scrollYProgress, [0, 1], ["0%", "120%"]);
-  const astronautRotate = useTransform(scrollYProgress, [0, 1], [0, 25]);
-  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-  const overlayOpacity = useTransform(scrollYProgress, [0, 0.8], [0, 0.6]);
+  const skyY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
+  const planetsY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  const mountain2Y = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
+  const mountain1BY = useTransform(scrollYProgress, [0, 1], ["0%", "8%"]);
+  const mountain1Y = useTransform(scrollYProgress, [0, 1], ["0%", "5%"]);
+  const astronautY = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+  const astronautRotate = useTransform(scrollYProgress, [0, 1], [8, 30]);
+  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "45%"]);
+  const overlayOpacity = useTransform(scrollYProgress, [0, 0.85], [0, 0.65]);
 
   useEffect(() => {
     if (textRef.current) {
@@ -38,7 +38,7 @@ const HeroSection = () => {
         opacity: [0, 1],
         translateY: [40, 0],
         duration: 1200,
-        delay: stagger(150, { start: 300 }),
+        delay: stagger(150, { start: 400 }),
         ease: "outExpo",
       });
     }
@@ -47,149 +47,198 @@ const HeroSection = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative w-full min-h-[100svh] flex items-center justify-center overflow-hidden bg-[hsl(220,25%,5%)]"
     >
-      {/* Layer 0: Sky background */}
-      <motion.div className="absolute inset-0 z-0" style={{ y: skyY }}>
-        <img src={skyBg} alt="" className="w-full h-[120%] object-cover" />
+      {/* Layer 0: Sky background — full cover, anchored top */}
+      <motion.div
+        className="absolute inset-0 z-0 will-change-transform"
+        style={{ y: skyY }}
+      >
+        <img
+          src={skyBg}
+          alt=""
+          className="w-full h-[115%] object-cover object-top"
+          loading="eager"
+        />
       </motion.div>
+
+      {/* Subtle dark vignette */}
+      <div
+        className="absolute inset-0 z-[1] pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse at 50% 0%, transparent 40%, hsl(220 25% 4% / 0.45) 100%)",
+        }}
+      />
 
       {/* Layer 1: Planets */}
-      <motion.div className="absolute inset-0 z-[1]" style={{ y: planetsY }}>
-        <img src={planets} alt="" className="w-full h-full object-cover opacity-70" />
+      <motion.div
+        className="absolute inset-0 z-[2] will-change-transform"
+        style={{ y: planetsY }}
+      >
+        <img
+          src={planets}
+          alt=""
+          className="w-full h-full object-cover object-center opacity-65 sm:opacity-70"
+        />
       </motion.div>
 
-      {/* Layer 2: Falling Astronaut */}
+      {/* Layer 2: Astronaut — responsive size & position */}
       <motion.div
-        className="absolute z-[2] right-[2%] sm:right-[5%] lg:right-[8%] top-[5%] sm:top-[8%] w-[45%] sm:w-[38%] md:w-[32%] lg:w-[28%] max-w-[480px]"
+        className="absolute z-[3]
+          right-[1%] top-[10%] w-[42%]
+          sm:right-[4%] sm:top-[8%] sm:w-[36%]
+          md:right-[6%] md:top-[7%] md:w-[30%]
+          lg:right-[7%] lg:top-[6%] lg:w-[26%]
+          max-w-[440px] will-change-transform"
         style={{ y: astronautY, rotate: astronautRotate }}
-        initial={{ opacity: 0, y: -120, rotate: -15 }}
+        initial={{ opacity: 0, y: -140, rotate: -18 }}
         animate={{ opacity: 1, y: 0, rotate: 8 }}
-        transition={{ duration: 2, delay: 0.6, ease: "easeOut" }}
+        transition={{ duration: 2.2, delay: 0.5, ease: "easeOut" }}
       >
         {/* Coral halo glow */}
         <motion.div
-          className="absolute inset-0 -inset-x-[20%] -inset-y-[15%] rounded-full"
+          className="absolute -inset-[25%] rounded-full pointer-events-none"
           style={{
-            background: "radial-gradient(circle, hsl(var(--primary) / 0.35) 0%, hsl(var(--primary) / 0.12) 40%, transparent 70%)",
-            filter: "blur(40px)",
+            background:
+              "radial-gradient(circle, hsl(var(--primary) / 0.38) 0%, hsl(var(--primary) / 0.14) 40%, transparent 70%)",
+            filter: "blur(45px)",
           }}
-          animate={{
-            scale: [1, 1.08, 1],
-            opacity: [0.7, 1, 0.7],
-          }}
-          transition={{
-            duration: 4,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
+          animate={{ scale: [1, 1.1, 1], opacity: [0.65, 1, 0.65] }}
+          transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.img
           src={astronaut}
           alt="Falling astronaut"
           className="relative w-full drop-shadow-2xl"
-          style={{ filter: "drop-shadow(0 20px 80px hsl(var(--primary) / 0.4))" }}
-          animate={{
-            y: [0, 15, 0],
-            rotate: [0, 3, -2, 0],
+          style={{
+            filter: "drop-shadow(0 24px 90px hsl(var(--primary) / 0.45))",
           }}
-          transition={{
-            duration: 6,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
+          animate={{ y: [0, 16, 0], rotate: [0, 3, -2, 0] }}
+          transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut" }}
         />
       </motion.div>
 
       {/* Layer 3: Mountain back */}
       <motion.div
-        className="absolute bottom-0 left-0 right-0 z-[3]"
+        className="absolute bottom-0 left-0 right-0 z-[4] will-change-transform"
         style={{ y: mountain2Y }}
       >
-        <img src={mountain2} alt="" className="w-full object-cover object-bottom" />
+        <img
+          src={mountain2}
+          alt=""
+          className="w-full h-auto object-cover object-bottom min-h-[30vw] sm:min-h-0"
+        />
       </motion.div>
 
       {/* Layer 3.5: Mountain mid */}
       <motion.div
-        className="absolute bottom-0 left-0 right-0 z-[3]"
+        className="absolute bottom-0 left-0 right-0 z-[5] will-change-transform"
         style={{ y: mountain1BY }}
       >
-        <img src={mountain1B} alt="" className="w-full object-cover object-bottom" />
+        <img
+          src={mountain1B}
+          alt=""
+          className="w-full h-auto object-cover object-bottom"
+        />
       </motion.div>
 
       {/* Layer 4: Mountain front */}
       <motion.div
-        className="absolute bottom-0 left-0 right-0 z-[4]"
+        className="absolute bottom-0 left-0 right-0 z-[6] will-change-transform"
         style={{ y: mountain1Y }}
       >
-        <img src={mountain1} alt="" className="w-full object-cover object-bottom" />
+        <img
+          src={mountain1}
+          alt=""
+          className="w-full h-auto object-cover object-bottom"
+        />
       </motion.div>
 
       {/* Scroll darkening overlay */}
       <motion.div
-        className="absolute inset-0 z-[5] bg-background pointer-events-none"
+        className="absolute inset-0 z-[7] bg-background pointer-events-none"
         style={{ opacity: overlayOpacity }}
       />
 
       {/* Content */}
-      <div className="relative z-[6] w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-20 sm:pt-24">
+      <div className="relative z-[8] w-full max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 pt-28 sm:pt-32 lg:pt-36 pb-20 sm:pb-24">
         <motion.div
           ref={textRef}
-          className="text-center sm:text-left max-w-2xl mx-auto sm:mx-0"
+          className="text-center sm:text-left max-w-xl mx-auto sm:mx-0"
           style={{ y: textY }}
         >
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-            className="hero-anim text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.08] tracking-tight text-white drop-shadow-lg"
+          {/* Tag badge */}
+          <motion.div
+            className="hero-anim inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/15 bg-white/5 backdrop-blur-sm mb-5 text-[11px] font-mono font-medium text-white/70 tracking-wider opacity-0"
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+            AI Infrastructure Partner · Cape Town
+          </motion.div>
+
+          <h1
+            className="hero-anim text-[clamp(2.4rem,7vw,5rem)] font-bold leading-[1.06] tracking-tight text-white drop-shadow-lg opacity-0"
           >
             All-in-one
             <br />
             <CharacterReveal
               text="AI systems"
-              className="bg-gradient-to-r from-gold via-coral to-[hsl(265,83%,68%)] bg-clip-text text-transparent"
+              className="bg-gradient-to-r from-gold via-coral to-[hsl(var(--purple-accent))] bg-clip-text text-transparent"
               staggerDelay={40}
             />
             <br />
             engine.
-          </motion.h1>
+          </h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="hero-anim mt-4 sm:mt-6 text-sm sm:text-base md:text-lg text-white/80 max-w-md mx-auto sm:mx-0 leading-relaxed drop-shadow-md"
+          <p
+            className="hero-anim mt-5 sm:mt-6 text-[clamp(0.9rem,2.2vw,1.1rem)] text-white/75 max-w-md mx-auto sm:mx-0 leading-relaxed drop-shadow-md opacity-0"
           >
             A fast and flexible AI infrastructure
             <br className="hidden sm:block" />
             partner to power your enterprise.
-          </motion.p>
+          </p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="hero-anim mt-6 sm:mt-8 flex flex-col sm:flex-row items-center gap-3 justify-center sm:justify-start"
+          <div
+            className="hero-anim mt-7 sm:mt-9 flex flex-col sm:flex-row items-center gap-3 justify-center sm:justify-start opacity-0"
           >
-            <Link
-              to="/contact"
-              className="w-full sm:w-auto px-6 py-2.5 rounded-full bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-all text-center shadow-lg"
-            >
-              Get Started
-            </Link>
-            <a
-              href="#features"
-              className="w-full sm:w-auto px-6 py-2.5 rounded-full border border-white/30 text-sm font-medium text-white/90 hover:text-white hover:border-white/60 transition-all flex items-center justify-center gap-2 backdrop-blur-sm"
-            >
-              Learn more <ArrowDown size={14} />
-            </a>
+            <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+              <Link
+                to="/contact"
+                className="w-full sm:w-auto px-7 py-3 rounded-full bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-all text-center shadow-xl shadow-primary/30"
+              >
+                Get Started
+              </Link>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+              <a
+                href="#features"
+                className="w-full sm:w-auto px-7 py-3 rounded-full border border-white/25 text-sm font-medium text-white/85 hover:text-white hover:border-white/50 transition-all flex items-center justify-center gap-2 backdrop-blur-sm hover:bg-white/5"
+              >
+                Learn more <ArrowDown size={14} />
+              </a>
+            </motion.div>
+          </div>
+
+          {/* Stats row */}
+          <motion.div
+            className="hero-anim mt-10 sm:mt-12 flex items-center gap-8 justify-center sm:justify-start opacity-0"
+          >
+            {[
+              { value: "40+", label: "AI Models" },
+              { value: "6", label: "Industries" },
+              { value: "99.9%", label: "Uptime SLA" },
+            ].map((stat) => (
+              <div key={stat.label} className="text-center sm:text-left">
+                <div className="text-xl sm:text-2xl font-bold text-white">{stat.value}</div>
+                <div className="text-[10px] sm:text-xs text-white/50 font-mono tracking-wide mt-0.5">{stat.label}</div>
+              </div>
+            ))}
           </motion.div>
         </motion.div>
       </div>
 
-      {/* Bottom fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent z-[7]" />
+      {/* Bottom fade — taller to fully blend into next section */}
+      <div className="absolute bottom-0 left-0 right-0 h-40 sm:h-52 bg-gradient-to-t from-background via-background/80 to-transparent z-[9] pointer-events-none" />
     </section>
   );
 };
