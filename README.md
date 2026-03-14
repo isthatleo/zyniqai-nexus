@@ -1,73 +1,144 @@
-# Welcome to your Lovable project
+# ZyniqAI 🚀
+[![React](https://img.shields.io/badge/React-18.3-blue?style=flat&logo=react)](https://react.dev/)
+[![Vite](https://img.shields.io/badge/Vite-5-green?style=flat&logo=vite)](https://vitejs.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.8-blue?style=flat&logo=typescript)](https://www.typescriptlang.org/)
+[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.4-38bdf8?style=flat&logo=tailwindcss)](https://tailwindcss.com/)
+[![Framer Motion](https://img.shields.io/badge/Framer_Motion-12-orange?style=flat&logo=framer)](https://www.framer.com/motion/)
 
-## Project info
+**ZyniqAI — Turning Data Into Action**
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+Predictive analytics, fleet intelligence, and real-time AI insights for enterprise operations. Industry-specific OS platforms (HospitalityOS, FintechOS, EducationOS, LogisticsOS, HealthcareOS) with stunning animations, glassmorphism UI, and production-ready dashboards.
 
-## How can I edit this code?
+![Hero Screenshot](https://via.placeholder.com/1200x600/1e1e1e/ffffff?text=ZyniqAI+Hero) <!-- Replace with actual screenshot -->
 
-There are several ways of editing your application.
+## ✨ Features
 
-**Use Lovable**
+- **Industry OS Platforms**: Modular AI systems for Hospitality, Fintech, Education, Logistics, Healthcare & Enterprise SaaS
+- **Advanced Animations**: Framer Motion + AnimeJS (timelines, scroll reveals, parallax, draggable carousels)
+- **Production UI**: shadcn/ui + Radix primitives, TailwindCSS (custom gold/coral themes, glassmorphism)
+- **Real-time Dashboards**: Recharts graphs, Tanstack Query, Supabase backend-ready
+- **AI Chat Widget**: Voice-enabled assistant with lead capture
+- **Multi-region Pricing**: Dynamic ZAR/GBP/USD tiers
+- **Theme System**: Dark/light mode with CSS variables
+- **Performance**: Vite HMR, optimized for 60fps animations
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+## 🏗️ Project Structure
 
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```
+zyniqai-nexus/
+├── public/                 # Static assets (favicons, logos)
+├── src/
+│   ├── components/         # UI components (HeroSection, Navbar, AIChatWidget, etc.)
+│   │   ├── ui/             # shadcn/ui primitives
+│   │   └── examples/       # Animation demos (canvas, timelines, draggables)
+│   ├── pages/              # 20+ routed pages (Index, HospitalityOS, Dashboard, etc.)
+│   ├── hooks/              # Custom hooks (useAnimateOnScroll, useAuth)
+│   ├── lib/                # Utilities
+│   ├── App.tsx             # Router + Providers (QueryClient, Theme, Auth)
+│   └── main.tsx            # Entry point
+├── supabase/               # Supabase config/migrations
+├── examples/               # Standalone animation demos
+├── tests/                  # Vitest setup
+├── package.json            # Bun/Vite deps (bun.lockb)
+└── tailwind.config.ts      # Custom themes/colors/keyframes
 ```
 
-**Edit a file directly in GitHub**
+## 🛠️ Tech Stack
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+| Category | Technologies |
+|----------|--------------|
+| **Core** | React 18, TypeScript 5, Vite 5 |
+| **Routing/State** | React Router 6, Tanstack Query 5 |
+| **Styling** | TailwindCSS 3, shadcn/ui, class-variance-authority, Tailwind Merge |
+| **Animation** | Framer Motion 12, AnimeJS 4, custom scroll hooks |
+| **UI Primitives** | Radix UI (dialogs, tooltips, accordions), Lucide React icons |
+| **Data/Forms** | Supabase, React Hook Form + Zod, Recharts |
+| **Utils** | date-fns, sonner (toasts), next-themes, vaul (drawers) |
+| **Testing** | Vitest 3, Testing Library |
 
-**Use GitHub Codespaces**
+## 🚀 Quick Start
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+```bash
+# Clone & install (uses Bun for speed)
+git clone <your-repo-url>
+cd zyniqai-nexus
+bun install
 
-## What technologies are used for this project?
+# Development server (localhost:8080)
+bun run dev
 
-This project is built with:
+# Build for production
+bun run build
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+# Preview production build
+bun run preview
 
-## How can I deploy this project?
+# Run tests
+bun run test
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+# Lint & format
+bun run lint
+```
 
-## Can I connect a custom domain to my Lovable project?
+**Note**: Bun recommended for fastest installs/builds. Falls back to npm fine.
 
-Yes, you can!
+## 📱 Pages & Navigation
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+| Route | Description |
+|-------|-------------|
+| `/` | Homepage (Hero, Features, IndustryOS, Pricing, Contact) |
+| `/hospitality-os` | Hospitality OS (booking engine, revenue analytics) |
+| `/fintech-os` | Fintech OS platform |
+| `/education-os` | Education management OS |
+| `/enterprise-saas` | Enterprise SaaS accelerator |
+| `/dashboard` | Admin dashboard |
+| `/client-portal` | Client-facing portal |
+| `/pricing` | Multi-tier pricing |
+| `/case-studies` | Real client results |
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+## 🎨 Customization
+
+1. **Colors/Themes**: Edit `tailwind.config.ts` (gold, coral, accent gradients)
+2. **Animations**: Extend keyframes in Tailwind config; new examples in `src/examples/`
+3. **Pages**: Add to `App.tsx` Routes; new components in `src/components/`
+4. **Supabase**: Configure `supabase/config.toml`; add env vars
+5. **Branding**: Update logos in `public/`, meta in `index.html`
+
+## 🚀 Deployment
+
+```bash
+# Build
+bun run build
+
+# Popular hosts:
+# Vercel: Drag `dist/` folder or `vercel --prod`
+# Netlify: Drag `dist/` or CLI
+# Cloudflare Pages: `wrangler pages publish dist`
+```
+
+**Vercel Template**: Includes `@vercel/analytics` & `speed-insights` ready.
+
+## 🧪 Testing & Quality
+
+- **Unit Tests**: `bun run test` (Vitest + jsdom)
+- **Linting**: ESLint 9 + React hooks config
+- **TypeScript**: Strict mode enabled
+- **Performance**: 50k+ star timeline animations tested
+
+## 🤝 Contributing
+
+1. Fork & clone
+2. `bun install`
+3. Create feature branch `feat/amazing-animation`
+4. Add tests, PR with description/screenshots
+
+**Code Style**: Follow existing patterns (TSX, Tailwind classes, Framer `motion.*`).
+
+## 📄 License
+
+MIT License - see [LICENSE](LICENSE) (add if missing).
+
+---
+
+⭐ **Built with ❤️ by ZyniqAI** | [Live Demo](http://localhost:8080) | [Contact](https://zyniqai.com/contact)
+

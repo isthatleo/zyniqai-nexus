@@ -2,7 +2,6 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform, type Variants } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowDown } from "lucide-react";
-import CharacterReveal from "./CharacterReveal";
 
 import skyBg from "@/assets/hero/sky.jpg";
 import mountain1 from "@/assets/hero/mountain-1.png";
@@ -110,27 +109,28 @@ const HeroSection = () => {
           style={{ y: textY }}
           className="max-w-[88%] sm:max-w-xl mx-auto sm:mx-0 text-center sm:text-left"
         >
-          <motion.h1 variants={itemVariants} className="text-[clamp(2.75rem,8vw,5.5rem)] font-bold leading-[1.04] tracking-tight text-white">
-            All-in-one
-            <br />
-            <CharacterReveal
-              text="AI systems"
-              style={{
+          <motion.div
+            variants={itemVariants}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mb-16"
+          >
+            <span className="text-xs font-medium tracking-widest uppercase text-primary mb-4 block">AI Engine</span>
+            <h1 className="text-[clamp(3rem,8.5vw,6rem)] md:text-6xl font-display font-bold leading-[1.04] tracking-tight text-white mb-4">
+              All-in-one <br></br><span className="gradient-text" style={{
                 background: "linear-gradient(90deg, hsl(40,72%,63%), hsl(0,72%,63%), hsl(280,83%,68%))",
                 backgroundClip: "text",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-              }}
-              staggerDelay={40}
-            />
-            <br />
-            engine.
-          </motion.h1>
+                WebkitBackgroundClip: "text !important",
+                WebkitTextFillColor: "transparent !important",
+                fontWeight: "bold",
+              }}>AI systems</span><br></br>
+               engine.
+            </h1>
+          </motion.div>
 
-          <motion.p variants={itemVariants} className="mt-4 sm:mt-6 text-[clamp(0.9rem,2.4vw,1.05rem)] text-white/70 max-w-[320px] sm:max-w-none mx-auto sm:mx-0 leading-relaxed">
-            A fast and flexible AI infrastructure partner
-            <br className="hidden sm:block" />
-            to power your enterprise.
+          <motion.p variants={itemVariants} className="mt-4 sm:mt-6 text-[clamp(1rem,2.6vw,1.125rem)] text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            A fast and flexible AI infrastructure partner to power your enterprise.
           </motion.p>
 
           <motion.div variants={itemVariants} className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-center gap-3 justify-center sm:justify-start">
