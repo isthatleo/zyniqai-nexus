@@ -8,7 +8,8 @@ const footerColumns = [
     title: "Solutions",
     links: [
       { label: "AI Modules", to: "/products" },
-      { label: "Web Design", to: "/services" },
+      { label: "Web Design", to: "/web-design" },
+      { label: "Healthcare OS", to: "/healthcare-os" },
       { label: "Hospitality OS", to: "/hospitality-os" },
       { label: "Education OS", to: "/education-os" },
       { label: "Logistics OS", to: "/logistics-os" },

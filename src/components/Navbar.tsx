@@ -11,11 +11,15 @@ const navLinks = [
     href: "/products",
     children: [
       { label: "AI Modules", href: "/products" },
+
+      { label: "Web Design", href: "/web-design" },
       { label: "Hospitality OS", href: "/hospitality-os" },
       { label: "Education OS", href: "/education-os" },
+
       { label: "Logistics OS", href: "/logistics-os" },
       { label: "Fintech OS", href: "/fintech-os" },
       { label: "Enterprise SaaS", href: "/enterprise-saas" },
+      { label: "Healthcare OS", href: "/healthcare-os" },
     ],
   },
   { label: "Services", href: "/services" },
@@ -94,7 +98,7 @@ const Navbar = () => {
 
             {/* Desktop Nav */}
             <div className="hidden lg:flex items-center gap-0.5">
-              {navLinks.map((link) => (
+{navLinks.map((link) => (
                 <div
                   key={link.label}
                   className="relative"

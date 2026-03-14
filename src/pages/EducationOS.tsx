@@ -24,15 +24,8 @@ const features = [
   { icon: ClipboardCheck, title: "Reports & Compliance", desc: "Automated report generation and regulatory compliance tools." },
 ];
 
-const tierBreakdowns = [
-  { breakdowns: [{ cat: "Maintenance", detail: "Bug fixes & stability patches" }, { cat: "Updates", detail: "Minor improvements monthly" }, { cat: "Check-in", detail: "Monthly review call" }, { cat: "SLA", detail: "48h response" }] },
-  { breakdowns: [{ cat: "Features", detail: "New feature development" }, { cat: "Analytics", detail: "Student performance dashboards" }, { cat: "AI", detail: "Enrollment forecasting updates" }, { cat: "SLA", detail: "24h priority response" }] },
-  { breakdowns: [{ cat: "AI Engine", detail: "Continuous model retraining" }, { cat: "Custom Reports", detail: "Bespoke compliance reports" }, { cat: "Dedicated", detail: "Priority support channel" }, { cat: "SLA", detail: "12h critical response" }] },
-];
-
 const EducationOS = () => {
   const [region, setRegion] = useState<Region>("za");
-  const [hoveredTier, setHoveredTier] = useState<number | null>(null);
   const p = pricing[region];
   const featuresRef = useRef<HTMLDivElement>(null);
   const kpisRef = useRef<HTMLDivElement>(null);
@@ -83,8 +76,14 @@ const EducationOS = () => {
           <div className="max-w-6xl mx-auto text-center">
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-16">
               <span className="text-xs font-medium tracking-widest uppercase text-primary mb-4 block">Industry OS</span>
-              <ScrollTextReveal text="ZyniqAI Education OS" tag="h1"
-                className="text-3xl md:text-5xl font-display font-bold mb-4 gradient-text" staggerDelay={35} />
+              <h1 className="text-3xl md:text-5xl font-display font-bold mb-4">
+                ZyniqAI <span className="gradient-text" style={{
+                  background: "linear-gradient(90deg, hsl(40,72%,63%), hsl(0,72%,63%), hsl(280,83%,68%))",
+                  backgroundClip: "text",
+                  WebkitBackgroundClip: "text !important",
+                  WebkitTextFillColor: "transparent !important",
+                }}>Education OS</span>
+              </h1>
               <p className="text-muted-foreground max-w-2xl mx-auto">
                 Manage your school efficiently, reduce administrative overhead, and harness AI to improve student outcomes and resource allocation.
               </p>
@@ -137,38 +136,21 @@ const EducationOS = () => {
                   { name: "Starter", price: p.t1, features: ["Maintenance & bug fixes", "Minor updates", "Monthly check-in", "48h response"] },
                   { name: "Growth", price: p.t2, features: ["Everything in Starter", "Feature additions", "Analytics upgrades", "24h response"], highlighted: true },
                   { name: "Strategic", price: p.t3, features: ["Everything in Growth", "AI continuous improvement", "Custom reports", "Priority support", "12h response"] },
-                ].map((plan, idx) => (
-                  <div
-                    key={plan.name}
-                    className={`glass-card-hover p-6 flex flex-col relative ${plan.highlighted ? "border-primary/40" : ""}`}
-                    onMouseEnter={() => setHoveredTier(idx)}
-                    onMouseLeave={() => setHoveredTier(null)}
-                  >
-                    {plan.highlighted && <span className="text-[10px] font-medium tracking-widest uppercase text-primary-foreground bg-primary px-3 py-1 rounded-full self-center mb-3">Popular</span>}
+                ].map((plan) => (
+                  <div key={plan.name} className={`glass-card-hover p-6 flex flex-col ${plan.highlighted ? "border-primary/40" : ""}`}>
+                    {plan.highlighted && <span className="text-[10px] font-medium tracking-widest uppercase text-primary-foreground bg-primary px-3 py-1 rounded-full self-start mb-3">Popular</span>}
                     <h3 className="text-lg font-display font-semibold">{plan.name}</h3>
                     <p className="text-2xl font-display font-bold mt-2">{plan.price}<span className="text-sm text-muted-foreground">/mo</span></p>
                     <ul className="space-y-2 mt-4 flex-1">
                       {plan.features.map((f) => (
-                        <li key={f} className="flex items-center justify-center gap-2 text-sm text-muted-foreground"><Check size={14} className="text-primary flex-shrink-0" /> {f}</li>
+                        <li key={f} className="flex items-center gap-2 text-sm text-muted-foreground">
+                          <Check size={14} className="text-primary flex-shrink-0" /> {f}
+                        </li>
                       ))}
                     </ul>
-                    {hoveredTier === idx && tierBreakdowns[idx] && (
-                      <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="absolute left-0 right-0 -bottom-2 translate-y-full z-20 mx-1">
-                        <div className="glass-card p-3 border border-primary/20 shadow-xl">
-                          <p className="text-[10px] font-semibold text-primary mb-2">💡 Value Breakdown</p>
-                          {tierBreakdowns[idx].breakdowns.map((b) => (
-                            <div key={b.cat} className="flex items-start gap-1.5 mb-1.5">
-                              <div className="w-1 h-1 rounded-full bg-primary mt-1.5 flex-shrink-0" />
-                              <div className="text-left">
-                                <span className="text-[10px] font-medium text-foreground">{b.cat}: </span>
-                                <span className="text-[10px] text-muted-foreground">{b.detail}</span>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </motion.div>
-                    )}
-                    <Link to="/contact" className="mt-6 block text-center text-sm font-medium py-3 rounded-lg border border-border/60 text-foreground hover:border-primary/40 transition-all">Get Started</Link>
+                    <Link to="/contact" className="mt-6 block text-center text-sm font-medium py-3 rounded-lg border border-border/60 text-foreground hover:border-primary/40 transition-all pointer-events-auto z-30 relative">
+                      Get Started
+                    </Link>
                   </div>
                 ))}
               </div>

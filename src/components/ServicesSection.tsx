@@ -148,7 +148,12 @@ const ServicesSection = () => {
             Six Core Pillars
           </div>
           <h2 className="text-3xl md:text-5xl font-bold mb-4">
-            Full Stack. <WavyText text="Enterprise Ready." className="gradient-text" staggerDelay={40} />
+            Full Stack. <span className="gradient-text cursor-pointer hover:[transform:translateY(-1px)] transition-transform duration-300 inline-block" style={{
+              background: "linear-gradient(90deg, hsl(40,72%,63%), hsl(0,72%,63%), hsl(280,83%,68%))",
+              backgroundClip: "text",
+              WebkitBackgroundClip: "text !important",
+              WebkitTextFillColor: "transparent !important",
+            }}>Enterprise Ready.</span>
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Six core pillars powering everything from web design to AI development and ongoing infrastructure optimization.

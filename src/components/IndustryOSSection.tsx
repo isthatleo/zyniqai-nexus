@@ -46,6 +46,14 @@ const modules = [
     color: "hsl(var(--cyan-accent))",
     colorRaw: "hsl(187, 72%, 55%)",
   },
+  {
+    icon: Building2,
+    title: "Healthcare OS",
+    desc: "Patient management, clinical workflows, AI diagnostics, and compliance tools.",
+    href: "/healthcare-os",
+    color: "hsl(var(--purple-accent))",
+    colorRaw: "hsl(265, 83%, 68%)",
+  },
 ];
 
 const IndustryOSSection = () => {
@@ -89,7 +97,12 @@ const IndustryOSSection = () => {
             Industry Solutions
           </div>
           <h2 className="text-3xl md:text-5xl font-bold mb-4">
-            Intelligent <HoverSplitText text="Operations Systems" className="gradient-text" />
+          <span className="gradient-text" style={{
+              background: "linear-gradient(90deg, hsl(40,72%,63%), hsl(0,72%,63%), hsl(280,83%,68%))",
+              backgroundClip: "text",
+              WebkitBackgroundClip: "text !important",
+              WebkitTextFillColor: "transparent !important",
+            }}>Operations Systems</span>
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Modular enterprise OS platforms built for your industry. Each one integrates AI as independent microservices.

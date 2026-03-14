@@ -30,9 +30,13 @@ const EnterpriseSaaS = () => {
         <section className="section-padding relative">
           <div className="max-w-6xl mx-auto">
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
-              <span className="text-xs font-medium tracking-widest uppercase text-primary mb-4 block">Industry OS</span>
-              <h1 className="text-3xl md:text-5xl font-display font-bold mb-4">
-                ZyniqAI <span className="gradient-text">Enterprise SaaS</span>
+               <h1 className="text-3xl md:text-5xl font-display font-bold mb-4">
+                ZyniqAI <span className="gradient-text" style={{
+                  background: "linear-gradient(90deg, hsl(40,72%,63%), hsl(0,72%,63%), hsl(280,83%,68%))",
+                  backgroundClip: "text",
+                  WebkitBackgroundClip: "text !important",
+                  WebkitTextFillColor: "transparent !important",
+                }}>Enterprise Saas</span>
               </h1>
               <p className="text-muted-foreground max-w-2xl mx-auto">
                 Scale your SaaS platform with multi-tenant architecture, usage analytics, churn prediction, and automated onboarding flows.
@@ -87,7 +91,7 @@ const EnterpriseSaaS = () => {
                         </li>
                       ))}
                     </ul>
-                    <Link to="/contact" className="mt-6 block text-center text-sm font-medium py-3 rounded-lg border border-border/60 text-foreground hover:border-primary/40 transition-all">
+                    <Link to="/contact" className="mt-6 block text-center text-sm font-medium py-3 rounded-lg border border-border/60 text-foreground hover:border-primary/40 transition-all pointer-events-auto z-30 relative">
                       Get Started
                     </Link>
                   </div>

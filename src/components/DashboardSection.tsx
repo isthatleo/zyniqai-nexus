@@ -80,7 +80,12 @@ const DashboardSection = () => {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-5xl font-bold mb-4">
-            Your Data, <WavyText text="Visualized" className="gradient-text" staggerDelay={40} />
+            Your Data, <span className="gradient-text cursor-pointer hover:[transform:translateY(-1px)] transition-transform duration-300 inline-block" style={{
+              background: "linear-gradient(90deg, hsl(40,72%,63%), hsl(0,72%,63%), hsl(280,83%,68%))",
+              backgroundClip: "text",
+              WebkitBackgroundClip: "text !important",
+              WebkitTextFillColor: "transparent !important",
+            }}>Visualized</span>
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto">
             Enterprise-grade dashboards with real-time AI analytics and actionable insights.

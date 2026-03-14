@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import Layout from "@/components/Layout";
 import { Link } from "react-router-dom";
-import { ArrowRight, Shield, Landmark, TrendingUp, AlertTriangle, FileCheck, BarChart3 } from "lucide-react";
+import { ArrowRight, Shield, Landmark, TrendingUp, AlertTriangle, FileCheck, BarChart3, Check } from "lucide-react";
 
 const features = [
   { icon: Shield, title: "Real-Time Fraud Detection", desc: "ML-powered transaction monitoring with anomaly detection and instant alerts.", color: "hsl(0, 72%, 63%)" },
@@ -29,8 +29,14 @@ const FintechOS = () => {
       <div className="pt-24 pb-20 px-4 w-full">
         <div className="max-w-6xl mx-auto">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-20 max-w-3xl mx-auto">
-            <span className="feature-pill" style={{ borderColor: "hsl(0, 72%, 63%, 0.4)", color: "hsl(0, 72%, 63%)", backgroundColor: "hsl(0, 72%, 63%, 0.08)" }}>Fintech OS</span>
-            <h1 className="text-4xl md:text-6xl font-bold mt-6 mb-4">Intelligent Financial <span className="gradient-text">Infrastructure</span></h1>
+             <h1 className="text-3xl md:text-5xl font-display font-bold mb-4">
+                Intelligent Financial <span className="gradient-text" style={{
+                  background: "linear-gradient(90deg, hsl(40,72%,63%), hsl(0,72%,63%), hsl(280,83%,68%))",
+                  backgroundClip: "text",
+                  WebkitBackgroundClip: "text !important",
+                  WebkitTextFillColor: "transparent !important",
+                }}>Infrastructure</span>
+              </h1>
             <p className="text-muted-foreground text-lg leading-relaxed">Build secure financial platforms with real-time fraud detection, automated compliance, and AI-driven risk assessment.</p>
           </motion.div>
 
@@ -62,25 +68,36 @@ const FintechOS = () => {
             <p className="text-2xl font-bold text-primary">{p.build}</p>
           </div>
 
-          <div className="grid sm:grid-cols-3 gap-4 mb-16">
+          <div className="grid sm:grid-cols-3 gap-5">
             {[
-              { name: "Starter", price: p.t1, features: ["Fraud monitoring", "Basic compliance", "Monthly reports"] },
-              { name: "Growth", price: p.t2, features: ["Everything in Starter", "AI risk models", "Custom dashboards", "24h SLA"] },
-              { name: "Enterprise", price: p.t3, features: ["Everything in Growth", "Dedicated engineer", "Custom ML models", "12h SLA"] },
-            ].map((tier, i) => (
-              <motion.div key={tier.name} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} className={`glass-card-hover p-6 text-center ${i === 1 ? "border-primary/40" : ""}`}>
-                <h3 className="font-bold text-sm mb-2">{tier.name}</h3>
-                <p className="text-2xl font-bold mb-1">{tier.price}</p>
-                <p className="text-xs text-muted-foreground mb-4">/month</p>
-                <ul className="space-y-2">{tier.features.map(f => <li key={f} className="text-xs text-muted-foreground">{f}</li>)}</ul>
-              </motion.div>
+              { name: "Starter", price: p.t1, features: ["Fraud monitoring", "Basic compliance", "Monthly reports", "48h response SLA"] },
+              { name: "Growth", price: p.t2, features: ["Everything in Starter", "AI risk models", "Custom dashboards", "24h response SLA"], highlighted: true },
+              { name: "Enterprise", price: p.t3, features: ["Everything in Growth", "Dedicated engineer", "Custom ML models", "12h response SLA"] },
+            ].map((plan) => (
+              <div key={plan.name} className={`glass-card-hover p-6 flex flex-col ${plan.highlighted ? "border-primary/40" : ""}`}>
+                {plan.highlighted && <span className="text-[10px] font-medium tracking-widest uppercase text-primary-foreground bg-primary px-3 py-1 rounded-full self-start mb-3">Popular</span>}
+                <h3 className="text-lg font-display font-semibold">{plan.name}</h3>
+                <p className="text-2xl font-display font-bold mt-2">{plan.price}<span className="text-sm text-muted-foreground">/mo</span></p>
+                <ul className="space-y-2 mt-4 flex-1">
+                  {plan.features.map((f) => (
+                    <li key={f} className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <Check size={14} className="text-primary flex-shrink-0" /> {f}
+                    </li>
+                  ))}
+                </ul>
+                <Link to="/contact" className="mt-6 block text-center text-sm font-medium py-3 rounded-lg border border-border/60 text-foreground hover:border-primary/40 transition-all pointer-events-auto z-30 relative">
+                  Get Started
+                </Link>
+              </div>
             ))}
           </div>
 
+          <br></br>
+
           <div className="text-center">
-            <Link to="/contact" className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-all">
-              Book a Strategy Call <ArrowRight size={14} />
-            </Link>
+                    <Link to="/contact" className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-all pointer-events-auto z-30 relative">
+                      Book a Strategy Call <ArrowRight size={14} />
+                    </Link>
           </div>
         </div>
       </div>

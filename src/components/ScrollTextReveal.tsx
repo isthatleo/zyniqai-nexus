@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { motion } from "framer-motion";
 import { animate, stagger } from "animejs";
 
 interface ScrollTextRevealProps {
@@ -33,7 +34,7 @@ const ScrollTextReveal = ({ text, className = "", tag: Tag = "h2", staggerDelay 
           observer.unobserve(entry.target);
         }
       },
-      { threshold: 0.3 }
+      { threshold: 0.05 }
     );
     observer.observe(containerRef.current);
     return () => observer.disconnect();
@@ -42,19 +43,27 @@ const ScrollTextReveal = ({ text, className = "", tag: Tag = "h2", staggerDelay 
   const words = text.split(" ");
 
   return (
-    <div ref={containerRef}>
+    <motion.div 
+      {...{
+        ref: containerRef,
+        initial: { opacity: 0.3 },
+        whileInView: { opacity: 1 },
+        viewport: { once: true, margin: "-30% 0px" },
+        className: "inline-block",
+      }}
+    >
       <Tag className={className}>
         {words.map((word, wi) => (
           <span key={wi} className="inline-block mr-[0.3em]">
             {word.split("").map((char, ci) => (
-              <span key={`${wi}-${ci}`} className="scroll-char inline-block opacity-0">
+              <span key={`${wi}-${ci}`} className="scroll-char inline-block opacity-0 will-change-auto">
                 {char}
               </span>
             ))}
           </span>
         ))}
       </Tag>
-    </div>
+    </motion.div>
   );
 };
 

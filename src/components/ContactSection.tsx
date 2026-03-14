@@ -5,11 +5,13 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { z } from "zod";
 import { useLocation } from "react-router-dom";
+import { PhoneInputComponent } from "@/components/PhoneInput"; // Fixed alias path
 
 const contactSchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100),
   email: z.string().trim().email("Invalid email").max(255),
   company: z.string().trim().max(100).optional(),
+  phone: z.string().optional(),
   message: z.string().trim().min(1, "Message is required").max(2000),
 });
 
@@ -17,6 +19,7 @@ const ContactSection = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [company, setCompany] = useState("");
+  const [phone, setPhone] = useState<string | undefined>("");
   const [message, setMessage] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const { toast } = useToast();
@@ -38,12 +41,13 @@ const ContactSection = () => {
     setSubmitting(true);
 
     try {
-      const parsed = contactSchema.parse({ name, email, company: company || undefined, message });
+      const parsed = contactSchema.parse({ name, email, company: company || undefined, phone, message });
 
       const { error } = await supabase.from("contact_submissions").insert({
         name: parsed.name,
         email: parsed.email,
         company: parsed.company || null,
+        phone: parsed.phone || null,
         message: parsed.message,
       });
 
@@ -51,12 +55,12 @@ const ContactSection = () => {
 
       try {
         await supabase.functions.invoke("send-contact-notification", {
-          body: { name: parsed.name, email: parsed.email, company: parsed.company, message: parsed.message },
+          body: { name: parsed.name, email: parsed.email, company: parsed.company, phone: parsed.phone, message: parsed.message },
         });
       } catch {}
 
       toast({ title: "Message sent!", description: "We'll get back to you within 24 hours." });
-      setName(""); setEmail(""); setCompany(""); setMessage("");
+      setName(""); setEmail(""); setCompany(""); setPhone(""); setMessage("");
     } catch (err: any) {
       if (err instanceof z.ZodError) {
         toast({ title: "Validation error", description: err.errors[0].message, variant: "destructive" });
@@ -115,7 +119,11 @@ const ContactSection = () => {
               </div>
               <div>
                 <label className="text-xs text-muted-foreground mb-1.5 block">Company</label>
-                <input type="text" value={company} onChange={(e) => setCompany(e.target.value)} placeholder="Company name" className={inputClass} />
+                <input type="text" name="company" value={company} onChange={(e) => setCompany(e.target.value)} placeholder="Company name" className={inputClass} />
+              </div>
+              <div>
+                <label className="text-xs text-muted-foreground mb-1.5 block">Phone</label>
+                <PhoneInputComponent value={phone} onChange={setPhone} />
               </div>
               <div>
                 <label className="text-xs text-muted-foreground mb-1.5 block">Message</label>
@@ -133,3 +141,4 @@ const ContactSection = () => {
 };
 
 export default ContactSection;
+

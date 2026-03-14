@@ -37,26 +37,7 @@ const features = [
   { icon: Clock, title: "Automation & Alerts", desc: "Automated guest communications, housekeeping triggers, and alerts." },
 ];
 
-const tierBreakdowns = [
-  { name: "Starter", breakdowns: [
-    { cat: "Maintenance", detail: "Bug fixes & system health monitoring" },
-    { cat: "Updates", detail: "Minor feature improvements monthly" },
-    { cat: "Check-in", detail: "Monthly strategy call with your team" },
-    { cat: "SLA", detail: "48h guaranteed response time" },
-  ]},
-  { name: "Growth", breakdowns: [
-    { cat: "Analytics", detail: "Full occupancy & revenue reporting suite" },
-    { cat: "AI Beta", detail: "Early access to demand forecasting models" },
-    { cat: "Optimization", detail: "Monthly pricing & conversion optimization" },
-    { cat: "SLA", detail: "24h priority response time" },
-  ]},
-  { name: "Strategic", breakdowns: [
-    { cat: "AI Engine", detail: "Continuous model improvement & retraining" },
-    { cat: "Custom Analytics", detail: "Bespoke dashboards for your KPIs" },
-    { cat: "Priority", detail: "Dedicated support channel" },
-    { cat: "SLA", detail: "12h critical response time" },
-  ]},
-];
+
 
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (!active || !payload) return null;
@@ -107,8 +88,16 @@ const HospitalityOS = () => {
           <div className="max-w-6xl mx-auto text-center">
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-16">
               <span className="text-xs font-medium tracking-widest uppercase text-primary mb-4 block">Industry OS</span>
-              <ScrollTextReveal text="ZyniqAI Hospitality OS" tag="h1"
-                className="text-3xl md:text-5xl font-display font-bold mb-4 gradient-text" staggerDelay={35} />
+
+              <h2 className="text-3xl md:text-5xl font-bold mb-4">
+                ZyniqAI <span className="gradient-text" style={{
+                  background: "linear-gradient(90deg, hsl(40,72%,63%), hsl(0,72%,63%), hsl(280,83%,68%))",
+                  backgroundClip: "text",
+                  WebkitBackgroundClip: "text !important",
+                  WebkitTextFillColor: "transparent !important",
+                }}>Hospitality OS</span>
+              </h2>
+
               <p className="text-muted-foreground max-w-2xl mx-auto">
                 Transform your hotel into a fully digital ecosystem. Centralize operations, increase direct bookings, and make data-driven decisions with AI-powered intelligence.
               </p>
@@ -168,40 +157,17 @@ const HospitalityOS = () => {
                     onMouseEnter={() => setHoveredTier(idx)}
                     onMouseLeave={() => setHoveredTier(null)}
                   >
-                    {plan.highlighted && <span className="text-[10px] font-medium tracking-widest uppercase text-primary-foreground bg-primary px-3 py-1 rounded-full self-center mb-3">Popular</span>}
+                    {plan.highlighted && <span className="text-[10px] font-medium tracking-widest uppercase text-primary-foreground bg-primary px-3 py-1 rounded-full self-start mb-3">Popular</span>}
                     <h3 className="text-lg font-display font-semibold">{plan.name}</h3>
                     <p className="text-2xl font-display font-bold mt-2">{plan.price}<span className="text-sm text-muted-foreground">/mo</span></p>
                     <ul className="space-y-2 mt-4 flex-1">
                       {plan.features.map((f) => (
-                        <li key={f} className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
+                        <li key={f} className="flex items-center gap-2 text-sm text-muted-foreground">
                           <Check size={14} className="text-primary flex-shrink-0" /> {f}
                         </li>
                       ))}
                     </ul>
-
-                    {/* Hover breakdown */}
-                    {hoveredTier === idx && tierBreakdowns[idx] && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 8 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="absolute left-0 right-0 -bottom-2 translate-y-full z-20 mx-1"
-                      >
-                        <div className="glass-card p-3 border border-primary/20 shadow-xl">
-                          <p className="text-[10px] font-semibold text-primary mb-2">💡 Value Breakdown</p>
-                          {tierBreakdowns[idx].breakdowns.map((b) => (
-                            <div key={b.cat} className="flex items-start gap-1.5 mb-1.5">
-                              <div className="w-1 h-1 rounded-full bg-primary mt-1.5 flex-shrink-0" />
-                              <div className="text-left">
-                                <span className="text-[10px] font-medium text-foreground">{b.cat}: </span>
-                                <span className="text-[10px] text-muted-foreground">{b.detail}</span>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </motion.div>
-                    )}
-
-                    <Link to="/contact" className="mt-6 block text-center text-sm font-medium py-3 rounded-lg border border-border/60 text-foreground hover:border-primary/40 transition-all">
+                    <Link to="/contact" className="mt-6 block text-center text-sm font-medium py-3 rounded-lg border border-border/60 text-foreground hover:border-primary/40 transition-all pointer-events-auto z-30 relative">
                       Get Started
                     </Link>
                   </div>

@@ -103,7 +103,6 @@ const FeaturesSection = () => {
   return (
     <section id="features" className="section-padding relative">
       <div className="max-w-6xl mx-auto text-center">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 22 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -117,14 +116,18 @@ const FeaturesSection = () => {
           </div>
           <h2 className="text-3xl md:text-5xl font-bold mb-4">
             The complete <br className="sm:hidden" />
-            <CharacterReveal text="AI toolbox" className="gradient-text" staggerDelay={30} />
+            <span className="gradient-text" style={{
+              background: "linear-gradient(90deg, hsl(40,72%,63%), hsl(0,72%,63%), hsl(280,83%,68%))",
+              backgroundClip: "text",
+              WebkitBackgroundClip: "text !important",
+              WebkitTextFillColor: "transparent !important",
+            }}>AI toolbox</span>
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto">
             Break free from limitations and build anything with a single platform.
           </p>
         </motion.div>
 
-        {/* Pills */}
         <div ref={pillsRef} className="flex flex-wrap items-center justify-center gap-2 mb-20">
           {pills.map((pill, i) => (
             <span
@@ -141,7 +144,6 @@ const FeaturesSection = () => {
           ))}
         </div>
 
-        {/* Feature Cards */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {features.map((feature, i) => {
             const animIdx = i % 4;
@@ -155,20 +157,16 @@ const FeaturesSection = () => {
                 whileHover={{ y: -5 }}
                 className="group glass-card-hover p-6 relative overflow-hidden text-left"
               >
-                {/* Accent top line */}
                 <div
                   className="absolute top-0 left-0 w-0 group-hover:w-full h-px transition-all duration-700 rounded-full"
                   style={{ backgroundColor: feature.accentRaw }}
                 />
-                {/* Corner glow */}
                 <div
                   className="absolute top-0 right-0 w-24 h-24 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
                   style={{
                     background: `radial-gradient(circle at 100% 0%, ${feature.accentRaw}20 0%, transparent 70%)`,
                   }}
                 />
-
-                {/* Animated accent */}
                 <div className="mb-5 flex justify-start">
                   {animIdx === 0 ? (
                     <TypewriterEffect text={feature.title.charAt(0).toUpperCase()} className="text-4xl font-bold" />
@@ -180,7 +178,6 @@ const FeaturesSection = () => {
                     <ScalingPulse color={feature.accentRaw} />
                   )}
                 </div>
-
                 <div className="flex items-center gap-2.5 mb-3">
                   <div
                     className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:scale-110"
@@ -192,7 +189,6 @@ const FeaturesSection = () => {
                     {feature.title}
                   </h3>
                 </div>
-
                 <p className="text-muted-foreground mb-4 leading-relaxed text-sm">{feature.description}</p>
                 <ul className="space-y-1.5">
                   {feature.bullets.map((bullet) => (
@@ -215,3 +211,4 @@ const FeaturesSection = () => {
 };
 
 export default FeaturesSection;
+

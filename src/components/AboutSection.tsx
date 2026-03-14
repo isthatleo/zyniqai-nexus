@@ -54,7 +54,12 @@ const AboutSection = () => {
             Core Values
           </div>
           <h2 className="text-3xl md:text-5xl font-bold mb-4">
-            AI Systems &amp; <CharacterReveal text="Infrastructure Partner" className="gradient-text" staggerDelay={25} />
+            AI Systems & <span className="gradient-text" style={{
+              background: "linear-gradient(90deg, hsl(40,72%,63%), hsl(0,72%,63%), hsl(280,83%,68%))",
+              backgroundClip: "text",
+              WebkitBackgroundClip: "text !important",
+              WebkitTextFillColor: "transparent !important",
+            }}>Infrastructure Partner</span>
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             We build systems. We optimize continuously. We own the infrastructure. We become mission-critical.
@@ -67,7 +72,6 @@ const AboutSection = () => {
               key={item.title}
               className="about-card glass-card-hover p-6 text-center group opacity-0 relative overflow-hidden"
             >
-              {/* Subtle color wash on hover */}
               <div
                 className="absolute inset-0 opacity-0 group-hover:opacity-[0.04] transition-opacity duration-500 rounded-2xl pointer-events-none"
                 style={{ backgroundColor: item.color }}
@@ -83,7 +87,6 @@ const AboutSection = () => {
               </div>
               <h4 className="font-semibold text-sm mb-1.5 group-hover:text-foreground transition-colors">{item.title}</h4>
               <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
-              {/* Bottom accent line */}
               <div
                 className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 group-hover:w-12 h-px transition-all duration-500 rounded-full"
                 style={{ backgroundColor: item.color }}

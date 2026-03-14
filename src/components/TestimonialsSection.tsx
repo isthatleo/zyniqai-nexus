@@ -93,7 +93,12 @@ const TestimonialsSection = () => {
             Client Stories
           </div>
           <h2 className="text-3xl md:text-5xl font-bold mb-4">
-            Trusted by <HoverSplitText text="industry leaders" className="gradient-text" />
+            Trusted by <span className="gradient-text cursor-pointer hover:[transform:translateY(-1px)] transition-transform duration-300 inline-block" style={{
+              background: "linear-gradient(90deg, hsl(40,72%,63%), hsl(0,72%,63%), hsl(280,83%,68%))",
+              backgroundClip: "text",
+              WebkitBackgroundClip: "text !important",
+              WebkitTextFillColor: "transparent !important",
+            }}>industry leaders</span>
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto">
             Enterprises across industries rely on ZyniqAI for intelligent systems at scale.

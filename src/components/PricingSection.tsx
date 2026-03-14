@@ -114,7 +114,6 @@ const PricingSection = () => {
   return (
     <section id="pricing" className="section-padding relative">
       <div className="max-w-6xl mx-auto text-center">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -127,13 +126,17 @@ const PricingSection = () => {
           </div>
           <h2 className="text-3xl md:text-5xl font-bold mb-4">
             Infrastructure-Grade{" "}
-            <CharacterReveal text="Pricing" className="gradient-text" staggerDelay={35} />
+            <span className="gradient-text" style={{
+              background: "linear-gradient(90deg, hsl(40,72%,63%), hsl(0,72%,63%), hsl(280,83%,68%))",
+              backgroundClip: "text",
+              WebkitBackgroundClip: "text !important",
+              WebkitTextFillColor: "transparent !important",
+            }}>Pricing</span>
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto mb-8 text-sm leading-relaxed">
             From startup websites to enterprise AI infrastructure. Implementation projects plus ongoing retainer plans.
           </p>
 
-          {/* Region selector */}
           <div className="inline-flex items-center gap-1 p-1 rounded-full bg-muted/50 border border-border/50">
             {(Object.keys(regionLabels) as Region[]).map((r) => (
               <button
@@ -151,7 +154,6 @@ const PricingSection = () => {
           </div>
         </motion.div>
 
-        {/* Implementation pricing */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -163,7 +165,6 @@ const PricingSection = () => {
           <p className="text-xs text-muted-foreground">once-off · scoped per project</p>
         </motion.div>
 
-        {/* Cards */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
           {packages.map((pkg, index) => {
             const isHovered = hoveredTier === pkg.name;
@@ -196,7 +197,6 @@ const PricingSection = () => {
                   onHoverEnd={() => setHoveredTier(null)}
                   whileHover={{ y: -6, transition: { type: "spring", stiffness: 300, damping: 25 } }}
                 >
-                  {/* Gradient overlay */}
                   <div
                     className="absolute inset-0 pointer-events-none transition-opacity duration-500"
                     style={{
@@ -204,8 +204,6 @@ const PricingSection = () => {
                       opacity: isHovered ? 1 : 0,
                     }}
                   />
-
-                  {/* Top accent line */}
                   <div
                     className="absolute top-0 left-0 right-0 h-px pointer-events-none transition-opacity duration-400"
                     style={{
@@ -213,10 +211,7 @@ const PricingSection = () => {
                       opacity: isHovered ? 1 : 0.3,
                     }}
                   />
-
-                  {/* Content */}
                   <div className="relative z-10 flex flex-col h-full p-5 sm:p-6">
-                    {/* Tag */}
                     {tag && (
                       <span
                         className="self-start text-[10px] font-semibold uppercase tracking-wider px-2.5 py-0.5 rounded-full mb-3"
@@ -235,7 +230,6 @@ const PricingSection = () => {
                       {pkg.description}
                     </p>
 
-                    {/* Price */}
                     <div className="flex items-end gap-1 mb-1 text-left">
                       <span className="text-[1.9rem] font-bold leading-none">
                         {formatPrice(Number(pkg.price_monthly))}
@@ -246,7 +240,6 @@ const PricingSection = () => {
                       {formatPrice(Number(pkg.price_yearly))}/yr · save 15%
                     </p>
 
-                    {/* Feature / Breakdown toggle */}
                     <div className="flex-1 relative min-h-[195px]">
                       <AnimatePresence mode="wait">
                         {!isHovered ? (
@@ -306,7 +299,6 @@ const PricingSection = () => {
                                 </div>
                               </motion.div>
                             ))}
-                            {/* Pricing summary */}
                             <div className="mt-3 pt-3 border-t border-border/30">
                               <div className="flex justify-between text-xs mb-1">
                                 <span className="text-muted-foreground">Monthly</span>
@@ -326,7 +318,6 @@ const PricingSection = () => {
                       </AnimatePresence>
                     </div>
 
-                    {/* CTA */}
                     <Link
                       to={{ pathname: "/contact", search: `?tier=${encodeURIComponent(pkg.name)}` }}
                       state={{ selectedTier: pkg.name }}

@@ -310,7 +310,7 @@ const ClientPortal = () => {
           </div>
 
           {/* Tabs */}
-          <div className="flex items-center gap-1 mb-6 overflow-x-auto pb-2">
+          <div className="flex items-center justify-center gap-1 mb-6 overflow-x-auto pb-2 max-w-4xl mx-auto">
             {filteredTabs.map((tab) => (
               <button
                 key={tab.key}
